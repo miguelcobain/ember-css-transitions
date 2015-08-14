@@ -1,3 +1,6 @@
+
+/*Example 1.*/
+
 .example-enter {
   opacity: 0.01;
 }
@@ -11,6 +14,26 @@
 }
 
 .example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
+
+/*Example 2.*/
+
+.exampletwo-enter {
+  opacity: 0.01;
+}
+
+.exampletwo-enter.exampletwo-enter-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+.exampletwo-leave {
+  opacity: 1;
+}
+
+.exampletwo-leave.exampletwo-leave-active {
   opacity: 0.01;
   transition: opacity .5s ease-in;
 }

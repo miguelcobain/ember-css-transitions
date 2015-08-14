@@ -18,3 +18,4 @@ testem.log
 
 # editors
 /.idea
+/publish.sh
