@@ -1,0 +1,1 @@
+export { default } from 'ember-css-transtions/services/transition-events';

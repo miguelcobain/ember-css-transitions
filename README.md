@@ -1,6 +1,12 @@
-# Ember-css-transtions
+# ember-css-transtions
 
-This README outlines the details of collaborating on this Ember addon.
+This addon provides a nice way of defining CSS Transitions for Ember Components.
+
+This is inspired by:
+
+- [React's CSS Transitions](https://facebook.github.io/react/docs/animation.html)
+- [Angular's CSS Transitions](https://docs.angularjs.org/api/ngAnimate)
+
 
 ## Installation
 
