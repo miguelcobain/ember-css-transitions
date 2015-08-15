@@ -2,5 +2,5 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-css-transtions'
+  name: 'ember-css-transitions'
 };

@@ -1,1 +1,1 @@
-export { default } from 'ember-css-transtions/mixins/transition-mixin';
+export { default } from 'ember-css-transitions/mixins/transition-mixin';
