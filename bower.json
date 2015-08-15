@@ -1,5 +1,5 @@
 {
-  "name": "ember-css-transtions",
+  "name": "ember-css-transitions",
   "dependencies": {
     "ember": "1.13.8",
     "ember-cli-shims": "ember-cli/ember-cli-shims#0.0.3",
