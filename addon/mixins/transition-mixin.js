@@ -20,6 +20,7 @@ export default Ember.Mixin.create({
   transitionEvents: Ember.inject.service('transition-events'),
 
   transitionClass: 'ember',
+  shouldTransition: true,
 
   'transition-class': Ember.computed.alias('transitionClass'),
 
@@ -98,28 +99,32 @@ export default Ember.Mixin.create({
   },
 
   _transitionDestroyElement: Ember.on('willDestroyElement', function () {
-    var _self = this;
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-    }
-    // This is currently the only way of doing this ( since willDestroyElement is not promise based.).
-    var clone = this.$().clone();
-    var parent = this.$().parent();
-    var idx = parent.children().index(this.$());
-    Ember.run.scheduleOnce('afterRender', function () {
-      Ember.$(parent.children()[idx - 1]).after(clone);
-      _self.transitionDomNode(clone[0], 'leave', function () {
-        clone.remove();
+    if (this.get('shouldTransition')) {
+      var _self = this;
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+      }
+      // This is currently the only way of doing this ( since willDestroyElement is not promise based.).
+      var clone = this.$().clone();
+      var parent = this.$().parent();
+      var idx = parent.children().index(this.$());
+      Ember.run.scheduleOnce('afterRender', function () {
+        Ember.$(parent.children()[idx - 1]).after(clone);
+        _self.transitionDomNode(clone[0], 'leave', function () {
+          clone.remove();
+        });
       });
-    });
+    }
   }),
 
 
 
   _transitionInsertElement: Ember.on('didInsertElement', function () {
-    this.transitionDomNode(this.get('element'), 'enter', function () {
-      // No hup
-    });
+    if (this.get('shouldTransition')) {
+      this.transitionDomNode(this.get('element'), 'enter', function () {
+        // No hup
+      });
+    }
   }),
 
 
