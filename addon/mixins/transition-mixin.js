@@ -109,6 +109,7 @@ export default Ember.Mixin.create({
       var parent = this.$().parent();
       var idx = parent.children().index(this.$());
       Ember.run.scheduleOnce('afterRender', function () {
+        _self.addDestroyedElementClone(parent, idx, clone);
         Ember.$(parent.children()[idx - 1]).after(clone);
         _self.transitionDomNode(clone[0], 'leave', function () {
           clone.remove();
@@ -117,6 +118,12 @@ export default Ember.Mixin.create({
     }
   }),
 
+  // Default placement  of the cloned element when being destroyed. 
+  // This might be overridden if component is wrapped in another component.
+  // Forexample if you are using ember-wormhole you should use parent.append(clone) instead of the default implementation.
+  addDestroyedElementClone (parent, idx, clone) {
+      Ember.$(parent.children()[idx - 1]).after(clone);
+  },
 
 
   _transitionInsertElement: Ember.on('didInsertElement', function () {
