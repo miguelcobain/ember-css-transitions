@@ -52,8 +52,29 @@ Install it is simple:
 
 ```
 ember install ember-css-transitions
+
 ```
 
+**Note** Installing ember-cli-autoprefixer is suggested for CSS transitions:
+
+```
+ember install ember-cli-autoprefixer
+```
+
+
+
+## Tested in the following browsers / platforms:
+
+- [x] IE 10
+- [x] IE 11
+- [x] Microsoft Edge
+- [x] Chrome
+- [x] Firefox
+- [x] Safari
+- [x] Android
+- [x] iPhone
+
+Note: **IE9** does not support CSS3 transitions / animations. They must live with no animations / transitions.
 
 ## Documentation
 
