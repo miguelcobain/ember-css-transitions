@@ -158,7 +158,7 @@ export default Ember.Mixin.create({
 
   _transitionInsertElement: Ember.on('didInsertElement', function () {
     if (this.get('shouldTransition')) {
-      this.transitionDomNode(this.get('element'), 'enter', this.didTransitionIn.bind(this));
+      this.transitionDomNode(this.get('element'), 'enter', this.didTransitionIn);
     }
   })
 
