@@ -11,7 +11,7 @@
     "start": "ember server",
     "test": "ember try:testall"
   },
-  "repository": "",
+  "repository": "peec/ember-css-transitions",
   "engines": {
     "node": ">= 0.10.0"
   },
