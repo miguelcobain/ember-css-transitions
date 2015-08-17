@@ -4,10 +4,17 @@ This addon provides a nice way of defining CSS Transitions for Ember Components.
 
 Ember CSS Transitions is heavily inspired (and CSS compatible) with:
 
-- [React's CSS Transitions](https://facebook.github.io/react/docs/animation.html) (mostly from React)
+- [React's CSS Transitions](https://facebook.github.io/react/docs/animation.html) (the implementation is mostly based on React)
 - [Angular's CSS Transitions](https://docs.angularjs.org/api/ngAnimate)
 
 Animations are completely based on CSS classes. As long as you have a CSS class attached to a HTML element, you can apply animations to it.
+
+
+## Documentation
+
+- [http://peec.github.io/ember-css-transitions/](http://peec.github.io/ember-css-transitions/)
+
+## How it works
 
 **Utimately you define your animations and transitions with ONLY CSS.**
 
@@ -75,10 +82,6 @@ ember install ember-cli-autoprefixer
 - [x] iPhone
 
 Note: **IE9** does not support CSS3 transitions / animations. They must live with no animations / transitions.
-
-## Documentation
-
-- [http://peec.github.io/ember-css-transitions/](http://peec.github.io/ember-css-transitions/)
 
 
 ## Installation
