@@ -28,6 +28,12 @@ export default Ember.Mixin.create({
     this.classNameQueue = [];
   }),
 
+  /**
+   * Transitions a DOMElement.
+   * @param DOMElement node Dom node to add transition classes to.
+   * @param animationType The animation type, e.g. "enter" or "leave".
+   * @param finishCallback The callback to use when transition was finished.
+   */
   transitionDomNode: function(node, animationType, finishCallback) {
     var _self = this;
     var $element = Ember.$(node);
@@ -78,6 +84,12 @@ export default Ember.Mixin.create({
     }
   },
 
+  /**
+   * Queues a class on a jQuery Element.
+   * Sets a timeout based on TICK, after TICK is done it sets the classes on the $element.
+   * @param $element
+   * @param className
+   */
   queueClass: function($element, className) {
     var _self = this;
 
@@ -90,10 +102,12 @@ export default Ember.Mixin.create({
     }
   },
 
+  /**
+   * Flushes queued classes on the $element given and resets the timer.
+   * @param $element The element to apply classNameQueue on.
+   */
   flushClassNameQueue: function($element) {
-    this.classNameQueue.forEach(function (className) {
-      $element.addClass(className);
-    });
+    $element.addClass(this.classNameQueue.join(' '));
     this.classNameQueue = [];
     this.timeout = null;
   },
@@ -112,31 +126,41 @@ export default Ember.Mixin.create({
         _self.addDestroyedElementClone(parent, idx, clone);
         Ember.$(parent.children()[idx - 1]).after(clone);
         _self.transitionDomNode(clone[0], 'leave', function () {
-          clone.remove();
+          _self.didTransitionOut(clone);
         });
       });
     }
   }),
 
-  // Default placement  of the cloned element when being destroyed. 
-  // This might be overridden if component is wrapped in another component.
-  // Forexample if you are using ember-wormhole you should use parent.append(clone) instead of the default implementation.
+  /**
+   * Default placement  of the cloned element when being destroyed.
+   * This might be overridden if component is wrapped in another component.
+   * Forexample if you are using ember-wormhole you should use parent.append(clone) instead of the default implementation.
+   */
   addDestroyedElementClone (parent, idx, clone) {
       Ember.$(parent.children()[idx - 1]).after(clone);
   },
 
+  /**
+   * Called after transition in was done. Will always be called after didInsertElement.
+   */
+  didTransitionIn () {
+    // No hup
+  },
+
+  /**
+   * Called when the transition out is called.
+   * @param clone The cloned jQuery element. Normally .remove() should be called to remove the element after transition is done.
+   */
+  didTransitionOut (clone) {
+    clone.remove();
+  },
 
   _transitionInsertElement: Ember.on('didInsertElement', function () {
     if (this.get('shouldTransition')) {
-      this.transitionDomNode(this.get('element'), 'enter', function () {
-        // No hup
-      });
+      this.transitionDomNode(this.get('element'), 'enter', this.didTransitionIn.bind(this));
     }
-  }),
-
-
-
-
+  })
 
 
 });
