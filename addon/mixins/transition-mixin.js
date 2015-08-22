@@ -107,7 +107,10 @@ export default Ember.Mixin.create({
    * @param $element The element to apply classNameQueue on.
    */
   flushClassNameQueue: function($element) {
-    $element.addClass(this.classNameQueue.join(' '));
+    // Add classes one and one to ensure animation correctness: e.g.: x-enter, x-enter-active     
+    this.classNameQueue.forEach(function (className) {
+        $element.addClass(className);		
+    });
     this.classNameQueue = [];
     this.timeout = null;
   },
