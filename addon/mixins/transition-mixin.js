@@ -20,6 +20,9 @@ export default Ember.Mixin.create({
   transitionEvents: Ember.inject.service('transition-events'),
 
   transitionClass: 'ember',
+  enterClass: 'enter',
+  leaveClass: 'leave',
+  activeClass: 'active',
   shouldTransition: true,
 
   'transition-class': Ember.computed.alias('transitionClass'),
@@ -47,7 +50,7 @@ export default Ember.Mixin.create({
     }
 
     var className = this.get('transitionClass') + '-' + animationType;
-    var activeClassName = className + '-active';
+    var activeClassName = className + '-' + this.get('activeClass');
 
 
     var noEventTimeout = null;
@@ -118,6 +121,8 @@ export default Ember.Mixin.create({
   _transitionDestroyElement: Ember.on('willDestroyElement', function () {
     if (this.get('shouldTransition')) {
       var _self = this;
+      var leaveClass = this.get('leaveClass');
+      
       if (this.timeout) {
         clearTimeout(this.timeout);
       }
@@ -128,7 +133,7 @@ export default Ember.Mixin.create({
       Ember.run.scheduleOnce('afterRender', function () {
         _self.addDestroyedElementClone(parent, idx, clone);
         Ember.$(parent.children()[idx - 1]).after(clone);
-        _self.transitionDomNode(clone[0], 'leave', function () {
+        _self.transitionDomNode(clone[0], leaveClass, function () {
           _self.didTransitionOut(clone);
         });
       });
@@ -161,7 +166,8 @@ export default Ember.Mixin.create({
 
   _transitionInsertElement: Ember.on('didInsertElement', function () {
     if (this.get('shouldTransition')) {
-      this.transitionDomNode(this.get('element'), 'enter', this.didTransitionIn);
+      let enterClass = this.get('enterClass');
+      this.transitionDomNode(this.get('element'), enterClass, this.didTransitionIn);
     }
   })
 
