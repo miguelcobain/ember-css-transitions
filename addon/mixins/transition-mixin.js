@@ -163,13 +163,17 @@ export default Mixin.create({
 
   _triggerTransitions(newAttrs) {
     let transitionTriggers = this.get('transitionTriggers');
-    transitionTriggers.forEach(prop => {
-      if (newAttrs[prop].value) {
-        this.$().addClass(prop);
-        this.transitionDomNode(this.get('element'), prop, 'add');
+    transitionTriggers.forEach(value => {
+      let [propName, className] = value.split(':');
+      if (!className) { className = propName; }
+      className = Ember.String.dasherize(className);
+
+      if (newAttrs[propName].value) {
+        this.$().addClass(className);
+        this.transitionDomNode(this.get('element'), className, 'add');
       } else {
-        this.transitionDomNode(this.get('element'), prop, 'remove', () => {
-          this.$().removeClass(prop);
+        this.transitionDomNode(this.get('element'), className, 'remove', () => {
+          this.$().removeClass(className);
         });
       }
     });
