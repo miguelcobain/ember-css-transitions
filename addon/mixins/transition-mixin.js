@@ -1,5 +1,5 @@
 import Ember from 'ember';
-const { Mixin, inject, computed } = Ember;
+const { Mixin, inject, computed, run } = Ember;
 
 const __DEV__ = Ember.environment === 'development';
 const TICK = 17;
@@ -25,8 +25,6 @@ export default Mixin.create({
     return this.get('transitionClasses').join(' ');
   }),
 
-  transitionClasses: Ember.A(),
-
   addClass(className, $element) {
     if (!this.get('isDestroying')) {
       this.get('transitionClasses').addObject(className);
@@ -45,14 +43,14 @@ export default Mixin.create({
 
   transitionEvents: inject.service('transition-events'),
 
-  transitionClass: 'ember',
-  shouldTransition: true,
+  shouldTransition: computed.bool('transitionClass'),
 
-  'transition-class': Ember.computed.alias('transitionClass'),
+  'transition-class': computed.alias('transitionClass'),
 
   init() {
     this._super(...arguments);
     this.classNameQueue = [];
+    this.transitionClasses = Ember.A();
   },
 
   /**
@@ -142,7 +140,7 @@ export default Mixin.create({
       var clone = this.$().clone();
       var parent = this.$().parent();
       var idx = parent.children().index(this.$());
-      Ember.run.scheduleOnce('afterRender', () => {
+      run.scheduleOnce('afterRender', () => {
         this.addDestroyedElementClone(parent, idx, clone);
         Ember.$(parent.children()[idx - 1]).after(clone);
         this.transitionDomNode(clone[0], this.get('transitionClass'), 'leave', () => {
@@ -176,7 +174,9 @@ export default Mixin.create({
 
   didInsertElement() {
     if (this.get('shouldTransition')) {
-      this.transitionDomNode(this.get('element'), this.get('transitionClass'), 'enter', this.didTransitionIn);
+      run.scheduleOnce('afterRender', () => {
+        this.transitionDomNode(this.get('element'), this.get('transitionClass'), 'enter', this.didTransitionIn);
+      });
     }
   },
 
