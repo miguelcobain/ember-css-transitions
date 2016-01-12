@@ -1,5 +1,5 @@
 import Ember from 'ember';
-const { Mixin, inject } = Ember;
+const { Mixin, inject, computed } = Ember;
 
 const __DEV__ = Ember.environment === 'development';
 const TICK = 17;
@@ -18,6 +18,31 @@ if (__DEV__) {
 }
 
 export default Mixin.create({
+
+  classNameBindings: ['joinedTransitionClasses'],
+
+  joinedTransitionClasses: computed('transitionClasses.[]', function() {
+    return this.get('transitionClasses').join(' ');
+  }),
+
+  transitionClasses: Ember.A(),
+
+  addClass(className, $element) {
+    if (!this.get('isDestroying')) {
+      this.get('transitionClasses').addObject(className);
+    } else {
+      $element.addClass(className);
+    }
+  },
+
+  removeClass(className, $element) {
+    if (!this.get('isDestroying')) {
+      this.get('transitionClasses').removeObject(className);
+    } else {
+      $element.removeClass(className);
+    }
+  },
+
   transitionEvents: inject.service('transition-events'),
 
   transitionClass: 'ember',
@@ -37,8 +62,7 @@ export default Mixin.create({
    * @param finishCallback The callback to use when transition was finished.
    */
   transitionDomNode(node, transitionClass, animationType, finishCallback) {
-    var $element = Ember.$(node);
-
+    let $element = Ember.$(node);
 
     if (!node) {
       if (finishCallback) {
@@ -50,19 +74,14 @@ export default Mixin.create({
     var className = transitionClass + '-' + animationType;
     var activeClassName = className + '-active';
 
-
     var noEventTimeout = null;
 
     var endListener = e => {
-      if (e && e.target !== node) {
-        return;
-      }
-      if (__DEV__) {
-        clearTimeout(noEventTimeout);
-      }
+      if (e && e.target !== node) { return; }
+      if (__DEV__) { clearTimeout(noEventTimeout); }
 
-      $element.removeClass(className);
-      $element.removeClass(activeClassName);
+      this.removeClass(className, $element);
+      this.removeClass(activeClassName, $element);
 
       this.get('transitionEvents').removeEndEventListener(node, endListener);
 
@@ -75,7 +94,7 @@ export default Mixin.create({
 
     this.get('transitionEvents').addEndEventListener(node, endListener);
 
-    $element.addClass(className);
+    this.addClass(className, $element);
 
     // Need to do this to actually trigger a transition.
     this.queueClass($element, activeClassName);
@@ -108,7 +127,7 @@ export default Mixin.create({
   flushClassNameQueue($element) {
     // Add classes one and one to ensure animation correctness: e.g.: x-enter, x-enter-active
     this.classNameQueue.forEach(className => {
-        $element.addClass(className);
+        this.addClass(className, $element);
     });
     this.classNameQueue = [];
     this.timeout = null;
@@ -119,7 +138,7 @@ export default Mixin.create({
       if (this.timeout) {
         clearTimeout(this.timeout);
       }
-      // This is currently the only way of doing this ( since willDestroyElement is not promise based.).
+      // This is currently the only way of doing this (since willDestroyElement is not promise based).
       var clone = this.$().clone();
       var parent = this.$().parent();
       var idx = parent.children().index(this.$());
@@ -168,11 +187,11 @@ export default Mixin.create({
       if (!className) { className = Ember.String.dasherize(propName); }
 
       if (newAttrs[propName].value) {
-        this.$().addClass(className);
+        this.addClass(className, this.$());
         this.transitionDomNode(this.get('element'), className, 'add');
       } else {
         this.transitionDomNode(this.get('element'), className, 'remove', () => {
-          this.$().removeClass(className);
+          this.removeClass(className, this.$());
         });
       }
     });
