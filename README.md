@@ -37,7 +37,7 @@ Animations are completely based on CSS classes. As long as you have a CSS class 
 }
 ```
 
-There are two ways of defining transitions, 
+There are two ways of defining transitions,
 And if you use the `{{transition-group}}` component you can then do something like this ( there is also a mixin you can use for custom components):
 
 ```handlebars
@@ -97,6 +97,7 @@ Note: **IE9** does not support CSS3 transitions / animations. They must live wit
 
 ## Running Tests
 
+* `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
 * `ember test`
 * `ember test --server`
 

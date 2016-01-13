@@ -8,6 +8,10 @@ export default Ember.Route.extend({
 
     toggleShow2: function () {
       this.controller.set('show2', !this.controller.get('show2'));
+    },
+
+    toggleClass() {
+      this.controller.toggleProperty('closed');
     }
   }
 });

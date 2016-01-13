@@ -51,6 +51,13 @@ export default Ember.Component.extend(TransitionMixin, {
   transition: opacity .5s ease-in;
 }
 </pre>
+
+<h3>CSS class add</h3>
+
+<button class="btn btn-lg btn-primary" {{action "toggleClass"}}>Press me</button>
+
+{{test-class-component closed=closed}}
+
     </div>
 
 
