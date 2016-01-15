@@ -50,6 +50,17 @@ And if you use the `{{transition-group}}` component you can then do something li
 
 `ember-css-transitions` will automatically manage the lifecycle of the css classes applied so that it makes the animation on `didInsertElement` and `willDestroyElement`. It adds `enter` suffix and `enter-active` when `didInsertElement` is applied. The same for `willDestroyElement`, but then it adds `yourclass-leave` and `yourclass-leave-active`.
 
+## Transition Classes
+
+Apart from the insert/destroy hooks for transitions, there is also an optional `transitionClasses` array
+that has similar syntax to `classNameBindings`, but also adds `*-add`, `*-remove` and `*-active` to the
+classes that you specify based on their transition time.
+
+```js
+transitionClasses: ['isOpen', 'pinned:is-pinned']
+```
+
+The above example will add the other classes for the two base classes, i.e. `.is-open` and `.is-pinned`.
 
 For example and docs, see: [http://peec.github.io/ember-css-transitions/](http://peec.github.io/ember-css-transitions/)
 
