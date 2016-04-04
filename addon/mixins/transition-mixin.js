@@ -153,8 +153,8 @@ export default Mixin.create({
    * Default placement  of the cloned element when being destroyed.
    */
   addDestroyedElementClone(parent, idx, clone) {
-    if (parent.children().length === 0) {
-      parent.append(clone);
+    if (idx === 0) {
+      parent.prepend(clone);
     } else {
       Ember.$(parent.children()[idx - 1]).after(clone);
     }
