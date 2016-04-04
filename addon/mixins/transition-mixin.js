@@ -4,7 +4,8 @@ const { Mixin, inject, computed, run } = Ember;
 const __DEV__ = Ember.environment === 'development';
 const TICK = 17;
 const NO_EVENT_TIMEOUT = 5000;
-var noEventListener = null;
+var noEventListener = null,
+    EMPTY_ARRAY = [];
 
 if (__DEV__) {
   noEventListener = function() {
@@ -179,6 +180,17 @@ export default Mixin.create({
       });
     }
   },
+
+  /**
+   * A list of properties that can control the transitions.  Functions just like
+   * Ember.Component.classNameBindings, and can be formatted in the same way.
+   *
+   * @property transitionTriggers
+   * @type Array
+   * @default []
+   * @public
+   */
+  transitionTriggers: EMPTY_ARRAY,
 
   _triggerTransitions(newAttrs) {
     let transitionTriggers = this.get('transitionTriggers');
