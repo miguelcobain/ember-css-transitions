@@ -196,6 +196,7 @@ export default Mixin.create({
   transitionTriggers: EMPTY_ARRAY,
 
   _setupTriggerObservers() {
+    this._observers = {};
     this.get('transitionTriggers').forEach((classExp) => {
       let [propName, className] = classExp.split(':');
       if (!className) { className = Ember.String.dasherize(propName); }
