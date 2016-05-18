@@ -22,8 +22,6 @@ export default Mixin.create({
 
   classNameBindings: ['joinedTransitionClasses'],
 
-  transitionClasses: null,
-
   joinedTransitionClasses: computed('transitionClasses.[]', function() {
     return this.get('transitionClasses').join(' ');
   }),
@@ -54,7 +52,6 @@ export default Mixin.create({
     this._super(...arguments);
     this.classNameQueue = [];
     this.transitionClasses = Ember.A();
-    this.transitionTriggers = Ember.A();
     this._setupTriggerObservers();
   },
 
@@ -190,14 +187,13 @@ export default Mixin.create({
   /**
    * A list of properties that can control the transitions.  Functions just like
    * Ember.Component.classNameBindings, and can be formatted in the same way.
-   * It is initialized by `init`.
    *
    * @property transitionTriggers
    * @type Array
    * @default []
    * @public
    */
-  transitionTriggers: null,
+  transitionTriggers: EMPTY_ARRAY,
 
   _setupTriggerObservers() {
     this.get('transitionTriggers').forEach((classExp) => {
