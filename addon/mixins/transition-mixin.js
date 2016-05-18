@@ -22,6 +22,8 @@ export default Mixin.create({
 
   classNameBindings: ['joinedTransitionClasses'],
 
+  transitionClasses: null,
+
   joinedTransitionClasses: computed('transitionClasses.[]', function() {
     return this.get('transitionClasses').join(' ');
   }),
@@ -52,6 +54,8 @@ export default Mixin.create({
     this._super(...arguments);
     this.classNameQueue = [];
     this.transitionClasses = Ember.A();
+    this.transitionTriggers = Ember.A();
+    this._setupTriggerObservers();
   },
 
   /**
@@ -133,6 +137,7 @@ export default Mixin.create({
   },
 
   willDestroyElement() {
+    this._teardownTriggerObservers();
     if (this.get('shouldTransition')) {
       if (this.timeout) {
         clearTimeout(this.timeout);
@@ -185,34 +190,54 @@ export default Mixin.create({
   /**
    * A list of properties that can control the transitions.  Functions just like
    * Ember.Component.classNameBindings, and can be formatted in the same way.
+   * It is initialized by `init`.
    *
    * @property transitionTriggers
    * @type Array
    * @default []
    * @public
    */
-  transitionTriggers: EMPTY_ARRAY,
+  transitionTriggers: null,
 
-  _triggerTransitions(newAttrs) {
-    let transitionTriggers = this.get('transitionTriggers');
-    transitionTriggers.forEach(value => {
-      let [propName, className] = value.split(':');
+  _setupTriggerObservers() {
+    this.get('transitionTriggers').forEach((classExp) => {
+      let [propName, className] = classExp.split(':');
       if (!className) { className = Ember.String.dasherize(propName); }
 
-      if (newAttrs[propName].value) {
-        this.addClass(className, this.$());
-        this.transitionDomNode(this.get('element'), className, 'add');
-      } else {
-        this.transitionDomNode(this.get('element'), className, 'remove', () => {
-          this.removeClass(className, this.$());
-        });
+      // create observer function
+      this._observers[propName] = function() {
+        let value = this.get(propName);
+        if (value) {
+          this.addClass(className, this.$());
+          this.transitionDomNode(this.get('element'), className, 'add');
+        } else {
+          this.transitionDomNode(this.get('element'), className, 'remove', () => {
+            this.removeClass(className, this.$());
+          });
+        }
+      };
+
+      // if value starts as true, add it immediatly
+      let value = this.get(propName);
+      if (value) {
+        this.get('transitionClasses').addObject(className);
       }
+
+      // add observer
+      this.addObserver(propName, this, this._observers[propName]);
     });
   },
 
-  didUpdateAttrs(options) {
-    this._super(...arguments);
-    this._triggerTransitions(options.newAttrs);
+  _teardownTriggerObservers() {
+    if (this._observers) {
+      this.get('transitionTriggers').forEach((classExp) => {
+
+        let [propName] = classExp.split(':');
+
+        this.removeObserver(propName, this, this._observers[propName]);
+        delete this._observers[propName];
+      });
+    }
   }
 
 });
