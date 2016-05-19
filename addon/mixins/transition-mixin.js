@@ -134,7 +134,7 @@ export default Mixin.create({
       if (op === 'add') {
         this.addClass(className, $element);
       } else if (op === 'remove') {
-        this.addClass(className, $element);
+        this.removeClass(className, $element);
       }
     });
     this.classNameQueue = [];
