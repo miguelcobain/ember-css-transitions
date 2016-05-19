@@ -99,6 +99,10 @@ export default Mixin.create({
     // Need to do this to actually trigger a transition.
     this.queueClass($element, activeClassName);
 
+    if (animationType === 'remove') {
+      this.queueClass($element, transitionClass, 'remove');
+    }
+
     if (__DEV__) {
       noEventTimeout = setTimeout(noEventListener, NO_EVENT_TIMEOUT);
     }
@@ -110,8 +114,8 @@ export default Mixin.create({
    * @param $element
    * @param className
    */
-  queueClass($element, className) {
-    this.classNameQueue.push(className);
+  queueClass($element, className, op = 'add') {
+    this.classNameQueue.push({op, className});
 
     if (!this.timeout) {
       this.timeout = setTimeout(() => {
@@ -126,8 +130,12 @@ export default Mixin.create({
    */
   flushClassNameQueue($element) {
     // Add classes one and one to ensure animation correctness: e.g.: x-enter, x-enter-active
-    this.classNameQueue.forEach(className => {
+    this.classNameQueue.forEach(({className, op}) => {
+      if (op === 'add') {
         this.addClass(className, $element);
+      } else if (op === 'remove') {
+        this.addClass(className, $element);
+      }
     });
     this.classNameQueue = [];
     this.timeout = null;
