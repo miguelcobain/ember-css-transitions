@@ -118,7 +118,7 @@ export default Mixin.create({
     this.classNameQueue.push({op, className});
 
     if (!this.timeout) {
-      this.timeout = setTimeout(() => {
+      this.timeout = run.later(() => {
         this.flushClassNameQueue($element);
       }, TICK);
     }
@@ -145,7 +145,7 @@ export default Mixin.create({
     this._teardownTriggerObservers();
     if (this.get('shouldTransition')) {
       if (this.timeout) {
-        clearTimeout(this.timeout);
+        run.cancel(this.timeout);
       }
       // This is currently the only way of doing this (since willDestroyElement is not promise based).
       var clone = this.$().clone();
