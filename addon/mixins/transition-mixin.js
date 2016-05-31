@@ -76,19 +76,21 @@ export default Mixin.create({
     var noEventTimeout = null;
 
     var endListener = e => {
-      if (e && e.target !== node) { return; }
-      if (__DEV__) { clearTimeout(noEventTimeout); }
+      run(() => {
+        if (e && e.target !== node) { return; }
+        if (__DEV__) { clearTimeout(noEventTimeout); }
 
-      this.removeClass(className, $element);
-      this.removeClass(activeClassName, $element);
+        this.removeClass(className, $element);
+        this.removeClass(activeClassName, $element);
 
-      this.get('transitionEvents').removeEndEventListener(node, endListener);
+        this.get('transitionEvents').removeEndEventListener(node, endListener);
 
-      // Usually this optional callback is used for informing an owner of
-      // a leave animation and telling it to remove the child.
-      if (finishCallback) {
-        finishCallback();
-      }
+        // Usually this optional callback is used for informing an owner of
+        // a leave animation and telling it to remove the child.
+        if (finishCallback) {
+          finishCallback();
+        }
+      });
     };
 
     this.get('transitionEvents').addEndEventListener(node, endListener);
@@ -113,9 +115,7 @@ export default Mixin.create({
     this.classNameQueue.push(className);
 
     if (!this.timeout) {
-      this.timeout = setTimeout(() => {
-        this.flushClassNameQueue($element);
-      }, TICK);
+      this.timeout = run.later(this, this.flushClassNameQueue, $element, TICK);
     }
   },
 
@@ -135,7 +135,7 @@ export default Mixin.create({
   willDestroyElement() {
     if (this.get('shouldTransition')) {
       if (this.timeout) {
-        clearTimeout(this.timeout);
+        run.cancel(this.timeout);
       }
       // This is currently the only way of doing this (since willDestroyElement is not promise based).
       var clone = this.$().clone();
