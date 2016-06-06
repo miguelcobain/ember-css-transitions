@@ -52,6 +52,7 @@ export default Mixin.create({
     this._super(...arguments);
     this.classNameQueue = [];
     this.transitionClasses = Ember.A();
+    this._setupTriggerObservers();
   },
 
   /**
@@ -98,6 +99,10 @@ export default Mixin.create({
     // Need to do this to actually trigger a transition.
     this.queueClass($element, activeClassName);
 
+    if (animationType === 'remove') {
+      this.queueClass($element, transitionClass, 'remove');
+    }
+
     if (__DEV__) {
       noEventTimeout = setTimeout(noEventListener, NO_EVENT_TIMEOUT);
     }
@@ -109,11 +114,11 @@ export default Mixin.create({
    * @param $element
    * @param className
    */
-  queueClass($element, className) {
-    this.classNameQueue.push(className);
+  queueClass($element, className, op = 'add') {
+    this.classNameQueue.push({op, className});
 
     if (!this.timeout) {
-      this.timeout = setTimeout(() => {
+      this.timeout = run.later(() => {
         this.flushClassNameQueue($element);
       }, TICK);
     }
@@ -125,17 +130,22 @@ export default Mixin.create({
    */
   flushClassNameQueue($element) {
     // Add classes one and one to ensure animation correctness: e.g.: x-enter, x-enter-active
-    this.classNameQueue.forEach(className => {
+    this.classNameQueue.forEach(({className, op}) => {
+      if (op === 'add') {
         this.addClass(className, $element);
+      } else if (op === 'remove') {
+        this.removeClass(className, $element);
+      }
     });
     this.classNameQueue = [];
     this.timeout = null;
   },
 
   willDestroyElement() {
+    this._teardownTriggerObservers();
     if (this.get('shouldTransition')) {
       if (this.timeout) {
-        clearTimeout(this.timeout);
+        run.cancel(this.timeout);
       }
       // This is currently the only way of doing this (since willDestroyElement is not promise based).
       var clone = this.$().clone();
@@ -193,26 +203,46 @@ export default Mixin.create({
    */
   transitionTriggers: EMPTY_ARRAY,
 
-  _triggerTransitions(newAttrs) {
-    let transitionTriggers = this.get('transitionTriggers');
-    transitionTriggers.forEach(value => {
-      let [propName, className] = value.split(':');
+  _setupTriggerObservers() {
+    this._observers = {};
+    this.get('transitionTriggers').forEach((classExp) => {
+      let [propName, className] = classExp.split(':');
       if (!className) { className = Ember.String.dasherize(propName); }
 
-      if (newAttrs[propName].value) {
-        this.addClass(className, this.$());
-        this.transitionDomNode(this.get('element'), className, 'add');
-      } else {
-        this.transitionDomNode(this.get('element'), className, 'remove', () => {
-          this.removeClass(className, this.$());
-        });
+      // create observer function
+      this._observers[propName] = function() {
+        let value = this.get(propName);
+        if (value) {
+          this.addClass(className, this.$());
+          this.transitionDomNode(this.get('element'), className, 'add');
+        } else {
+          this.transitionDomNode(this.get('element'), className, 'remove', () => {
+            this.removeClass(className, this.$());
+          });
+        }
+      };
+
+      // if value starts as true, add it immediatly
+      let value = this.get(propName);
+      if (value) {
+        this.get('transitionClasses').addObject(className);
       }
+
+      // add observer
+      this.addObserver(propName, this, this._observers[propName]);
     });
   },
 
-  didUpdateAttrs(options) {
-    this._super(...arguments);
-    this._triggerTransitions(options.newAttrs);
+  _teardownTriggerObservers() {
+    if (this._observers) {
+      this.get('transitionTriggers').forEach((classExp) => {
+
+        let [propName] = classExp.split(':');
+
+        this.removeObserver(propName, this, this._observers[propName]);
+        delete this._observers[propName];
+      });
+    }
   }
 
 });
