@@ -28,7 +28,9 @@ export default Mixin.create({
 
   addClass(className, $element) {
     if (!this.get('isDestroying')) {
-      this.get('transitionClasses').addObject(className);
+      run(() => {
+        this.get('transitionClasses').addObject(className);
+      });
     } else {
       $element.addClass(className);
     }
@@ -36,7 +38,9 @@ export default Mixin.create({
 
   removeClass(className, $element) {
     if (!this.get('isDestroying')) {
-      this.get('transitionClasses').removeObject(className);
+      run(() => {
+        this.get('transitionClasses').removeObject(className);
+      });
     } else {
       $element.removeClass(className);
     }
