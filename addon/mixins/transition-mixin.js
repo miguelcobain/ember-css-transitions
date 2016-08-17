@@ -1,8 +1,7 @@
 import Ember from 'ember';
-const { Mixin, inject, computed, run } = Ember;
+const { Mixin, inject, computed, run, testing } = Ember;
 
 const __DEV__ = Ember.environment === 'development';
-const TICK = 17;
 const NO_EVENT_TIMEOUT = 5000;
 var noEventListener = null,
     EMPTY_ARRAY = [];
@@ -18,6 +17,47 @@ if (__DEV__) {
   };
 }
 
+/**
+ * T (period) = 1 / f (frequency)
+ * TICK = 1 / 60hz = 0,01667s = 17ms
+ */
+const TICK = 17;
+
+/**
+ * This function performs some logic after a browser
+ * repaint. While on testing, use a run-loop friendly equivalent.
+ * This makes the `wait()` helper work as expected.
+ */
+export const rAF = testing ? function(fn) {
+  return run.later(fn, TICK);
+} : window.requestAnimationFrame;
+
+/**
+ * Performs some logic after DOM changes have been flushed
+ * and after a browser repaint
+ */
+export function nextTick(fn) {
+  return run.schedule('afterRender', () => {
+    return rAF(fn);
+  });
+}
+
+function computeTimeout(element) {
+  let {
+    transitionDuration,
+    transitionDelay,
+    animationDuration,
+    animationDelay,
+    animationIterationCount
+  } = window.getComputedStyle(element);
+
+  let maxDelay = Math.max(parseFloat(animationDelay), parseFloat(transitionDelay));
+  let maxDuration = Math.max(parseFloat(animationDuration) *
+    parseFloat(animationIterationCount), parseFloat(transitionDuration));
+
+  return maxDelay + maxDuration;
+}
+
 export default Mixin.create({
 
   classNameBindings: ['joinedTransitionClasses'],
@@ -28,9 +68,7 @@ export default Mixin.create({
 
   addClass(className, $element) {
     if (!this.get('isDestroying')) {
-      run(() => {
-        this.get('transitionClasses').addObject(className);
-      });
+      this.get('transitionClasses').addObject(className);
     } else {
       $element.addClass(className);
     }
@@ -38,9 +76,7 @@ export default Mixin.create({
 
   removeClass(className, $element) {
     if (!this.get('isDestroying')) {
-      run(() => {
-        this.get('transitionClasses').removeObject(className);
-      });
+      this.get('transitionClasses').removeObject(className);
     } else {
       $element.removeClass(className);
     }
@@ -51,6 +87,7 @@ export default Mixin.create({
   shouldTransition: computed.bool('transitionClass'),
 
   'transition-class': computed.alias('transitionClass'),
+  transitionName: computed.alias('transitionClass'),
 
   init() {
     this._super(...arguments);
@@ -82,12 +119,12 @@ export default Mixin.create({
 
     var endListener = e => {
       if (e && e.target !== node) { return; }
-      if (__DEV__) { clearTimeout(noEventTimeout); }
+      //if (__DEV__) { clearTimeout(noEventTimeout); }
 
       this.removeClass(className, $element);
       this.removeClass(activeClassName, $element);
 
-      this.get('transitionEvents').removeEndEventListener(node, endListener);
+      //this.get('transitionEvents').removeEndEventListener(node, endListener);
 
       // Usually this optional callback is used for informing an owner of
       // a leave animation and telling it to remove the child.
@@ -96,7 +133,8 @@ export default Mixin.create({
       }
     };
 
-    this.get('transitionEvents').addEndEventListener(node, endListener);
+    //this.get('transitionEvents').addEndEventListener(node, endListener);
+    run.later(endListener, computeTimeout(node));
 
     this.addClass(className, $element);
 
@@ -122,9 +160,9 @@ export default Mixin.create({
     this.classNameQueue.push({op, className});
 
     if (!this.timeout) {
-      this.timeout = run.later(() => {
+      this.timeout = nextTick(() => {
         this.flushClassNameQueue($element);
-      }, TICK);
+      });
     }
   },
 
@@ -153,6 +191,7 @@ export default Mixin.create({
       }
       // This is currently the only way of doing this (since willDestroyElement is not promise based).
       var clone = this.$().clone();
+      clone.attr('id', `${this.elementId}_clone`);
       var parent = this.$().parent();
       var idx = parent.children().index(this.$());
       run.scheduleOnce('afterRender', () => {
@@ -188,11 +227,12 @@ export default Mixin.create({
     clone.remove();
   },
 
-  didInsertElement() {
-    if (this.get('shouldTransition')) {
-      run.scheduleOnce('afterRender', () => {
-        this.transitionDomNode(this.get('element'), this.get('transitionClass'), 'enter', this.didTransitionIn);
-      });
+  // TODO use `didInsertElement` to implement "appear"
+
+  didRender() {
+    if (this.get('shouldTransition') && !this.didEnter) {
+      this.didEnter = true;
+      this.transitionDomNode(this.get('element'), this.get('transitionClass'), 'enter', this.didTransitionIn);
     }
   },
 
