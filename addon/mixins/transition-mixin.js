@@ -1,13 +1,18 @@
 import Ember from 'ember';
-const { Mixin, RSVP, inject, computed, run, testing, $ } = Ember;
+const {
+  Mixin, RSVP, inject, computed, run, testing, $, A, K,
+  String: { dasherize }
+} = Ember;
 
 /**
+ * @private
  * T (period) = 1 / f (frequency)
  * TICK = 1 / 60hz = 0,01667s = 17ms
  */
 const TICK = 17;
 
 /**
+ * @public
  * This function performs some logic after a browser
  * repaint. While on testing, use a run-loop friendly equivalent.
  * This makes the tests work as expected.
@@ -17,13 +22,16 @@ export const rAF = testing ? function(fn) {
 } : window.requestAnimationFrame;
 
 /**
+ * @public
  * Performs some logic after DOM changes have been flushed
  * and after a browser repaint.
  */
 export function nextTick() {
   return new RSVP.Promise((resolve) => {
     run.schedule('afterRender', () => {
-      rAF(() => { resolve(); });
+      rAF(() => {
+        resolve();
+      });
     });
   });
 }
@@ -80,12 +88,13 @@ export default Mixin.create({
 
   init() {
     this._super(...arguments);
-    this.transitionClasses = Ember.A();
+    this.transitionClasses = A();
     this.transitionTimeouts = [];
     this._setupTriggerObservers();
   },
 
   /**
+   * @private
    * Transitions the element.
    * @param animationType The animation type, e.g. "enter" or "leave".
    * @param transitionClass The name of the class with the transition defined
@@ -117,7 +126,9 @@ export default Mixin.create({
         let timeout = run.later(() => {
           this.removeClass(className, element);
           this.removeClass(activeClassName, element);
-          if (finishCallback) { finishCallback(); }
+          if (finishCallback) {
+            finishCallback();
+          }
         }, computeTimeout(element));
         this.transitionTimeouts.push(timeout);
       });
@@ -159,6 +170,7 @@ export default Mixin.create({
   },
 
   /**
+   * @public
    * Default placement of the cloned element when being destroyed.
    */
   addDestroyedElementClone(original, clone) {
@@ -170,11 +182,13 @@ export default Mixin.create({
   },
 
   /**
+   * @public
    * Called after transition in was done. Will always be called after didInsertElement.
    */
-  didTransitionIn: Ember.K,
+  didTransitionIn: K,
 
   /**
+   * @public
    * Called when the transition out is called.
    * @param clone The cloned jQuery element. Normally .remove() should be called to remove the element after transition is done.
    */
@@ -197,7 +211,9 @@ export default Mixin.create({
     this._observers = {};
     this.get('transitionTriggers').forEach((classExp) => {
       let [propName, className] = classExp.split(':');
-      if (!className) { className = Ember.String.dasherize(propName); }
+      if (!className) {
+        className = dasherize(propName);
+      }
 
       // create observer function
       this._observers[propName] = function() {
