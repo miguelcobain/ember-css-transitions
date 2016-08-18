@@ -121,6 +121,12 @@ export default Mixin.create({
       // add active class after repaint
       this.addClass(activeClassName, element);
 
+      // if we're animation a class removal
+      // we need to remove the class
+      if (animationType === 'remove') {
+        this.removeClass(transitionClass);
+      }
+
       // wait for ember to apply classes
       run.schedule('afterRender', () => {
         // set timeout for animation end
@@ -147,7 +153,7 @@ export default Mixin.create({
 
   willDestroyElement() {
     this._super(...arguments);
-    
+
     this._teardownTriggerObservers();
     this.transitionTimeouts.forEach((t) => clearTimeout(t));
 
@@ -216,9 +222,7 @@ export default Mixin.create({
           this.addClass(className, this.element);
           this.transition('add', className);
         } else {
-          this.transition('remove', className, () => {
-            this.removeClass(className, this.element);
-          });
+          this.transition('remove', className);
         }
       };
 
