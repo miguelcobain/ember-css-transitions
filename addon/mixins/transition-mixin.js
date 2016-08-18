@@ -1,22 +1,6 @@
 import Ember from 'ember';
 const { Mixin, RSVP, inject, computed, run, testing, $ } = Ember;
 
-const __DEV__ = Ember.environment === 'development';
-const NO_EVENT_TIMEOUT = 5000;
-var noEventListener = null,
-    EMPTY_ARRAY = [];
-
-if (__DEV__) {
-  noEventListener = function() {
-    Ember.Logger.warn(
-      'transition(): tried to perform an animation without ' +
-      'an animationend or transitionend event after timeout (' +
-      `${NO_EVENT_TIMEOUT}ms). You should either disable this` +
-      'transition in JS or add a CSS animation/transition.'
-    );
-  };
-}
-
 /**
  * T (period) = 1 / f (frequency)
  * TICK = 1 / 60hz = 0,01667s = 17ms
@@ -207,7 +191,7 @@ export default Mixin.create({
    * @default []
    * @public
    */
-  transitionTriggers: EMPTY_ARRAY,
+  transitionTriggers: [],
 
   _setupTriggerObservers() {
     this._observers = {};
