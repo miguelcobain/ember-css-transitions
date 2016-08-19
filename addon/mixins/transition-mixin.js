@@ -200,16 +200,16 @@ export default Mixin.create({
    * A list of properties that can control the transitions.  Functions just like
    * Ember.Component.classNameBindings, and can be formatted in the same way.
    *
-   * @property transitionTriggers
+   * @property transitionClassNameBindings
    * @type Array
    * @default []
    * @public
    */
-  transitionTriggers: [],
+  transitionClassNameBindings: [],
 
   _setupTriggerObservers() {
     this._observers = {};
-    this.get('transitionTriggers').forEach((classExp) => {
+    this.get('transitionClassNameBindings').forEach((classExp) => {
       let [propName, className] = classExp.split(':');
       if (!className) {
         className = dasherize(propName);
@@ -239,7 +239,7 @@ export default Mixin.create({
 
   _teardownTriggerObservers() {
     if (this._observers) {
-      this.get('transitionTriggers').forEach((classExp) => {
+      this.get('transitionClassNameBindings').forEach((classExp) => {
 
         let [propName] = classExp.split(':');
 
