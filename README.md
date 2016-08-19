@@ -53,7 +53,7 @@ If you use the `{{transition-group}}` component you can then do something like t
 `ember-css-transitions` will automatically manage the lifecycle of the css classes applied so that it makes the animation on `didInsertElement` and `willDestroyElement`.
 It adds `yourclass-enter` suffix and `yourclass-enter-active` when `didInsertElement` is applied. The same happens in `willDestroyElement` using `yourclass-leave` and `yourclass-leave-active`.
 
-## Animating class add/removal
+### Animating class add/removal
 
 Apart from the insert/destroy hooks for transitions, there is also an optional `transitionClassNameBindings` array
 that has the same syntax as `classNameBindings`, but also adds `*-add`, `*-add-active`, `*-remove` and `*-remove-active` to the
