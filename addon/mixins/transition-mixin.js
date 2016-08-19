@@ -13,11 +13,11 @@ const TICK = 17;
 
 /**
  * @public
- * This function performs some logic after a browser
- * repaint. While on testing, use a run-loop friendly equivalent.
- * This makes the tests work as expected.
+ * This function performs some logic after a browser repaint.
+ * While on testing or if raf not available, use a run-loop friendly equivalent.
+ * This also makes the tests work as expected.
  */
-export const rAF = testing ? function(fn) {
+export const rAF = testing || !window.requestAnimationFrame ? function(fn) {
   return run.later(fn, TICK);
 } : window.requestAnimationFrame;
 
