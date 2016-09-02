@@ -114,7 +114,7 @@ export default Mixin.create({
       // add active class after repaint
       this.addClass(activeClassName, element);
 
-      // if we're animation a class removal
+      // if we're animating a class removal
       // we need to remove the class
       if (animationType === 'remove') {
         this.removeClass(transitionClass);
