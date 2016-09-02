@@ -1,7 +1,7 @@
 {
   "name": "ember-css-transitions",
   "version": "0.1.4",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Ember implementation of CSS Transitions. Just like ng-animate and react animation but for Ember.",
   "directories": {
     "doc": "doc",
     "test": "tests"
