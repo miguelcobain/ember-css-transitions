@@ -36,6 +36,11 @@ export function nextTick() {
   });
 }
 
+/**
+ * @private
+ * Computes the time a css animation will take.
+ * Uses `getComputedStyle` to get durations and delays.
+ */
 function computeTimeout(element) {
   let {
     transitionDuration,
@@ -57,6 +62,11 @@ function computeTimeout(element) {
   return (maxDelay + maxDuration) * 1000;
 }
 
+/**
+ * @public
+ * @class TransitionMixin
+ * @extends Ember.Mixin
+ */
 export default Mixin.create({
 
   classNameBindings: ['joinedTransitionClasses'],
