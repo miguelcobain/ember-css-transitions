@@ -148,10 +148,10 @@ export default Mixin.create({
   didInsertElement() {
     this._super(...arguments);
 
-    let transitionClass = this.get('transitionClass');
+    let transitionClass = this.get('transitionName');
     if (transitionClass) {
       run.schedule('afterRender', () => {
-        this.transition('enter', this.get('transitionClass'), this.didTransitionIn);
+        this.transition('enter', transitionClass, this.didTransitionIn);
       });
     }
   },
@@ -162,7 +162,7 @@ export default Mixin.create({
     this._teardownTriggerObservers();
     this.transitionTimeouts.forEach((t) => clearTimeout(t));
 
-    let transitionClass = this.get('transitionClass');
+    let transitionClass = this.get('transitionName');
     if (transitionClass) {
       // We can't stop ember from removing the element
       // so we clone the element to animate it out
