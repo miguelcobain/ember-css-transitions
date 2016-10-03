@@ -1,12 +1,13 @@
 import Ember from 'ember';
+const { Route } = Ember;
 
-export default Ember.Route.extend({
+export default Route.extend({
   actions: {
-    toggleShow: function () {
+    toggleShow() {
       this.controller.set('show', !this.controller.get('show'));
     },
 
-    toggleShow2: function () {
+    toggleShow2() {
       this.controller.set('show2', !this.controller.get('show2'));
     },
 

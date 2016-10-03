@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import TransitionMixin from 'ember-css-transitions/mixins/transition-mixin';
+const { Component } = Ember;
 
-export default Ember.Component.extend(TransitionMixin, {
-  transitionTriggers: ['closed:is-closed'],
+export default Component.extend(TransitionMixin, {
+  transitionClassNameBindings: ['closed:is-closed'],
   closed: false
 });

@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import TransitionMixin from '../mixins/transition-mixin';
+const { Component } = Ember;
 
-
-export default Ember.Component.extend(TransitionMixin, {
-  tagName: 'div'
+export default Component.extend(TransitionMixin, {
 });

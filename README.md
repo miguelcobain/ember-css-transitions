@@ -37,36 +37,39 @@ Animations are completely based on CSS classes. As long as you have a CSS class 
 }
 ```
 
-There are two ways of defining transitions,
-And if you use the `{{transition-group}}` component you can then do something like this ( there is also a mixin you can use for custom components):
+### Animating insert and destroy
+
+There are two ways of defining enter/leave transitions,
+If you use the `{{transition-group}}` component you can then do something like this ( there is also a mixin you can use for custom components):
 
 ```handlebars
 {{#if shouldShowThis}}
-    {{#transition-group transition-class="example"}}
-        This is animated in.
-    {{/transition-group}}
+  {{#transition-group transitionName="example"}}
+    This is animated in.
+  {{/transition-group}}
 {{/if}}
 ```
 
-`ember-css-transitions` will automatically manage the lifecycle of the css classes applied so that it makes the animation on `didInsertElement` and `willDestroyElement`. It adds `enter` suffix and `enter-active` when `didInsertElement` is applied. The same for `willDestroyElement`, but then it adds `yourclass-leave` and `yourclass-leave-active`.
+`ember-css-transitions` will automatically manage the lifecycle of the css classes applied so that it makes the animation on `didInsertElement` and `willDestroyElement`.
+It adds `yourclass-enter` suffix and `yourclass-enter-active` when `didInsertElement` is applied. The same happens in `willDestroyElement` using `yourclass-leave` and `yourclass-leave-active`.
 
-## Transition Classes
+### Animating class add/removal
 
-Apart from the insert/destroy hooks for transitions, there is also an optional `transitionClasses` array
-that has similar syntax to `classNameBindings`, but also adds `*-add`, `*-remove` and `*-active` to the
+Apart from the insert/destroy hooks for transitions, there is also an optional `transitionClassNameBindings` array
+that has the same syntax as `classNameBindings`, but also adds `*-add`, `*-add-active`, `*-remove` and `*-remove-active` to the
 classes that you specify based on their transition time.
 
 ```js
-transitionClasses: ['isOpen', 'pinned:is-pinned']
+transitionClassNameBindings: ['isOpen', 'pinned:is-pinned']
 ```
 
 The above example will add the other classes for the two base classes, i.e. `.is-open` and `.is-pinned`.
 
-For example and docs, see: [http://peec.github.io/ember-css-transitions/](http://peec.github.io/ember-css-transitions/)
+For more examples and docs, see: [http://peec.github.io/ember-css-transitions/](http://peec.github.io/ember-css-transitions/)
 
 ## Install
 
-Install it is simple:
+Run:
 
 ```
 ember install ember-css-transitions
@@ -78,8 +81,6 @@ ember install ember-css-transitions
 ```
 ember install ember-cli-autoprefixer
 ```
-
-
 
 ## Tested in the following browsers / platforms:
 
@@ -94,17 +95,14 @@ ember install ember-cli-autoprefixer
 
 Note: **IE9** does not support CSS3 transitions / animations. They must live with no animations / transitions.
 
-
-## Installation
+## Contribute
 
 * `git clone` this repository
 * `npm install`
 * `bower install`
-
-## Running
-
 * `ember server`
 * Visit your app at http://localhost:4200.
+* Create PR/issue!
 
 ## Running Tests
 

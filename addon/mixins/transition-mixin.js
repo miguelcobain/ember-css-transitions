@@ -1,23 +1,72 @@
 import Ember from 'ember';
-const { Mixin, inject, computed, run } = Ember;
+const {
+  Mixin, RSVP, inject, computed, run, testing, $, A, K,
+  String: { dasherize }
+} = Ember;
 
-const __DEV__ = Ember.environment === 'development';
+/**
+ * @private
+ * T (period) = 1 / f (frequency)
+ * TICK = 1 / 60hz = 0,01667s = 17ms
+ */
 const TICK = 17;
-const NO_EVENT_TIMEOUT = 5000;
-var noEventListener = null,
-    EMPTY_ARRAY = [];
 
-if (__DEV__) {
-  noEventListener = function() {
-    Ember.Logger.warn(
-      'transition(): tried to perform an animation without ' +
-      'an animationend or transitionend event after timeout (' +
-      `${NO_EVENT_TIMEOUT}ms). You should either disable this` +
-      'transition in JS or add a CSS animation/transition.'
-    );
-  };
+/**
+ * @public
+ * This function performs some logic after a browser repaint.
+ * While on testing or if raf not available, use a run-loop friendly equivalent.
+ * This also makes the tests work as expected.
+ */
+export const rAF = testing || !window.requestAnimationFrame ? function(fn) {
+  return run.later(fn, TICK);
+} : window.requestAnimationFrame;
+
+/**
+ * @public
+ * Performs some logic after DOM changes have been flushed
+ * and after a browser repaint.
+ */
+export function nextTick() {
+  return new RSVP.Promise((resolve) => {
+    run.schedule('afterRender', () => {
+      rAF(() => {
+        resolve();
+      });
+    });
+  });
 }
 
+/**
+ * @private
+ * Computes the time a css animation will take.
+ * Uses `getComputedStyle` to get durations and delays.
+ */
+function computeTimeout(element) {
+  let {
+    transitionDuration,
+    transitionDelay,
+    animationDuration,
+    animationDelay,
+    animationIterationCount
+  } = window.getComputedStyle(element);
+
+  // `getComputedStyle` returns durations and delays in the Xs format.
+  // Conveniently if `parseFloat` encounters a character other than a sign (+ or -),
+  // numeral (0-9), a decimal point, or an exponent, it returns the value up to that point
+  // and ignores that character and all succeeding characters.
+
+  let maxDelay = Math.max(parseFloat(animationDelay), parseFloat(transitionDelay));
+  let maxDuration = Math.max(parseFloat(animationDuration) *
+    parseFloat(animationIterationCount), parseFloat(transitionDuration));
+
+  return (maxDelay + maxDuration) * 1000;
+}
+
+/**
+ * @public
+ * @class TransitionMixin
+ * @extends Ember.Mixin
+ */
 export default Mixin.create({
 
   classNameBindings: ['joinedTransitionClasses'],
@@ -26,203 +75,164 @@ export default Mixin.create({
     return this.get('transitionClasses').join(' ');
   }),
 
-  addClass(className, $element) {
+  addClass(className, element) {
     if (!this.get('isDestroying')) {
-      run(() => {
-        this.get('transitionClasses').addObject(className);
-      });
+      this.get('transitionClasses').addObject(className);
     } else {
-      $element.addClass(className);
+      $(element).addClass(className);
     }
   },
 
-  removeClass(className, $element) {
+  removeClass(className, element) {
     if (!this.get('isDestroying')) {
-      run(() => {
-        this.get('transitionClasses').removeObject(className);
-      });
+      this.get('transitionClasses').removeObject(className);
     } else {
-      $element.removeClass(className);
+      $(element).removeClass(className);
     }
   },
 
   transitionEvents: inject.service('transition-events'),
 
-  shouldTransition: computed.bool('transitionClass'),
-
   'transition-class': computed.alias('transitionClass'),
+  transitionName: computed.alias('transitionClass'),
 
   init() {
     this._super(...arguments);
-    this.classNameQueue = [];
-    this.transitionClasses = Ember.A();
+    this.transitionClasses = A();
+    this.transitionTimeouts = [];
     this._setupTriggerObservers();
   },
 
   /**
-   * Transitions a DOMElement.
-   * @param DOMElement node Dom node to add transition classes to.
+   * @private
+   * Transitions the element.
    * @param animationType The animation type, e.g. "enter" or "leave".
-   * @param finishCallback The callback to use when transition was finished.
+   * @param transitionClass The name of the class with the transition defined
+   * @return Promise
    */
-  transitionDomNode(node, transitionClass, animationType, finishCallback) {
-    let $element = Ember.$(node);
+  transition(animationType, transitionClass, finishCallback) {
+    // we may need to animate the clone if the element was destroyed
+    let element = this.clone ? this.clone.get(0) : this.element;
 
-    if (!node) {
-      if (finishCallback) {
-        finishCallback();
+    let className = `${transitionClass}-${animationType}`;
+    let activeClassName = `${className}-active`;
+
+    // add first class right away
+    this.addClass(className, element);
+
+    nextTick().then(() => {
+      // add active class after repaint
+      this.addClass(activeClassName, element);
+
+      // if we're animating a class removal
+      // we need to remove the class
+      if (animationType === 'remove') {
+        this.removeClass(transitionClass);
       }
-      return;
-    }
 
-    var className = transitionClass + '-' + animationType;
-    var activeClassName = className + '-active';
-
-    var noEventTimeout = null;
-
-    var endListener = e => {
-      if (e && e.target !== node) { return; }
-      if (__DEV__) { clearTimeout(noEventTimeout); }
-
-      this.removeClass(className, $element);
-      this.removeClass(activeClassName, $element);
-
-      this.get('transitionEvents').removeEndEventListener(node, endListener);
-
-      // Usually this optional callback is used for informing an owner of
-      // a leave animation and telling it to remove the child.
-      if (finishCallback) {
-        finishCallback();
-      }
-    };
-
-    this.get('transitionEvents').addEndEventListener(node, endListener);
-
-    this.addClass(className, $element);
-
-    // Need to do this to actually trigger a transition.
-    this.queueClass($element, activeClassName);
-
-    if (animationType === 'remove') {
-      this.queueClass($element, transitionClass, 'remove');
-    }
-
-    if (__DEV__) {
-      noEventTimeout = setTimeout(noEventListener, NO_EVENT_TIMEOUT);
-    }
-  },
-
-  /**
-   * Queues a class on a jQuery Element.
-   * Sets a timeout based on TICK, after TICK is done it sets the classes on the $element.
-   * @param $element
-   * @param className
-   */
-  queueClass($element, className, op = 'add') {
-    this.classNameQueue.push({op, className});
-
-    if (!this.timeout) {
-      this.timeout = run.later(() => {
-        this.flushClassNameQueue($element);
-      }, TICK);
-    }
-  },
-
-  /**
-   * Flushes queued classes on the $element given and resets the timer.
-   * @param $element The element to apply classNameQueue on.
-   */
-  flushClassNameQueue($element) {
-    // Add classes one and one to ensure animation correctness: e.g.: x-enter, x-enter-active
-    this.classNameQueue.forEach(({className, op}) => {
-      if (op === 'add') {
-        this.addClass(className, $element);
-      } else if (op === 'remove') {
-        this.removeClass(className, $element);
-      }
+      // wait for ember to apply classes
+      run.schedule('afterRender', () => {
+        // set timeout for animation end
+        let timeout = run.later(() => {
+          this.removeClass(className, element);
+          this.removeClass(activeClassName, element);
+          if (finishCallback) {
+            finishCallback();
+          }
+        }, computeTimeout(element));
+        this.transitionTimeouts.push(timeout);
+      });
     });
-    this.classNameQueue = [];
-    this.timeout = null;
+  },
+
+  didInsertElement() {
+    this._super(...arguments);
+
+    let transitionClass = this.get('transitionName');
+    if (transitionClass) {
+      run.schedule('afterRender', () => {
+        this.transition('enter', transitionClass, this.didTransitionIn);
+      });
+    }
   },
 
   willDestroyElement() {
+    this._super(...arguments);
+
     this._teardownTriggerObservers();
-    if (this.get('shouldTransition')) {
-      if (this.timeout) {
-        run.cancel(this.timeout);
-      }
-      // This is currently the only way of doing this (since willDestroyElement is not promise based).
-      var clone = this.$().clone();
-      var parent = this.$().parent();
-      var idx = parent.children().index(this.$());
-      run.scheduleOnce('afterRender', () => {
-        this.addDestroyedElementClone(parent, idx, clone);
-        this.transitionDomNode(clone[0], this.get('transitionClass'), 'leave', () => {
-          this.didTransitionOut(clone);
+    this.transitionTimeouts.forEach((t) => clearTimeout(t));
+
+    let transitionClass = this.get('transitionName');
+    if (transitionClass) {
+      // We can't stop ember from removing the element
+      // so we clone the element to animate it out
+      let clone = this.clone = this.$().clone();
+      clone.attr('id', `${this.elementId}_clone`);
+      this.addDestroyedElementClone(this.$(), clone);
+
+      nextTick().then(() => {
+        this.transition('leave', transitionClass, () => {
+          this.didTransitionOut();
+          delete this.clone;
         });
       });
     }
   },
 
   /**
-   * Default placement  of the cloned element when being destroyed.
+   * @public
+   * Default placement of the cloned element when being destroyed.
    */
-  addDestroyedElementClone(parent, idx, clone) {
-    if (idx === 0) {
-      parent.prepend(clone);
+  addDestroyedElementClone(original, clone) {
+    if (original.prev().length) {
+      original.prev().after(clone);
     } else {
-      Ember.$(parent.children()[idx - 1]).after(clone);
+      original.parent().prepend(clone);
     }
   },
 
   /**
+   * @public
    * Called after transition in was done. Will always be called after didInsertElement.
    */
-  didTransitionIn: Ember.K,
+  didTransitionIn: K,
 
   /**
+   * @public
    * Called when the transition out is called.
    * @param clone The cloned jQuery element. Normally .remove() should be called to remove the element after transition is done.
    */
-  didTransitionOut(clone) {
-    clone.remove();
-  },
-
-  didInsertElement() {
-    if (this.get('shouldTransition')) {
-      run.scheduleOnce('afterRender', () => {
-        this.transitionDomNode(this.get('element'), this.get('transitionClass'), 'enter', this.didTransitionIn);
-      });
-    }
+  didTransitionOut() {
+    this.clone.remove();
   },
 
   /**
    * A list of properties that can control the transitions.  Functions just like
    * Ember.Component.classNameBindings, and can be formatted in the same way.
    *
-   * @property transitionTriggers
+   * @property transitionClassNameBindings
    * @type Array
    * @default []
    * @public
    */
-  transitionTriggers: EMPTY_ARRAY,
+  transitionClassNameBindings: [],
 
   _setupTriggerObservers() {
     this._observers = {};
-    this.get('transitionTriggers').forEach((classExp) => {
+    this.get('transitionClassNameBindings').forEach((classExp) => {
       let [propName, className] = classExp.split(':');
-      if (!className) { className = Ember.String.dasherize(propName); }
+      if (!className) {
+        className = dasherize(propName);
+      }
 
       // create observer function
       this._observers[propName] = function() {
         let value = this.get(propName);
         if (value) {
-          this.addClass(className, this.$());
-          this.transitionDomNode(this.get('element'), className, 'add');
+          this.addClass(className, this.element);
+          this.transition('add', className);
         } else {
-          this.transitionDomNode(this.get('element'), className, 'remove', () => {
-            this.removeClass(className, this.$());
-          });
+          this.transition('remove', className);
         }
       };
 
@@ -239,7 +249,7 @@ export default Mixin.create({
 
   _teardownTriggerObservers() {
     if (this._observers) {
-      this.get('transitionTriggers').forEach((classExp) => {
+      this.get('transitionClassNameBindings').forEach((classExp) => {
 
         let [propName] = classExp.split(':');
 
