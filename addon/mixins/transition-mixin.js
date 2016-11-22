@@ -1,6 +1,6 @@
 import Ember from 'ember';
 const {
-  Mixin, RSVP, inject, computed, run, testing, $, A, K,
+  Mixin, RSVP, inject, computed, run, testing, $, A,
   String: { dasherize }
 } = Ember;
 
@@ -195,7 +195,7 @@ export default Mixin.create({
    * @public
    * Called after transition in was done. Will always be called after didInsertElement.
    */
-  didTransitionIn: K,
+  didTransitionIn() { },
 
   /**
    * @public
