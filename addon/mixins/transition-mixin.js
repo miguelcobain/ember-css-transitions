@@ -41,7 +41,7 @@ export function nextTick() {
  * Computes the time a css animation will take.
  * Uses `getComputedStyle` to get durations and delays.
  */
-function computeTimeout(element) {
+export function computeTimeout(element) {
   let {
     transitionDuration,
     transitionDelay,
