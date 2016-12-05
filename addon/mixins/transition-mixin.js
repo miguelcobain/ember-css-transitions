@@ -139,7 +139,7 @@ export default Mixin.create({
           if (finishCallback) {
             finishCallback();
           }
-        }, computeTimeout(element));
+        }, computeTimeout(element) || 0);
         this.transitionTimeouts.push(timeout);
       });
     });
