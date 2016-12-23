@@ -1,6 +1,6 @@
 import Ember from 'ember';
 const {
-  Mixin, RSVP, inject, computed, run, testing, $, A,
+  Mixin, RSVP, computed, run, testing, $, A,
   String: { dasherize }
 } = Ember;
 
@@ -90,8 +90,6 @@ export default Mixin.create({
       $(element).removeClass(className);
     }
   },
-
-  transitionEvents: inject.service('transition-events'),
 
   'transition-class': computed.alias('transitionClass'),
   transitionName: computed.alias('transitionClass'),
