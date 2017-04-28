@@ -23,6 +23,16 @@ export const rAF = testing || !window.requestAnimationFrame ? function(fn) {
 
 /**
  * @public
+ * This function is the counterpart of rAF. It will cancel a previously
+ * scheduled task with rAF. If on testing or when rAF isn't available
+ * we default to `run.cancel`.
+ */
+export const cAF = testing || !window.cancelAnimationFrame ? function(requestID) {
+  return run.cancel(requestID);
+} : window.cancelAnimationFrame;
+
+/**
+ * @public
  * Performs some logic after DOM changes have been flushed
  * and after a browser repaint.
  */
