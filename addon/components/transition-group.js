@@ -1,6 +1,5 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import TransitionMixin from '../mixins/transition-mixin';
-const { Component } = Ember;
 
 export default Component.extend(TransitionMixin, {
 });

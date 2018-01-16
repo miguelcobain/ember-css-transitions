@@ -1,7 +1,14 @@
+import { alias } from '@ember/object/computed';
+import Mixin from '@ember/object/mixin';
+import RSVP from 'rsvp';
+import { computed } from '@ember/object';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
+import { A } from '@ember/array';
+import { dasherize } from '@ember/string';
 import Ember from 'ember';
 const {
-  Mixin, RSVP, computed, run, testing, $, A,
-  String: { dasherize }
+  testing
 } = Ember;
 
 /**
@@ -101,8 +108,8 @@ export default Mixin.create({
     }
   },
 
-  'transition-class': computed.alias('transitionClass'),
-  transitionName: computed.alias('transitionClass'),
+  'transition-class': alias('transitionClass'),
+  transitionName: alias('transitionClass'),
 
   init() {
     this._super(...arguments);
