@@ -3,7 +3,6 @@ import Mixin from '@ember/object/mixin';
 import RSVP from 'rsvp';
 import { computed } from '@ember/object';
 import { run } from '@ember/runloop';
-import $ from 'jquery';
 import { A } from '@ember/array';
 import { dasherize } from '@ember/string';
 import Ember from 'ember';
@@ -96,7 +95,7 @@ export default Mixin.create({
     if (!this.get('isDestroying')) {
       this.get('transitionClasses').addObject(className);
     } else {
-      $(element).addClass(className);
+      element.classList.add(className);
     }
   },
 
@@ -104,7 +103,7 @@ export default Mixin.create({
     if (!this.get('isDestroying')) {
       this.get('transitionClasses').removeObject(className);
     } else {
-      $(element).removeClass(className);
+      element.classList.remove(className);
     }
   },
 
@@ -127,7 +126,7 @@ export default Mixin.create({
    */
   transition(animationType, transitionClass, finishCallback) {
     // we may need to animate the clone if the element was destroyed
-    let element = this.clone ? this.clone.get(0) : this.element;
+    let element = this.clone || this.element;
 
     let className = `${transitionClass}-${animationType}`;
     let activeClassName = `${className}-active`;
@@ -181,9 +180,11 @@ export default Mixin.create({
     if (transitionClass) {
       // We can't stop ember from removing the element
       // so we clone the element to animate it out
-      let clone = this.clone = this.$().clone();
-      clone.attr('id', `${this.elementId}_clone`);
-      this.addDestroyedElementClone(this.$(), clone);
+      let clone = this.clone = this.element.cloneNode(true);
+
+      clone.setAttribute('id', `${this.elementId}_clone`);
+
+      this.addDestroyedElementClone(this.element, clone);
 
       nextTick().then(() => {
         this.transition('leave', transitionClass, () => {
@@ -199,10 +200,11 @@ export default Mixin.create({
    * Default placement of the cloned element when being destroyed.
    */
   addDestroyedElementClone(original, clone) {
-    if (original.prev().length) {
-      original.prev().after(clone);
+    if (original.previousElementSibling) {
+      original.insertAdjacentElement('afterend', clone);
     } else {
-      original.parent().prepend(clone);
+      const parent = original.parentNode;
+      parent.insertBefore(clone, parent.firstChild);
     }
   },
 
