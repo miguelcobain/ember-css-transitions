@@ -217,10 +217,13 @@ export default Mixin.create({
   /**
    * @public
    * Called when the transition out is called.
-   * @param clone The cloned jQuery element. Normally .remove() should be called to remove the element after transition is done.
+   * Call removeChild() from parentNode for IE11 support
+   * @param clone The cloned element. Should be called to remove the element after transition is done.
    */
   didTransitionOut() {
-    this.clone.remove();
+    if (this.clone.parentNode !== null) {
+      this.clone.parentNode.removeChild(this.clone);
+    }
   },
 
   /**
