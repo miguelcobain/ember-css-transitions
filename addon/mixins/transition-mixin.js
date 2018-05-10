@@ -110,13 +110,6 @@ export default Mixin.create({
   'transition-class': alias('transitionClass'),
   transitionName: alias('transitionClass'),
 
-  init() {
-    this._super(...arguments);
-    this.transitionClasses = A();
-    this.transitionTimeouts = [];
-    this._setupTriggerObservers();
-  },
-
   /**
    * @private
    * Transitions the element.
@@ -157,6 +150,22 @@ export default Mixin.create({
         this.transitionTimeouts.push(timeout);
       });
     });
+  },
+
+  init() {
+    this._super(...arguments);
+
+    let transitionClass = this.get('transitionName');
+    if (transitionClass) {
+      let animationType = 'enter';
+      let className = `${transitionClass}-${animationType}`;
+      this.transitionClasses = A([className]);
+    } else {
+      this.transitionClasses = A();
+    }
+
+    this.transitionTimeouts = [];
+    this._setupTriggerObservers();
   },
 
   didInsertElement() {
