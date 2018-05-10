@@ -1,14 +1,13 @@
-import { alias } from '@ember/object/computed';
 import Mixin from '@ember/object/mixin';
 import RSVP from 'rsvp';
 import { computed } from '@ember/object';
-import { run } from '@ember/runloop';
+import { alias } from '@ember/object/computed';
+import { later, cancel, schedule } from '@ember/runloop';
 import { A } from '@ember/array';
 import { dasherize } from '@ember/string';
 import Ember from 'ember';
-const {
-  testing
-} = Ember;
+
+const { testing } = Ember;
 
 /**
  * @private
@@ -24,7 +23,7 @@ const TICK = 17;
  * This also makes the tests work as expected.
  */
 export const rAF = testing || !window.requestAnimationFrame ? function(fn) {
-  return run.later(fn, TICK);
+  return later(fn, TICK);
 } : window.requestAnimationFrame;
 
 /**
@@ -34,7 +33,7 @@ export const rAF = testing || !window.requestAnimationFrame ? function(fn) {
  * we default to `run.cancel`.
  */
 export const cAF = testing || !window.cancelAnimationFrame ? function(requestID) {
-  return run.cancel(requestID);
+  return cancel(requestID);
 } : window.cancelAnimationFrame;
 
 /**
@@ -44,7 +43,7 @@ export const cAF = testing || !window.cancelAnimationFrame ? function(requestID)
  */
 export function nextTick() {
   return new RSVP.Promise((resolve) => {
-    run.schedule('afterRender', () => {
+    schedule('afterRender', () => {
       rAF(() => {
         resolve();
       });
@@ -138,9 +137,9 @@ export default Mixin.create({
       }
 
       // wait for ember to apply classes
-      run.schedule('afterRender', () => {
+      schedule('afterRender', () => {
         // set timeout for animation end
-        let timeout = run.later(() => {
+        let timeout = later(() => {
           this.removeClass(className, element);
           this.removeClass(activeClassName, element);
           if (finishCallback) {
@@ -173,7 +172,7 @@ export default Mixin.create({
 
     let transitionClass = this.get('transitionName');
     if (transitionClass) {
-      run.schedule('afterRender', () => {
+      schedule('afterRender', () => {
         this.transition('enter', transitionClass, this.didTransitionIn);
       });
     }
