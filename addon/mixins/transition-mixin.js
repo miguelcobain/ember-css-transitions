@@ -200,12 +200,7 @@ export default Mixin.create({
    * Default placement of the cloned element when being destroyed.
    */
   addDestroyedElementClone(original, clone) {
-    if (original.previousElementSibling) {
-      original.insertAdjacentElement('afterend', clone);
-    } else {
-      const parent = original.parentNode;
-      parent.insertBefore(clone, parent.firstChild);
-    }
+    original.parentNode.insertBefore(clone, original.nextElementSibling);
   },
 
   /**
