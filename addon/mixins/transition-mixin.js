@@ -133,7 +133,7 @@ export default Mixin.create({
       // if we're animating a class removal
       // we need to remove the class
       if (animationType === 'remove') {
-        this.removeClass(transitionClass);
+        this.removeClass(transitionClass, element);
       }
 
       // wait for ember to apply classes
