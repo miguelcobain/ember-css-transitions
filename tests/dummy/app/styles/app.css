@@ -1,42 +1,25 @@
 
 /*Example 1.*/
 
+/* BEGIN-SNIPPET demo-styles.css */
 .example-enter {
-  opacity: 0.01;
+  opacity: 0;
 }
 
 .example-enter.example-enter-active {
   opacity: 1;
-  transition: opacity .5s ease-in;
+  transition: opacity 0.5s ease-in;
 }
+
 .example-leave {
   opacity: 1;
 }
 
 .example-leave.example-leave-active {
-  opacity: 0.01;
-  transition: opacity .5s ease-in;
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
 }
-
-
-/*Example 2.*/
-
-.exampletwo-enter {
-  opacity: 0.01;
-}
-
-.exampletwo-enter.exampletwo-enter-active {
-  opacity: 1;
-  transition: opacity .5s ease-in;
-}
-.exampletwo-leave {
-  opacity: 1;
-}
-
-.exampletwo-leave.exampletwo-leave-active {
-  opacity: 0.01;
-  transition: opacity .5s ease-in;
-}
+/* END-SNIPPET */
 
 /* CSS add/remove example */
 

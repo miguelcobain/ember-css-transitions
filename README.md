@@ -103,6 +103,7 @@ Note: **IE9** does not support CSS3 transitions / animations. They must live wit
 
 ### Linting
 
+* `npm run lint:hbs`
 * `npm run lint:js`
 * `npm run lint:js -- --fix`
 

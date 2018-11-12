@@ -127,6 +127,9 @@ export default Mixin.create({
     this.addClass(className, element);
 
     nextTick().then(() => {
+      // This is for to force a repaint,
+      // which is necessary in order to transition styles when adding a class name.
+      element.scrollTop;
       // add active class after repaint
       this.addClass(activeClassName, element);
 
