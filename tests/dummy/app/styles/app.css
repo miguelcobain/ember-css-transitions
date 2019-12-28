@@ -1,7 +1,4 @@
-
-/*Example 1.*/
-
-/* BEGIN-SNIPPET demo-styles.css */
+/* BEGIN-SNIPPET insert-destroy.css */
 .example-enter {
   opacity: 0;
 }
@@ -21,22 +18,19 @@
 }
 /* END-SNIPPET */
 
-/* CSS add/remove example */
-
-.is-closed-add, .is-closed-remove {
-  -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-  -moz-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-  -o-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+/* BEGIN-SNIPPET class-add-removal.css*/
+.is-important-add, .is-important-remove {
   transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
 }
 
-.is-closed,
-.is-closed-add.is-closed-add-active {
+.is-important,
+.is-important-add.is-important-add-active {
   color: red;
-  font-size: 3em;
+  font-size: 1.5em;
 }
 
-.is-closed-remove.is-closed-remove-active {
+.is-important-remove.is-important-remove-active {
   font-size: 1.0em;
   color: black;
 }
+/* END-SNIPPET */

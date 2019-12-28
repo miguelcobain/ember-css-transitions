@@ -8,8 +8,8 @@ const Router = AddonDocsRouter.extend({
 
 Router.map(function() {
   docsRoute(this, function() {
-    this.route('transition-group');
-    this.route('mixin');
+    this.route('insert-destroy');
+    this.route('add-removal');
   });
 });
 
