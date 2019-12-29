@@ -6,7 +6,7 @@ For this case, the `{{css-transition}}` modifier can animate adding and removing
 To do this you just need to pass in a named argument to the modifier, and it will use the argument name and apply
 the correct intermediate classes for animation based on the argument value.
 
-Let's look at one example:
+Let's look at an example of adding/removing an `is-important` class:
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="class-add-removal.hbs"}}

@@ -1,58 +1,42 @@
-import { later, cancel } from '@ember/runloop';
+import { later } from '@ember/runloop';
 import { Promise } from 'rsvp';
-import Ember from 'ember';
-
-// eslint-disable-next-line ember/no-ember-testing-in-module-scope
-const isTesting = Ember.testing;
 
 /**
- * @private
- * T (period) = 1 / f (frequency)
- * TICK = 1 / 60hz = 0,01667s = 17ms
- */
-const TICK = 17;
-
-/**
- * @public
- * This function performs some logic after a browser repaint.
- * While on testing or if raf not available, use a run-loop friendly equivalent.
- * This also makes the tests work as expected.
- */
-export const rAF = isTesting || !window.requestAnimationFrame ? function(fn) {
-  return later(fn, TICK);
-} : window.requestAnimationFrame;
-
-/**
- * @public
- * This function is the counterpart of rAF. It will cancel a previously
- * scheduled task with rAF. If on testing or when rAF isn't available
- * we default to `run.cancel`.
- */
-export const cAF = isTesting || !window.cancelAnimationFrame ? function(requestID) {
-  return cancel(requestID);
-} : window.cancelAnimationFrame;
-
-/**
- * @public
- * Performs some logic after DOM changes have been flushed
- * and after a browser repaint.
+ * Function that returns a promise that resolves after after DOM changes
+ * have been flushed and after a browser repaint.
+ *
+ * @function nextTick
+ * @export nextTick
+ * @return {Promise} the promise
  */
 export function nextTick() {
   return new Promise((resolve) => {
-    rAF(() => resolve());
-  });
-}
-
-export function sleep(time) {
-  return new Promise((resolve) => {
-    later(() => resolve(), time);
+    window.requestAnimationFrame(() => resolve());
   });
 }
 
 /**
- * @private
+ * Function that returns a promise that resolves after `ms` milliseconds.
+ *
+ * @function sleep
+ * @export sleep
+ * @param {number} ms number of milliseconds after which the promise will resolve
+ * @return {Promise} the promise that will resolve after `ms` milliseconds
+ */
+export function sleep(ms) {
+  return new Promise((resolve) => {
+    later(() => resolve(), ms);
+  });
+}
+
+/**
  * Computes the time a css animation will take.
  * Uses `getComputedStyle` to get durations and delays.
+ *
+ * @function computeTimeout
+ * @export computeTimeout
+ * @param {Element} element element used calculate the animation duration based on `getComputedStyle`
+ * @return {number} the calculated animation duration + delay
  */
 export function computeTimeout(element) {
   let {

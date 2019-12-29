@@ -17,8 +17,6 @@ Let's look at one example:
         <h1>Hello world</h1>
       </div>
     {{/if}}
-
-    
   {{/demo.example}}
 
   {{demo.snippet "insert-destroy.hbs"}}
