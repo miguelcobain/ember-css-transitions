@@ -47,11 +47,6 @@ jobs:
       script:
         - npm test
 
-    - stage: deploy
-      if: (branch = master OR tag IS present) AND type = push
-      env: NAME=deploy
-      script: node_modules/.bin/ember deploy production
-
     # we recommend new addons test the current and previous LTS
     # as well as latest stable release (bonus points to beta/canary)
     - env: EMBER_TRY_SCENARIO=ember-lts-3.8
