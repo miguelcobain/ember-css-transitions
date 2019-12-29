@@ -1,6 +1,6 @@
 {
   "name": "ember-css-transitions",
-  "version": "0.1.16",
+  "version": "1.0.0",
   "description": "Ember implementation of CSS Transitions. Just like ng-animate and react animation but for Ember.",
   "keywords": [
     "ember-addon",
