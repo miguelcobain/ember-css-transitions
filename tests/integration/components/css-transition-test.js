@@ -1,9 +1,8 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, find, waitFor, waitUntil } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { spy } from 'sinon';
-import { gte } from 'ember-compatibility-helpers';
 
 module('Integration | Component | transition group', function(hooks) {
   setupRenderingTest(hooks);
@@ -17,29 +16,25 @@ module('Integration | Component | transition group', function(hooks) {
         </div>
       {{/if}}
     `
+  }, {
+    name: 'classic component',
+    template: hbs`
+      {{#if this.show}}
+        <MyComponent id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+          <p class="content">Çup?</p>
+        </MyComponent>
+      {{/if}}
+    `
+  }, {
+    name: 'glimmer component',
+    template: hbs`
+      {{#if this.show}}
+        <GlimmerComponent id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+          <p class="content">Çup?</p>
+        </GlimmerComponent>
+      {{/if}}
+    `
   }];
-
-  if (gte('3.9.0')) {
-    testCases.push({
-      name: 'classic component',
-      template: hbs`
-        {{#if this.show}}
-          <MyComponent id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
-            <p class="content">Çup?</p>
-          </MyComponent>
-        {{/if}}
-      `
-    }, {
-      name: 'glimmer component',
-      template: hbs`
-        {{#if this.show}}
-          <GlimmerComponent id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
-            <p class="content">Çup?</p>
-          </GlimmerComponent>
-        {{/if}}
-      `
-    });
-  }
 
   testCases.forEach((i) => {
 
@@ -106,25 +101,21 @@ module('Integration | Component | transition group', function(hooks) {
         <p class="content">Çup?</p>
       </div>
     `
+  }, {
+    name: 'classic component',
+    template: hbs`
+      <MyComponent id="my-element" {{css-transition isImportant=this.isImportant didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+        <p class="content">Çup?</p>
+      </MyComponent>
+    `
+  }, {
+    name: 'glimmer component',
+    template: hbs`
+      <GlimmerComponent id="my-element" {{css-transition isImportant=this.isImportant didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+        <p class="content">Çup?</p>
+      </GlimmerComponent>
+    `
   }];
-
-  if (gte('3.9.0')) {
-    testCases.push({
-      name: 'classic component',
-      template: hbs`
-        <MyComponent id="my-element" {{css-transition isImportant=this.isImportant didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
-          <p class="content">Çup?</p>
-        </MyComponent>
-      `
-    }, {
-      name: 'glimmer component',
-      template: hbs`
-        <GlimmerComponent id="my-element" {{css-transition isImportant=this.isImportant didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
-          <p class="content">Çup?</p>
-        </GlimmerComponent>
-      `
-    });
-  }
 
   testCases.forEach((i) => {
 

@@ -37,35 +37,13 @@ Animations are completely based on CSS classes. As long as you have a CSS class 
 }
 ```
 
-### Animating insert and destroy
-
-There are two ways of defining enter/leave transitions,
-If you use the `{{transition-group}}` component you can then do something like this ( there is also a mixin you can use for custom components):
-
-```handlebars
-{{#if shouldShowThis}}
-  {{#transition-group transitionName="example"}}
-    This is animated in.
-  {{/transition-group}}
-{{/if}}
+```hbs
+<div {{css-transition "example"}}>
+  <h1>Hello world</h1>
+</div>
 ```
 
-`ember-css-transitions` will automatically manage the lifecycle of the css classes applied so that it makes the animation on `didInsertElement` and `willDestroyElement`.
-It adds `yourclass-enter` suffix and `yourclass-enter-active` when `didInsertElement` is applied. The same happens in `willDestroyElement` using `yourclass-leave` and `yourclass-leave-active`.
-
-### Animating class add/removal
-
-Apart from the insert/destroy hooks for transitions, there is also an optional `transitionClassNameBindings` array
-that has the same syntax as `classNameBindings`, but also adds `*-add`, `*-add-active`, `*-remove` and `*-remove-active` to the
-classes that you specify based on their transition time.
-
-```js
-transitionClassNameBindings: ['isOpen', 'pinned:is-pinned']
-```
-
-The above example will add the other classes for the two base classes, i.e. `.is-open` and `.is-pinned`.
-
-For more examples and docs, see: [http://peec.github.io/ember-css-transitions/](http://peec.github.io/ember-css-transitions/)
+Check out the homepage for more detailed documentation: [http://peec.github.io/ember-css-transitions/](http://peec.github.io/ember-css-transitions/)
 
 ## Install
 
@@ -76,7 +54,7 @@ ember install ember-css-transitions
 
 ```
 
-**Note** Installing ember-cli-autoprefixer is suggested for CSS transitions:
+**Note** Using ember-cli-autoprefixer is suggested for CSS transitions:
 
 ```
 ember install ember-cli-autoprefixer
