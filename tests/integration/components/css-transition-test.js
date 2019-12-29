@@ -19,7 +19,7 @@ module('Integration | Component | transition group', function(hooks) {
     `
   }];
 
-  if (gte('3.8.0')) {
+  if (gte('3.9.0')) {
     testCases.push({
       name: 'classic component',
       template: hbs`
@@ -108,7 +108,7 @@ module('Integration | Component | transition group', function(hooks) {
     `
   }];
 
-  if (gte('3.8.0')) {
+  if (gte('3.9.0')) {
     testCases.push({
       name: 'classic component',
       template: hbs`
