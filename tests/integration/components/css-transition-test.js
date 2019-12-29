@@ -3,11 +3,12 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, find, waitFor, waitUntil } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { spy } from 'sinon';
+import { gte } from 'ember-compatibility-helpers';
 
 module('Integration | Component | transition group', function(hooks) {
   setupRenderingTest(hooks);
 
-  [{
+  let testCases = [{
     name: 'element',
     template: hbs`
       {{#if this.show}}
@@ -16,25 +17,31 @@ module('Integration | Component | transition group', function(hooks) {
         </div>
       {{/if}}
     `
-  }, {
-    name: 'classic component',
-    template: hbs`
-      {{#if this.show}}
-        <MyComponent id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
-          <p class="content">Çup?</p>
-        </MyComponent>
-      {{/if}}
-    `
-  }, {
-    name: 'glimmer component',
-    template: hbs`
-      {{#if this.show}}
-        <GlimmerComponent id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
-          <p class="content">Çup?</p>
-        </GlimmerComponent>
-      {{/if}}
-    `
-  }].forEach((i) => {
+  }];
+
+  if (gte('3.8.0')) {
+    testCases.push({
+      name: 'classic component',
+      template: hbs`
+        {{#if this.show}}
+          <MyComponent id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+            <p class="content">Çup?</p>
+          </MyComponent>
+        {{/if}}
+      `
+    }, {
+      name: 'glimmer component',
+      template: hbs`
+        {{#if this.show}}
+          <GlimmerComponent id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+            <p class="content">Çup?</p>
+          </GlimmerComponent>
+        {{/if}}
+      `
+    });
+  }
+
+  testCases.forEach((i) => {
 
     test(`enter and leave transitions work (${i.name})`, async function(assert) {
       assert.expect(16);
@@ -92,28 +99,34 @@ module('Integration | Component | transition group', function(hooks) {
 
   });
 
-  [{
+  testCases = [{
     name: 'element',
     template: hbs`
       <div id="my-element" {{css-transition isImportant=this.isImportant didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
         <p class="content">Çup?</p>
       </div>
     `
-  }, {
-    name: 'classic component',
-    template: hbs`
-      <MyComponent id="my-element" {{css-transition isImportant=this.isImportant didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
-        <p class="content">Çup?</p>
-      </MyComponent>
-    `
-  }, {
-    name: 'glimmer component',
-    template: hbs`
-      <GlimmerComponent id="my-element" {{css-transition isImportant=this.isImportant didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
-        <p class="content">Çup?</p>
-      </GlimmerComponent>
-    `
-  }].forEach((i) => {
+  }];
+
+  if (gte('3.8.0')) {
+    testCases.push({
+      name: 'classic component',
+      template: hbs`
+        <MyComponent id="my-element" {{css-transition isImportant=this.isImportant didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+          <p class="content">Çup?</p>
+        </MyComponent>
+      `
+    }, {
+      name: 'glimmer component',
+      template: hbs`
+        <GlimmerComponent id="my-element" {{css-transition isImportant=this.isImportant didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+          <p class="content">Çup?</p>
+        </GlimmerComponent>
+      `
+    });
+  }
+
+  testCases.forEach((i) => {
 
     test(`add and remove transitions work (${i.name})`, async function(assert) {
       assert.expect(16);
