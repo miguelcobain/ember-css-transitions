@@ -16,5 +16,11 @@
     "name": "v0.1.16",
     "sha": "c6c9f7d666aa59939baa09c127dd16c35a01fd0e",
     "tag": "v0.1.16"
+  },
+  "master": {
+    "path": "versions/master",
+    "name": "master",
+    "sha": "58cb17880fa0d4495a7615ff6b8e687af9074ce8",
+    "tag": null
   }
 }
