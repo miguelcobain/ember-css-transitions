@@ -6,6 +6,9 @@ import { nextTick, sleep, computeTimeout } from 'ember-css-transitions/utils/tra
 export default class CssTransitionModifier extends Modifier {
 
   clone = null;
+  parentElement = null;
+  nextElementSibling = null;
+
 
   get el() {
     return this.clone || this.element;
@@ -32,6 +35,9 @@ export default class CssTransitionModifier extends Modifier {
         this.args.named.didTransitionIn();
       }
     }
+
+    this.parentElement = this.element.parentElement;
+    this.nextElementSibling = this.element.nextElementSibling;
   }
 
   async willRemove() {
@@ -107,11 +113,13 @@ export default class CssTransitionModifier extends Modifier {
    */
   addClone() {
     let original = this.element;
+    let parentElement = original.parentElement || this.parentElement;
+    let nextElementSibling = original.nextElementSibling || this.nextElementSibling;
     let clone = original.cloneNode(true);
 
     clone.setAttribute('id', `${original.id}_clone`);
 
-    original.parentNode.insertBefore(clone, original.nextElementSibling);
+    parentElement.insertBefore(clone, nextElementSibling);
 
     this.clone = clone;
   }

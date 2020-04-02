@@ -145,7 +145,7 @@ module('Integration | Component | transition group', function(hooks) {
   });
 
   test('can customize class while using the modifier', async function(assert) {
-    assert.expect(3);
+    assert.expect(12);
 
     this.set('isImportant', false);
 
@@ -155,14 +155,18 @@ module('Integration | Component | transition group', function(hooks) {
       </div>
     `);
 
-    assert.dom('#my-element').hasClass('some test classes', 'element has provided classes');
+    assert.dom('#my-element').hasClass('some', 'element has provided classes');
+    assert.dom('#my-element').hasClass('test', 'element has provided classes');
+    assert.dom('#my-element').hasClass('classes', 'element has provided classes');
     assert.dom('#my-element').doesNotHaveClass('is-important', 'still does not have transition class');
 
     this.set('isImportant', true);
 
     await waitFor('#my-element.is-important');
 
-    assert.dom('#my-element').hasClass('some test classes', 'element still has provided classes');
+    assert.dom('#my-element').hasClass('some', 'element still has provided classes');
+    assert.dom('#my-element').hasClass('test', 'element still has provided classes');
+    assert.dom('#my-element').hasClass('classes', 'element still has provided classes');
     assert.dom('#my-element').hasClass('is-important', 'element has transitioned class');
 
 
@@ -170,7 +174,9 @@ module('Integration | Component | transition group', function(hooks) {
 
     await waitFor('#my-element:not(.is-important)');
 
-    assert.dom('#my-element').hasClass('some test classes', 'element has provided classes');
+    assert.dom('#my-element').hasClass('some', 'element has provided classes');
+    assert.dom('#my-element').hasClass('test', 'element has provided classes');
+    assert.dom('#my-element').hasClass('classes', 'element has provided classes');
     assert.dom('#my-element').doesNotHaveClass('is-important', 'does not have transition class');
   });
 });
