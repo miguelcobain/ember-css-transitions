@@ -1,20 +1,24 @@
 /* BEGIN-SNIPPET insert-destroy.css */
 .example-enter {
   opacity: 0;
+  height: 0px;
 }
 
 .example-enter.example-enter-active {
   opacity: 1;
-  transition: opacity 0.5s ease-in;
+  height: 50px;
+  transition: all 0.5s ease-in;
 }
 
 .example-leave {
   opacity: 1;
+  height: 50px;
 }
 
 .example-leave.example-leave-active {
   opacity: 0;
-  transition: opacity 0.5s ease-in;
+  height: 0;
+  transition: all 0.5s ease-in;
 }
 /* END-SNIPPET */
 

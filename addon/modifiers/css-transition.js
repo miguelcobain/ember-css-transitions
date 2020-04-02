@@ -3,6 +3,20 @@ import { dasherize } from '@ember/string';
 
 import { nextTick, sleep, computeTimeout } from 'ember-css-transitions/utils/transition-utils';
 
+/**
+  Modifier that applies classes. Usage:
+
+  ```hbs
+  <div {{css-transition "example"}}>
+    <p>Hello world</p>
+  </div>
+  ```
+
+  @class CssTransitionModifier
+  @argument didTransitionIn
+  @argument didTransitionOut
+  @public
+*/
 export default class CssTransitionModifier extends Modifier {
 
   clone = null;
@@ -29,7 +43,7 @@ export default class CssTransitionModifier extends Modifier {
       this.addClass(className);
 
       await nextTick();
-      this.transition('enter', transitionClass);
+      await this.transition('enter', transitionClass);
 
       if (this.args.named.didTransitionIn) {
         this.args.named.didTransitionIn();
@@ -47,9 +61,9 @@ export default class CssTransitionModifier extends Modifier {
       // We can't stop ember from removing the element
       // so we clone the element to animate it out
       this.addClone();
-      await nextTick()
+      await nextTick();
 
-      await this.transition('leave', transitionClass)
+      await this.transition('leave', transitionClass);
 
       this.removeClone();
 
@@ -107,10 +121,6 @@ export default class CssTransitionModifier extends Modifier {
     }
   }
 
-  /**
-   * @public
-   * Default placement of the cloned element when being destroyed.
-   */
   addClone() {
     let original = this.element;
     let parentElement = original.parentElement || this.parentElement;
@@ -125,17 +135,19 @@ export default class CssTransitionModifier extends Modifier {
   }
 
   removeClone() {
-    if (this.clone.parentNode !== null) {
+    if (this.clone.isConnected && this.clone.parentNode !== null) {
       this.clone.parentNode.removeChild(this.clone);
     }
   }
 
   /**
-   * @private
    * Transitions the element.
-   * @param animationType The animation type, e.g. "enter" or "leave".
-   * @param transitionClass The name of the class with the transition defined
-   * @return Promise
+   *
+   * @private
+   * @method transition
+   * @param {String} animationType The animation type, e.g. "enter" or "leave".
+   * @param {String} transitionClass The name of the class with the transition defined
+   * @return {Promise}
    */
   async transition(animationType, transitionClass) {
     let element = this.el;

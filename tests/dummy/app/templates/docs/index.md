@@ -1,4 +1,4 @@
-# About
+# Introduction
 
 `ember-css-transitions` provides some utilities that help you define animations purely in CSS.
 

@@ -1,127 +1,177 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, find, waitFor, waitUntil } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { spy } from 'sinon';
 
 module('Integration | Component | transition group', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('enter and leave transitions work', async function(assert) {
-    assert.expect(16);
-
-    this.didTransitionIn = spy();
-    this.didTransitionOut = spy();
-
-    this.set('show', false);
-
-    await render(hbs`
+  let testCases = [{
+    name: 'element',
+    template: hbs`
       {{#if this.show}}
         <div id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
           <p class="content">Çup?</p>
         </div>
       {{/if}}
-    `);
+    `
+  }, {
+    name: 'classic component',
+    template: hbs`
+      {{#if this.show}}
+        <MyComponent id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+          <p class="content">Çup?</p>
+        </MyComponent>
+      {{/if}}
+    `
+  }, {
+    name: 'glimmer component',
+    template: hbs`
+      {{#if this.show}}
+        <GlimmerComponent id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+          <p class="content">Çup?</p>
+        </GlimmerComponent>
+      {{/if}}
+    `
+  }];
 
-    assert.dom('#my-element').doesNotExist('no element at first');
-    assert.ok(this.didTransitionIn.notCalled, 'didTransitionIn was not called');
-    assert.ok(this.didTransitionOut.notCalled, 'didTransitionOut was not called');
+  testCases.forEach((i) => {
 
-    this.set('show', true);
+    test(`enter and leave transitions work (${i.name})`, async function(assert) {
+      assert.expect(16);
 
-    assert.dom('#my-element').exists({ count: 1 }, 'element is rendered');
-    assert.dom('.content').exists({ count: 1 }, 'its contents as well');
+      this.didTransitionIn = spy();
+      this.didTransitionOut = spy();
 
-    assert.dom('#my-element').hasClass('example-enter', '-enter is immediately applied');
+      this.set('show', false);
 
-    await waitFor('#my-element.example-enter-active');
+      await render(i.template);
 
-    assert.dom('#my-element').hasClass('example-enter-active', '-enter-active is applied');
+      assert.dom('#my-element').doesNotExist('no element at first');
+      assert.ok(this.didTransitionIn.notCalled, 'didTransitionIn was not called');
+      assert.ok(this.didTransitionOut.notCalled, 'didTransitionOut was not called');
 
-    await waitFor('#my-element:not(.example-enter)');
+      this.set('show', true);
 
-    assert.dom('#my-element').doesNotHaveClass('example-enter', '-enter was removed');
+      assert.dom('#my-element').exists({ count: 1 }, 'element is rendered');
+      assert.dom('.content').exists({ count: 1 }, 'its contents as well');
 
-    assert.ok(this.didTransitionIn.calledOnce, 'didTransitionIn was called once');
-    assert.ok(this.didTransitionOut.notCalled, 'didTransitionOut was not called');
+      assert.dom('#my-element').hasClass('example-enter', '-enter is immediately applied');
 
-    this.set('show', false);
+      await waitFor('#my-element.example-enter-active');
 
-    await waitFor('#my-element_clone.example-leave');
+      assert.dom('#my-element').hasClass('example-enter-active', '-enter-active is applied');
 
-    assert.dom('#my-element_clone').hasClass('example-leave', '-leave is applied on clone');
+      await waitFor('#my-element:not(.example-enter)');
 
-    await waitFor('#my-element_clone.example-leave-active');
+      assert.dom('#my-element').doesNotHaveClass('example-enter', '-enter was removed');
 
-    assert.dom('#my-element_clone').hasClass('example-leave-active', '-leave-active is applied after `afterRender` and a browser repaint on clone');
+      assert.ok(this.didTransitionIn.calledOnce, 'didTransitionIn was called once');
+      assert.ok(this.didTransitionOut.notCalled, 'didTransitionOut was not called');
 
-    assert.dom('#my-element').doesNotExist('original element is not present');
+      this.set('show', false);
 
-    await waitUntil(() => {
-      return find('#my-element_clone') === null;
+      await waitFor('#my-element_clone.example-leave');
+
+      assert.dom('#my-element_clone').hasClass('example-leave', '-leave is applied on clone');
+
+      await waitFor('#my-element_clone.example-leave-active');
+
+      assert.dom('#my-element_clone').hasClass('example-leave-active', '-leave-active is applied after `afterRender` and a browser repaint on clone');
+
+      assert.dom('#my-element').doesNotExist('original element is not present');
+
+      await waitUntil(() => {
+        return find('#my-element_clone') === null;
+      });
+
+      assert.dom('#my-element_clone').doesNotExist('clone was removed');
+
+      assert.ok(this.didTransitionIn.calledOnce, 'didTransitionIn was called once');
+      assert.ok(this.didTransitionOut.calledOnce, 'didTransitionOut was called once');
     });
 
-    assert.dom('#my-element_clone').doesNotExist('clone was removed');
-
-    assert.ok(this.didTransitionIn.calledOnce, 'didTransitionIn was called once');
-    assert.ok(this.didTransitionOut.calledOnce, 'didTransitionOut was called once');
   });
 
-  test('add and remove transitions work', async function(assert) {
-    assert.expect(16);
-
-    this.didTransitionIn = spy();
-    this.didTransitionOut = spy();
-
-    this.set('isImportant', false);
-
-    await render(hbs`
+  testCases = [{
+    name: 'element',
+    template: hbs`
       <div id="my-element" {{css-transition isImportant=this.isImportant didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
         <p class="content">Çup?</p>
       </div>
-    `);
+    `
+  }, {
+    name: 'classic component',
+    template: hbs`
+      <MyComponent id="my-element" {{css-transition isImportant=this.isImportant didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+        <p class="content">Çup?</p>
+      </MyComponent>
+    `
+  }, {
+    name: 'glimmer component',
+    template: hbs`
+      <GlimmerComponent id="my-element" {{css-transition isImportant=this.isImportant didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+        <p class="content">Çup?</p>
+      </GlimmerComponent>
+    `
+  }];
 
-    assert.dom('#my-element').doesNotHaveClass('is-important', 'element doesn\'t have class');
+  testCases.forEach((i) => {
 
-    assert.ok(this.didTransitionIn.notCalled, 'didTransitionIn was not called');
-    assert.ok(this.didTransitionOut.notCalled, 'didTransitionOut was not called');
+    test(`add and remove transitions work (${i.name})`, async function(assert) {
+      assert.expect(16);
 
-    this.set('isImportant', true);
+      this.didTransitionIn = spy();
+      this.didTransitionOut = spy();
 
-    await waitFor('#my-element.is-important-add');
+      this.set('isImportant', false);
 
-    assert.dom('#my-element').hasClass('is-important-add', '-add is immediately applied');
+      await render(i.template);
 
-    await waitFor('#my-element.is-important-add-active');
+      assert.dom('#my-element').doesNotHaveClass('is-important', 'element doesn\'t have class');
 
-    // transition should be happening now
-    assert.dom('#my-element').hasClass('is-important-add-active', '-add-active is applied after `afterRender` and a browser repaint');
+      assert.ok(this.didTransitionIn.notCalled, 'didTransitionIn was not called');
+      assert.ok(this.didTransitionOut.notCalled, 'didTransitionOut was not called');
 
-    await waitFor('#my-element:not(.is-important-add)');
+      this.set('isImportant', true);
 
-    assert.dom('#my-element').doesNotHaveClass('is-important-add', '-add was removed');
-    assert.dom('#my-element').hasClass('is-important', 'class was added');
+      await waitFor('#my-element.is-important-add');
 
-    assert.ok(this.didTransitionIn.calledOnceWith('is-important'), 'didTransitionIn was called once with is-important');
-    assert.ok(this.didTransitionOut.notCalled, 'didTransitionOut was not called');
+      assert.dom('#my-element').hasClass('is-important-add', '-add is immediately applied');
 
-    this.set('isImportant', false);
+      await waitFor('#my-element.is-important-add-active');
 
-    assert.dom('#my-element').hasClass('is-important-remove', '-remove is applied');
+      // transition should be happening now
+      assert.dom('#my-element').hasClass('is-important-add-active', '-add-active is applied after `afterRender` and a browser repaint');
 
-    await waitFor('#my-element.is-important-remove-active');
+      await waitFor('#my-element:not(.is-important-add)');
 
-    assert.dom('#my-element').hasClass('is-important-remove-active', '-remove-active is applied after `afterRender` and a browser repaint on clone');
+      assert.dom('#my-element').doesNotHaveClass('is-important-add', '-add was removed');
+      assert.dom('#my-element').hasClass('is-important', 'class was added');
 
-    assert.dom('#my-element').doesNotHaveClass('is-important', 'class was removed');
+      assert.ok(this.didTransitionIn.calledOnceWith('is-important'), 'didTransitionIn was called once with is-important');
+      assert.ok(this.didTransitionOut.notCalled, 'didTransitionOut was not called');
 
-    await waitFor('#my-element:not(.is-important-remove)');
+      this.set('isImportant', false);
 
-    assert.dom('#my-element').doesNotHaveClass('is-important-remove', '-remove was removed');
-    assert.dom('#my-element').doesNotHaveClass('is-important-remove-active', '-remove-active was removed');
+      assert.dom('#my-element').hasClass('is-important-remove', '-remove is applied');
 
-    assert.ok(this.didTransitionIn.calledOnceWith('is-important'), 'didTransitionIn was called once with is-important');
-    assert.ok(this.didTransitionOut.calledOnceWith('is-important'), 'didTransitionOut was called once with is-important');
+      await waitFor('#my-element.is-important-remove-active');
+
+      assert.dom('#my-element').hasClass('is-important-remove-active', '-remove-active is applied after `afterRender` and a browser repaint on clone');
+
+      assert.dom('#my-element').doesNotHaveClass('is-important', 'class was removed');
+
+      await waitFor('#my-element:not(.is-important-remove)');
+
+      assert.dom('#my-element').doesNotHaveClass('is-important-remove', '-remove was removed');
+      assert.dom('#my-element').doesNotHaveClass('is-important-remove-active', '-remove-active was removed');
+
+      assert.ok(this.didTransitionIn.calledOnceWith('is-important'), 'didTransitionIn was called once with is-important');
+      assert.ok(this.didTransitionOut.calledOnceWith('is-important'), 'didTransitionOut was called once with is-important');
+    });
+
   });
 
   test('element should have class applied when provided value is true to start with', async function(assert) {
@@ -169,14 +219,13 @@ module('Integration | Component | transition group', function(hooks) {
     assert.dom('#my-element').hasClass('classes', 'element still has provided classes');
     assert.dom('#my-element').hasClass('is-important', 'element has transitioned class');
 
-
     this.set('isImportant', false);
 
     await waitFor('#my-element:not(.is-important)');
 
-    assert.dom('#my-element').hasClass('some', 'element has provided classes');
-    assert.dom('#my-element').hasClass('test', 'element has provided classes');
-    assert.dom('#my-element').hasClass('classes', 'element has provided classes');
+    assert.dom('#my-element').hasClass('some', 'element still has provided classes');
+    assert.dom('#my-element').hasClass('test', 'element still has provided classes');
+    assert.dom('#my-element').hasClass('classes', 'element still has provided classes');
     assert.dom('#my-element').doesNotHaveClass('is-important', 'does not have transition class');
   });
 });
