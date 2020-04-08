@@ -33,6 +33,10 @@ export default class CssTransitionModifier extends Modifier {
   }
 
   async didInstall() {
+    if (this.args.named.isEnabled === false) {
+      return;
+    }
+
     this.applyClasses();
 
     let transitionClass = this.transitionClass;
@@ -55,6 +59,10 @@ export default class CssTransitionModifier extends Modifier {
   }
 
   async willRemove() {
+    if (this.args.named.isEnabled === false) {
+      return;
+    }
+
     let transitionClass = this.transitionClass;
 
     if (transitionClass) {
@@ -77,7 +85,7 @@ export default class CssTransitionModifier extends Modifier {
 
   prev = {};
 
-  ignoredArgs = ['didTransitionIn', 'didTransitionOut'];
+  ignoredArgs = ['didTransitionIn', 'didTransitionOut', 'isEnabled'];
 
   get validArgs() {
     return Object.keys(this.args.named).filter(i => !this.ignoredArgs.includes(i));
@@ -95,6 +103,10 @@ export default class CssTransitionModifier extends Modifier {
   }
 
   async didUpdateArguments() {
+    if (this.args.named.isEnabled === false) {
+      return;
+    }
+
     for (let key of this.validArgs) {
       let prevValue = this.prev[key];
       let value = this.args.named[key];

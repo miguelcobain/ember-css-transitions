@@ -228,4 +228,30 @@ module('Integration | Component | transition group', function(hooks) {
     assert.dom('#my-element').hasClass('classes', 'element still has provided classes');
     assert.dom('#my-element').doesNotHaveClass('is-important', 'does not have transition class');
   });
+
+  test('can disable the modifier by using isEnabled=false', async function(assert) {
+    assert.expect(8);
+
+    this.set('isImportant', false);
+
+    await render(hbs`
+      <div id="my-element" class="some test classes" {{css-transition isEnabled=false isImportant=this.isImportant}}>
+        <p class="content">Çup?</p>
+      </div>
+    `);
+
+    assert.dom('#my-element').hasClass('some', 'element has provided classes');
+    assert.dom('#my-element').hasClass('test', 'element has provided classes');
+    assert.dom('#my-element').hasClass('classes', 'element has provided classes');
+    assert.dom('#my-element').doesNotHaveClass('is-important', 'still does not have transition class');
+
+    this.set('isImportant', true);
+
+    await waitFor('#my-element:not(.is-important)');
+
+    assert.dom('#my-element').hasClass('some', 'element still has provided classes');
+    assert.dom('#my-element').hasClass('test', 'element still has provided classes');
+    assert.dom('#my-element').hasClass('classes', 'element still has provided classes');
+    assert.dom('#my-element').doesNotHaveClass('is-important', 'does not have transition class');
+  });
 });
