@@ -15,7 +15,8 @@ Here is a simple example that uses both:
 
     {{#if this.show}}
       <div
-        {{css-transition "example"
+        {{css-transition
+          name="example"
           didTransitionIn=this.didTransitionIn
           didTransitionOut=this.didTransitionOut}}
       >
@@ -48,7 +49,7 @@ In the demo below you will not see any animations.
 
     {{#if this.isShowing}}
       <div
-        {{css-transition "example" isEnabled=false}}
+        {{css-transition name="example" isEnabled=false}}
       >
         <h1>Hello world</h1>
       </div>

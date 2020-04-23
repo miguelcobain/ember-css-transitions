@@ -2,15 +2,16 @@
 
 `ember-css-transitions` provides some utilities that help you define animations purely in CSS.
 
-This can be thought of a port of angular's ng-animate or react-animation for Ember.
+This can be thought of a port of Vue's transitions for Ember.
 
-To install it just run:
+To install it run:
 
 ```bash
 ember install ember-css-transitions
 ```
 
-The kind of CSS you'll be writing is of the following structure:
+
+This addon is perfect for libraries like [Animate.css](https://animate.style/) and [Tailwind CSS](https://tailwindcss.com/). If you write your own css it will be of the following structure:
 
 
 ```css
@@ -19,10 +20,14 @@ The kind of CSS you'll be writing is of the following structure:
   opacity: 0;
 }
 
-.example-enter.example-enter-active {
-  /* enter final state and how to transition to it */
-  opacity: 1;
+.example-enter-active {
+  /* define the duration, delay and easing curve for the entering transition */
   transition: opacity 0.5s ease-in;
+}
+
+.example-enter-to {
+  /* enter final state */
+  opacity: 1;
 }
 
 .example-leave {
@@ -30,12 +35,15 @@ The kind of CSS you'll be writing is of the following structure:
   opacity: 1;
 }
 
-.example-leave.example-leave-active {
-  /* leave final state and how to transition to it */
-  opacity: 0;
+.example-leave-active {
+  /* define the duration, delay and easing curve for the leaving transition */
   transition: opacity 0.5s ease-in;
 }
-```
 
+.example-leave-active {
+  /* leave final state */
+  opacity: 0;
+}
+```
 
 Check out the other sections of the docs for more info on how to use the addon.
