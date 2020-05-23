@@ -1,24 +1,46 @@
 /* BEGIN-SNIPPET insert-destroy.css */
 .example-enter {
   opacity: 0;
-  height: 0px;
+  max-height: 0px;
 }
 
 .example-enter.example-enter-active {
   opacity: 1;
-  height: 50px;
+  max-height: 50px;
   transition: all 0.5s ease-in;
 }
 
 .example-leave {
   opacity: 1;
-  height: 50px;
+  max-height: 50px;
 }
 
 .example-leave.example-leave-active {
   opacity: 0;
-  height: 0;
+  max-height: 0;
   transition: all 0.5s ease-in;
+}
+/* END-SNIPPET */
+
+/* BEGIN-SNIPPET insert-destroy-verbose.css */
+.duration-500 {
+  transition-duration: 500ms;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.opacity-100 {
+  opacity: 100;
+}
+
+.max-h-0	{
+  max-height: 0;
+}
+
+.max-h-12	{
+  max-height: 3rem;
 }
 /* END-SNIPPET */
 

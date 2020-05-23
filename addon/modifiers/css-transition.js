@@ -28,22 +28,86 @@ export default class CssTransitionModifier extends Modifier {
     return this.clone || this.element;
   }
 
-  get transitionClass() {
-    return this.args.positional[0];
+  get transitionName() {
+    let positionalArgument = this.args.positional[0];
+    if (typeof positionalArgument === 'string') {
+      return positionalArgument
+    } else {
+      return null;
+    }
+  }
+
+  get transitionHash() {
+    let positionalArgument = this.args.positional[0];
+    if (typeof positionalArgument === 'object') {
+      return positionalArgument
+    } else {
+      return null;
+    }
+  }
+
+  get enterClass() {
+   if (this.transitionName) {
+     return `${this.transitionName}-enter`
+   } else if (this.transitionHash) {
+     return this.transitionHash.enter;
+   } else {
+     return null;
+   }
+  }
+
+  get enterActiveClass() {
+   if (this.transitionName) {
+     return `${this.transitionName}-enter-active`
+   } else if (this.transitionHash) {
+     return this.transitionHash.enterActive || `${this.transitionHash.enter}-active`;
+   } else {
+     return null;
+   }
+  }
+
+  get leaveClass() {
+   if (this.transitionName) {
+     return `${this.transitionName}-leave`
+   } else if (this.transitionHash) {
+     return this.transitionHash.leave;
+   } else {
+     return null;
+   }
+  }
+
+  get leaveActiveClass() {
+   if (this.transitionName) {
+     return `${this.transitionName}-leave-active`
+   } else if (this.transitionHash) {
+     return this.transitionHash.leaveActive || `${this.transitionHash.leave}-active`;
+   } else {
+     return null;
+   }
+  }
+
+  addClassNames(className) {
+    return `${className}-add`;
+  }
+
+  addActiveClassNames(className) {
+    return `${className}-add-active`;
+  }
+
+  removeClassNames(className) {
+    return `${className}-remove`;
+  }
+
+  removeActiveClassNames(className) {
+    return `${className}-remove-active`;
   }
 
   async didInstall() {
-    this.applyClasses();
-
-    let transitionClass = this.transitionClass;
-
-    if (transitionClass) {
-      let animationType = 'enter';
-      let className = `${transitionClass}-${animationType}`;
-      this.addClass(className);
-
-      await nextTick();
-      await this.transition('enter', transitionClass);
+    if (this.enterClass) {
+      await this.transition({
+        className: this.enterClass,
+        activeClassName: this.enterActiveClass
+      });
 
       if (this.args.named.didTransitionIn) {
         this.args.named.didTransitionIn();
@@ -55,15 +119,16 @@ export default class CssTransitionModifier extends Modifier {
   }
 
   async willRemove() {
-    let transitionClass = this.transitionClass;
-
-    if (transitionClass) {
+    if (this.leaveClass) {
       // We can't stop ember from removing the element
       // so we clone the element to animate it out
       this.addClone();
       await nextTick();
 
-      await this.transition('leave', transitionClass);
+      await this.transition({
+        className: this.leaveClass,
+        activeClassName: this.leaveActiveClass
+      });
 
       this.removeClone();
 
@@ -105,13 +170,22 @@ export default class CssTransitionModifier extends Modifier {
 
         if (value) {
           this.addClass(className);
-          await this.transition('add', className);
+
+          await this.transition({
+            className: this.addClassNames(className),
+            activeClassName: this.addActiveClassNames(className)
+          });
 
           if (this.args.named.didTransitionIn) {
             this.args.named.didTransitionIn(className);
           }
         } else {
-          await this.transition('remove', className);
+          this.removeClass(className);
+
+          await this.transition({
+            className: this.removeClassNames(className),
+            activeClassName: this.removeActiveClassNames(className)
+          });
 
           if (this.args.named.didTransitionOut) {
             this.args.named.didTransitionOut(className);
@@ -146,31 +220,22 @@ export default class CssTransitionModifier extends Modifier {
    * @private
    * @method transition
    * @param {String} animationType The animation type, e.g. "enter" or "leave".
-   * @param {String} transitionClass The name of the class with the transition defined
    * @return {Promise}
    */
-  async transition(animationType, transitionClass) {
+  async transition({ className, activeClassName }) {
     let element = this.el;
-
-    let className = `${transitionClass}-${animationType}`;
-    let activeClassName = `${className}-active`;
 
     // add first class right away
     this.addClass(className);
 
-    await nextTick()
+    await nextTick();
 
     // This is for to force a repaint,
     // which is necessary in order to transition styles when adding a class name.
     element.scrollTop;
+
     // add active class after repaint
     this.addClass(activeClassName);
-
-    // if we're animating a class removal
-    // we need to remove the class
-    if (animationType === 'remove') {
-      this.removeClass(transitionClass);
-    }
 
     // wait for ember to apply classes
     // set timeout for animation end
@@ -181,11 +246,11 @@ export default class CssTransitionModifier extends Modifier {
   }
 
   addClass(className) {
-    this.el.classList.add(className);
+    this.el.classList.add(...className.split(' '));
   }
 
   removeClass(className) {
-    this.el.classList.remove(className);
+    this.el.classList.remove(...className.split(' '));
   }
 
 }
