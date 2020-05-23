@@ -234,8 +234,9 @@ export default class CssTransitionModifier extends Modifier {
     // which is necessary in order to transition styles when adding a class name.
     element.scrollTop;
 
-    // add active class after repaint
+    // add activeClass & remove class after repaint
     this.addClass(activeClassName);
+    this.removeClass(className);
 
     // wait for ember to apply classes
     // set timeout for animation end

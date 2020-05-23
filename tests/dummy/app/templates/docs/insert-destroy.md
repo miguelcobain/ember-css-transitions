@@ -31,10 +31,6 @@ Let's look at one example:
 
 Each individual class can also be specified independently like below.
 
-*This does not work with Animate/ Tailwind enter/ enterActive and leave/ leaveActive are applied at the same time. Whichever one is last in the stylesheet wins*
-
-*Here, using Tailwind inspired classes, fading in works but fading out does not. 😢*
-
 {{#docs-demo as |demo|}}
   {{#demo.example name="insert-destroy-verbose.hbs"}}
     <button class="docs-btn" {{on "click" (action (mut this.show2) (not show2))}}>

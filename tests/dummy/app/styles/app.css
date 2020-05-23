@@ -4,7 +4,7 @@
   max-height: 0px;
 }
 
-.example-enter.example-enter-active {
+.example-enter-active {
   opacity: 1;
   max-height: 50px;
   transition: all 0.5s ease-in;
@@ -15,7 +15,7 @@
   max-height: 50px;
 }
 
-.example-leave.example-leave-active {
+.example-leave-active {
   opacity: 0;
   max-height: 0;
   transition: all 0.5s ease-in;
@@ -45,18 +45,18 @@
 /* END-SNIPPET */
 
 /* BEGIN-SNIPPET class-add-removal.css*/
-.is-important-add, .is-important-remove {
+.is-important,
+.is-important-add-active,
+.is-important-remove {
+  color: red;
+  font-size: 1.5em;
   transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
 }
 
-.is-important,
-.is-important-add.is-important-add-active {
-  color: red;
-  font-size: 1.5em;
-}
-
-.is-important-remove.is-important-remove-active {
+.is-important-add,
+.is-important-remove-active {
   font-size: 1.0em;
   color: black;
+  transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
 }
 /* END-SNIPPET */
