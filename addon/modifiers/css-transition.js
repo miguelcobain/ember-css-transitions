@@ -22,6 +22,7 @@ export default class CssTransitionModifier extends Modifier {
   clone = null;
   parentElement = null;
   nextElementSibling = null;
+  installed = false;
 
 
   get el() {
@@ -47,19 +48,31 @@ export default class CssTransitionModifier extends Modifier {
       this.addClass(className);
 
       await nextTick();
+
+      if (!this.element) {
+        return;
+      }
+
       await this.transition('enter', transitionClass);
+
+      if (!this.element) {
+        return;
+      }
 
       if (this.args.named.didTransitionIn) {
         this.args.named.didTransitionIn();
       }
     }
 
+
+
     this.parentElement = this.element.parentElement;
     this.nextElementSibling = this.element.nextElementSibling;
+    this.installed = true;
   }
 
   async willRemove() {
-    if (this.args.named.isEnabled === false) {
+    if (this.args.named.isEnabled === false || !this.installed) {
       return;
     }
 
@@ -170,7 +183,11 @@ export default class CssTransitionModifier extends Modifier {
     // add first class right away
     this.addClass(className);
 
-    await nextTick()
+    await nextTick();
+
+    if (!this.el) {
+      return;
+    }
 
     // This is for to force a repaint,
     // which is necessary in order to transition styles when adding a class name.
@@ -187,6 +204,10 @@ export default class CssTransitionModifier extends Modifier {
     // wait for ember to apply classes
     // set timeout for animation end
     await sleep(computeTimeout(element) || 0);
+
+    if (!this.el) {
+      return;
+    }
 
     this.removeClass(className);
     this.removeClass(activeClassName);
