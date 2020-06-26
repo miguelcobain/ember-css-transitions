@@ -150,6 +150,9 @@ export default class CssTransitionModifier extends Modifier {
     let original = this.element;
     let parentElement = original.parentElement || this.parentElement;
     let nextElementSibling = original.nextElementSibling || this.nextElementSibling;
+    if (nextElementSibling && (nextElementSibling.parentElement !== parentElement)) {
+      nextElementSibling = null;
+    }
     let clone = original.cloneNode(true);
 
     clone.setAttribute('id', `${original.id}_clone`);

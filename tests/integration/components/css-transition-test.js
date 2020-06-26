@@ -300,4 +300,44 @@ module('Integration | Component | transition group', function(hooks) {
     assert.dom('#my-element').hasClass('classes', 'element still has provided classes');
     assert.dom('#my-element').doesNotHaveClass('is-important', 'does not have transition class');
   });
+
+  test('teardown by removal of the parent element', async function(assert) {
+    this.set('show', true);
+    this.render(hbs`
+      {{#if this.show}}
+        <div>
+          <div id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+            <p class="content">Çup?</p>
+          </div>
+        </div>
+      {{/if}}
+    `);
+    await waitFor('#my-element.example-enter-active');
+    await waitFor('#my-element:not(.example-enter)');
+    this.set('show', false);
+    assert.dom('#my-element').doesNotExist();
+  });
+
+  test('teardown after removal of sibling element', async function(assert) {
+    this.set('show', true);
+    this.set('showSibling', true);
+    this.render(hbs`
+      {{#if this.show}}
+        <div>
+          <div id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+            <p class="content">Çup?</p>
+          </div>
+          {{#if this.showSibling}}
+            <div data-test-sibling>Sibling element</div>
+          {{/if}}
+        </div>
+      {{/if}}
+    `);
+    await waitFor('#my-element.example-enter-active');
+    await waitFor('#my-element:not(.example-enter)');
+    this.set('showSibling', false);
+    assert.dom('[data-test-sibling]').doesNotExist();
+    this.set('show', false);
+    assert.dom('#my-element').doesNotExist();
+  });
 });
