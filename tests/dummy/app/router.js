@@ -10,7 +10,7 @@ Router.map(function() {
   docsRoute(this, function() {
     this.route('insert-destroy');
     this.route('add-removal');
-    this.route('actions');
+    this.route('options');
   });
 });
 
