@@ -92,6 +92,54 @@ module('Integration | Component | transition group', function(hooks) {
       assert.ok(this.didTransitionOut.calledOnce, 'didTransitionOut was called once');
     });
 
+    test(`teardown after -enter-active is applied does not throw errors (${i.name})`, async function(assert) {
+      assert.expect(6);
+
+      this.didTransitionIn = spy();
+      this.didTransitionOut = spy();
+
+      this.set('show', false);
+
+      await render(i.template);
+
+      this.set('show', true);
+
+      assert.dom('#my-element').exists({ count: 1 }, 'element is rendered');
+      assert.dom('#my-element').hasClass('example-enter', '-enter is immediately applied');
+
+      await waitFor('#my-element.example-enter-active');
+
+      this.set('show', false);
+
+      assert.dom('#my-element').doesNotExist('element is removed');
+      assert.ok(this.didTransitionIn.notCalled, 'didTransitionIn was not called');
+      assert.ok(this.didTransitionOut.notCalled, 'didTransitionOut was not called');
+      assert.dom('#my-element_clone').doesNotExist('clone was not created');
+    });
+
+    test(`teardown after -enter is applied does not throw errors (${i.name})`, async function(assert) {
+      assert.expect(6);
+
+      this.didTransitionIn = spy();
+      this.didTransitionOut = spy();
+
+      this.set('show', false);
+
+      await render(i.template);
+
+      this.set('show', true);
+
+      assert.dom('#my-element').exists({ count: 1 }, 'element is rendered');
+      assert.dom('#my-element').hasClass('example-enter', '-enter is immediately applied');
+
+      this.set('show', false);
+
+      assert.dom('#my-element').doesNotExist('element is removed');
+      assert.ok(this.didTransitionIn.notCalled, 'didTransitionIn was not called');
+      assert.ok(this.didTransitionOut.notCalled, 'didTransitionOut was not called');
+      assert.dom('#my-element_clone').doesNotExist('clone was not created');
+    });
+
   });
 
   testCases = [{
@@ -253,5 +301,45 @@ module('Integration | Component | transition group', function(hooks) {
     assert.dom('#my-element').hasClass('test', 'element still has provided classes');
     assert.dom('#my-element').hasClass('classes', 'element still has provided classes');
     assert.dom('#my-element').doesNotHaveClass('is-important', 'does not have transition class');
+  });
+
+  test('teardown by removal of the parent element', async function(assert) {
+    this.set('show', true);
+    this.render(hbs`
+      {{#if this.show}}
+        <div>
+          <div id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+            <p class="content">Çup?</p>
+          </div>
+        </div>
+      {{/if}}
+    `);
+    await waitFor('#my-element.example-enter-active');
+    await waitFor('#my-element:not(.example-enter)');
+    this.set('show', false);
+    assert.dom('#my-element').doesNotExist();
+  });
+
+  test('teardown after removal of sibling element', async function(assert) {
+    this.set('show', true);
+    this.set('showSibling', true);
+    this.render(hbs`
+      {{#if this.show}}
+        <div>
+          <div id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+            <p class="content">Çup?</p>
+          </div>
+          {{#if this.showSibling}}
+            <div data-test-sibling>Sibling element</div>
+          {{/if}}
+        </div>
+      {{/if}}
+    `);
+    await waitFor('#my-element.example-enter-active');
+    await waitFor('#my-element:not(.example-enter)');
+    this.set('showSibling', false);
+    assert.dom('[data-test-sibling]').doesNotExist();
+    this.set('show', false);
+    assert.dom('#my-element').doesNotExist();
   });
 });

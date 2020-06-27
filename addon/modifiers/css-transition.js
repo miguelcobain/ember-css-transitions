@@ -22,7 +22,7 @@ export default class CssTransitionModifier extends Modifier {
   clone = null;
   parentElement = null;
   nextElementSibling = null;
-
+  installed = false;
 
   get el() {
     return this.clone || this.element;
@@ -32,58 +32,32 @@ export default class CssTransitionModifier extends Modifier {
     return this.args.positional[0];
   }
 
-  async didInstall() {
+  didInstall() {
     if (this.args.named.isEnabled === false) {
       return;
-    }
-
-    this.applyClasses();
-
-    let transitionClass = this.transitionClass;
-
-    if (transitionClass) {
-      let animationType = 'enter';
-      let className = `${transitionClass}-${animationType}`;
-      this.addClass(className);
-
-      await nextTick();
-      await this.transition('enter', transitionClass);
-
-      if (this.args.named.didTransitionIn) {
-        this.args.named.didTransitionIn();
-      }
     }
 
     this.parentElement = this.element.parentElement;
     this.nextElementSibling = this.element.nextElementSibling;
+
+    this.guardedRun(this.transitionIn);
   }
 
-  async willRemove() {
+  willRemove() {
+    if (this.args.named.isEnabled === false || !this.installed) {
+      return;
+    }
+
+    this.guardedRun(this.transitionOut);
+  }
+
+  didUpdateArguments() {
     if (this.args.named.isEnabled === false) {
       return;
     }
 
-    let transitionClass = this.transitionClass;
-
-    if (transitionClass) {
-      // We can't stop ember from removing the element
-      // so we clone the element to animate it out
-      this.addClone();
-      await nextTick();
-
-      await this.transition('leave', transitionClass);
-
-      this.removeClone();
-
-      if (this.args.named.didTransitionOut) {
-        this.args.named.didTransitionOut();
-      }
-
-      this.clone = null;
-    }
+    this.guardedRun(this.transitionClassChange);
   }
-
-  prev = {};
 
   ignoredArgs = ['didTransitionIn', 'didTransitionOut', 'isEnabled'];
 
@@ -102,41 +76,15 @@ export default class CssTransitionModifier extends Modifier {
     }
   }
 
-  async didUpdateArguments() {
-    if (this.args.named.isEnabled === false) {
-      return;
-    }
-
-    for (let key of this.validArgs) {
-      let prevValue = this.prev[key];
-      let value = this.args.named[key];
-      this.prev[key] = value; // update previous value
-
-      if (prevValue !== value) {
-        let className = dasherize(key);
-
-        if (value) {
-          this.addClass(className);
-          await this.transition('add', className);
-
-          if (this.args.named.didTransitionIn) {
-            this.args.named.didTransitionIn(className);
-          }
-        } else {
-          await this.transition('remove', className);
-
-          if (this.args.named.didTransitionOut) {
-            this.args.named.didTransitionOut(className);
-          }
-        }
-      }
-    }
-  }
-
   addClone() {
     let original = this.element;
     let parentElement = original.parentElement || this.parentElement;
     let nextElementSibling = original.nextElementSibling || this.nextElementSibling;
+
+    if (nextElementSibling && (nextElementSibling.parentElement !== parentElement)) {
+      nextElementSibling = null;
+    }
+
     let clone = original.cloneNode(true);
 
     clone.setAttribute('id', `${original.id}_clone`);
@@ -152,6 +100,77 @@ export default class CssTransitionModifier extends Modifier {
     }
   }
 
+  *transitionIn() {
+    this.applyClasses();
+
+    let transitionClass = this.transitionClass;
+
+    if (transitionClass) {
+      let animationType = 'enter';
+      let className = `${transitionClass}-${animationType}`;
+      this.addClass(className);
+
+      yield nextTick();
+      yield* this.transition('enter', transitionClass);
+
+      if (this.args.named.didTransitionIn) {
+        this.args.named.didTransitionIn();
+      }
+    }
+
+    this.installed = true;
+  }
+
+  *transitionOut() {
+    let transitionClass = this.transitionClass;
+
+    if (transitionClass) {
+      // We can't stop ember from removing the element
+      // so we clone the element to animate it out
+      this.addClone();
+      yield nextTick();
+
+      yield* this.transition('leave', transitionClass);
+
+      this.removeClone();
+
+      if (this.args.named.didTransitionOut) {
+        this.args.named.didTransitionOut();
+      }
+
+      this.clone = null;
+    }
+  }
+
+  prev = {};
+
+  *transitionClassChange() {
+    for (let key of this.validArgs) {
+      let prevValue = this.prev[key];
+      let value = this.args.named[key];
+      this.prev[key] = value; // update previous value
+
+      if (prevValue !== value) {
+        let className = dasherize(key);
+
+        if (value) {
+          this.addClass(className);
+          yield* this.transition('add', className);
+
+          if (this.args.named.didTransitionIn) {
+            this.args.named.didTransitionIn(className);
+          }
+        } else {
+          yield* this.transition('remove', className);
+
+          if (this.args.named.didTransitionOut) {
+            this.args.named.didTransitionOut(className);
+          }
+        }
+      }
+    }
+  }
+
   /**
    * Transitions the element.
    *
@@ -159,9 +178,9 @@ export default class CssTransitionModifier extends Modifier {
    * @method transition
    * @param {String} animationType The animation type, e.g. "enter" or "leave".
    * @param {String} transitionClass The name of the class with the transition defined
-   * @return {Promise}
+   * @return {Generator}
    */
-  async transition(animationType, transitionClass) {
+  *transition(animationType, transitionClass) {
     let element = this.el;
 
     let className = `${transitionClass}-${animationType}`;
@@ -170,7 +189,7 @@ export default class CssTransitionModifier extends Modifier {
     // add first class right away
     this.addClass(className);
 
-    await nextTick()
+    yield nextTick();
 
     // This is for to force a repaint,
     // which is necessary in order to transition styles when adding a class name.
@@ -186,7 +205,7 @@ export default class CssTransitionModifier extends Modifier {
 
     // wait for ember to apply classes
     // set timeout for animation end
-    await sleep(computeTimeout(element) || 0);
+    yield sleep(computeTimeout(element) || 0);
 
     this.removeClass(className);
     this.removeClass(activeClassName);
@@ -198,6 +217,19 @@ export default class CssTransitionModifier extends Modifier {
 
   removeClass(className) {
     this.el.classList.remove(className);
+  }
+
+  async guardedRun(f, ...args) {
+    let gen = f.call(this, ...args);
+    let isDone = false;
+
+    // stop if the function doesn't have anything else to yield
+    // or if the element is no longer present
+    while (!isDone && this.el) {
+      let { value, done } = gen.next();
+      isDone = done;
+      await value;
+    }
   }
 
 }
