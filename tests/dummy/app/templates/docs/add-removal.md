@@ -11,10 +11,10 @@ Let's look at an example of adding/removing an `is-important` class:
 {{#docs-demo as |demo|}}
   {{#demo.example name="class-add-removal.hbs"}}
     <button class="docs-btn" {{on "click" (action (mut this.isImportant) (not this.isImportant))}}>
-      Press me
+      Press me {{#if this.isImportant}}(Make un-important){{else}}(Make important){{/if}}
     </button>
 
-    <div {{css-transition isImportant=this.isImportant}}>
+    <div {{css-transition state=(if this.isImportant "is-important")}}>
       <h1>A very important text.</h1>
     </div>
 
@@ -25,6 +25,25 @@ Let's look at an example of adding/removing an `is-important` class:
 {{/docs-demo}}
 
 <aside>
-  Notice that the class name is a "dasherized" version of the argument name.
-  In this case <code>isImportant</code> becomes <code>is-important</code>.
+  Notice how the state argument's value is used for the prefix of the css classes you define.
 </aside>
+
+## **Manually specifying class names**
+
+Sometimes you don't need this modifier to animate state changes.
+
+{{#docs-demo as |demo|}}
+  {{#demo.example name="class-add-removal-verbose.hbs"}}
+    <button class="docs-btn" {{on "click" (action (mut this.isImportant2) (not this.isImportant2))}}>
+      Press me {{#if this.isImportant2}}(Make un-important){{else}}(Make Important){{/if}}
+    </button>
+
+    <div class="{{if this.isImportant2 'text-red-600 text-2xl duration-1000' 'text-black text-base duration-200'}}">
+      <h1>A very important text.</h1>
+    </div>
+
+  {{/demo.example}}
+
+  {{demo.snippet "class-add-removal-verbose.hbs"}}
+  {{demo.snippet "class-add-removal-verbose.css"}}
+{{/docs-demo}}

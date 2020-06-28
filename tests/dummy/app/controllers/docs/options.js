@@ -13,6 +13,5 @@ export default class ActionsController extends Controller {
   didTransitionOut() {
     alert('transitioned out');
   }
-
 }
 // END-SNIPPET
