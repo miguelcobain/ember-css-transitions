@@ -3,7 +3,7 @@
 
 #### ✨ Features
 
-- there is now an `@isEnabled` argument that enables/disables animation
+- there is now an `isEnabled` argument that enables/disables animation
 
 #### 🐛 Bugfixes
 
