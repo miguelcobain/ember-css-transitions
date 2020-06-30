@@ -38,6 +38,13 @@ jobs:
         - npm run lint
         - npm run test:ember
 
+    - stage: "Tests Node 12"
+      name: "Tests on Node 12"
+      node_js:
+        - "12"
+      script:
+        - npm run test:ember
+
     - stage: "Additional Tests"
       name: "Floating Dependencies"
       install:
