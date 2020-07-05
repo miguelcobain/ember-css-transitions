@@ -292,7 +292,7 @@ export default class CssTransitionModifier extends Modifier {
    * @param {String} classNames
    */
   addClass(className) {
-    this.el.classList.add(...className.split(' '));
+    this.el.classList.add(...className.trim().split(/\s+/));
   }
 
   /**
@@ -303,7 +303,7 @@ export default class CssTransitionModifier extends Modifier {
    * @param {String} classNames
    */
   removeClass(className) {
-    this.el.classList.remove(...className.split(' '));
+    this.el.classList.remove(...className.trim().split(/\s+/));
   }
 
   async guardedRun(f, ...args) {
