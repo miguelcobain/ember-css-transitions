@@ -1,30 +1,22 @@
 # Animating class add/removal
 
 Another common use case is to animate between two states and not just the insertion and removal of an element.
+In this case just the act of insert/removing a class should be enough and this addon is not needed.
 
-For this case, the `{{css-transition}}` modifier can animate adding and removing a class.
-To do this you just need to pass in a named argument to the modifier, and it will use the argument name and apply
-the correct intermediate classes for animation based on the argument value.
-
-Let's look at an example of adding/removing an `is-important` class:
+Here is an example of such an animation:
 
 {{#docs-demo as |demo|}}
-  {{#demo.example name="class-add-removal.hbs"}}
-    <button class="docs-btn" {{on "click" (action (mut this.isImportant) (not this.isImportant))}}>
-      Press me
+  {{#demo.example name="class-add-removal-verbose.hbs"}}
+    <button class="docs-btn" {{on "click" (fn (mut this.isImportant) (not this.isImportant))}}>
+      Toggle
     </button>
 
-    <div {{css-transition isImportant=this.isImportant}}>
+    <div class={{if this.isImportant "text-red-600 text-2xl duration-1000" "text-black text-base duration-200"}}>
       <h1>A very important text.</h1>
     </div>
 
   {{/demo.example}}
 
-  {{demo.snippet "class-add-removal.hbs"}}
-  {{demo.snippet "class-add-removal.css"}}
+  {{demo.snippet "class-add-removal-verbose.hbs"}}
+  {{demo.snippet "class-add-removal-verbose.css"}}
 {{/docs-demo}}
-
-<aside>
-  Notice that the class name is a "dasherized" version of the argument name.
-  In this case <code>isImportant</code> becomes <code>is-important</code>.
-</aside>

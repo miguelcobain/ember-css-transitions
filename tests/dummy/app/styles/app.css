@@ -1,40 +1,79 @@
-/* BEGIN-SNIPPET insert-destroy.css */
-.example-enter {
+/* BEGIN-SNIPPET intro-example.css */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
   opacity: 0;
-  height: 0px;
-}
-
-.example-enter.example-enter-active {
-  opacity: 1;
-  height: 50px;
-  transition: all 0.5s ease-in;
-}
-
-.example-leave {
-  opacity: 1;
-  height: 50px;
-}
-
-.example-leave.example-leave-active {
-  opacity: 0;
-  height: 0;
-  transition: all 0.5s ease-in;
 }
 /* END-SNIPPET */
 
-/* BEGIN-SNIPPET class-add-removal.css*/
-.is-important-add, .is-important-remove {
-  transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+/* BEGIN-SNIPPET slide-fade.css */
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
+}
+/* END-SNIPPET */
+
+/* BEGIN-SNIPPET insert-destroy-verbose.css */
+.transition-all {
+  transition-property: all;
 }
 
-.is-important,
-.is-important-add.is-important-add-active {
-  color: red;
-  font-size: 1.5em;
+.duration-500 {
+  transition-duration: 500ms;
 }
 
-.is-important-remove.is-important-remove-active {
-  font-size: 1.0em;
-  color: black;
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.opacity-100 {
+  opacity: 100;
+}
+
+.max-h-12	{
+  max-height: 3rem;
+}
+
+.max-h-0	{
+  max-height: 0;
+}
+/* END-SNIPPET */
+
+/* BEGIN-SNIPPET class-add-removal-verbose.css*/
+.duration-1000 {
+  transition-duration: 1000ms;
+}
+
+.duration-200	{
+  transition-duration: 200ms
+}
+
+.text-red-600	{
+  color: #e53e3e;
+}
+
+.text-black	{
+  color: #000000;
+}
+
+.text-base {
+  font-size: 1rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
 }
 /* END-SNIPPET */

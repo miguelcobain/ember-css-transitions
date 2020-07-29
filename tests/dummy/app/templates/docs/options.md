@@ -10,15 +10,13 @@ Here is a simple example that uses both:
 {{#docs-demo as |demo|}}
   {{#demo.example name="actions.hbs"}}
     <button class="docs-btn" {{on "click" (action (mut this.show) (not show))}}>
-      Press me
+      Toggle
     </button>
 
     {{#if this.show}}
-      <div
-        {{css-transition "example"
-          didTransitionIn=this.didTransitionIn
-          didTransitionOut=this.didTransitionOut}}
-      >
+      <div {{css-transition "slide-fade"
+        didTransitionIn=this.didTransitionIn
+        didTransitionOut=this.didTransitionOut}}>
         <h1>Hello world</h1>
       </div>
     {{/if}}
@@ -42,14 +40,12 @@ In the demo below you will not see any animations.
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="is-enabled.hbs"}}
-    <button class="docs-btn" {{on "click" (action (mut this.isShowing) (not this.isShowing))}}>
-      Press me
+    <button class="docs-btn" {{on "click" (fn (mut this.show2) (not this.show2))}}>
+      Toggle
     </button>
 
-    {{#if this.isShowing}}
-      <div
-        {{css-transition "example" isEnabled=false}}
-      >
+    {{#if this.show2}}
+      <div {{css-transition "slide-fade" isEnabled=false}}>
         <h1>Hello world</h1>
       </div>
     {{/if}}
