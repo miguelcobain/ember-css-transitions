@@ -77,3 +77,21 @@
   font-size: 1.5rem;
 }
 /* END-SNIPPET */
+
+
+/* THE FOLLOWING IS USED FOR INTEGRATION TESTS, DO NOT REMOVE */
+
+/* initial state */
+.example-enter, .example-leave-to {
+  opacity: 0;
+}
+
+/* final state */
+.example-enter-to, .example-leave {
+  opacity: 1;
+}
+
+/* easings */
+.example-enter-active, .example-leave-active {
+  transition: opacity .5s ease-in;
+}
