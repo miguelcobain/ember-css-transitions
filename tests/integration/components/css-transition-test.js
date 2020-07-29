@@ -12,7 +12,7 @@ module('Integration | Component | transition group', function(hooks) {
       name: 'element',
       template: hbs`
         {{#if this.show}}
-          <div id="my-element" {{css-transition name="example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+          <div id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
             <p class="content">Çup?</p>
           </div>
         {{/if}}
@@ -21,7 +21,7 @@ module('Integration | Component | transition group', function(hooks) {
       name: 'classic component',
       template: hbs`
         {{#if this.show}}
-          <MyComponent id="my-element" {{css-transition name="example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+          <MyComponent id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
             <p class="content">Çup?</p>
           </MyComponent>
         {{/if}}
@@ -30,7 +30,7 @@ module('Integration | Component | transition group', function(hooks) {
       name: 'glimmer component',
       template: hbs`
         {{#if this.show}}
-          <GlimmerComponent id="my-element" {{css-transition name="example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
+          <GlimmerComponent id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
             <p class="content">Çup?</p>
           </GlimmerComponent>
         {{/if}}

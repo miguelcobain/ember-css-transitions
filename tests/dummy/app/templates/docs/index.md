@@ -10,40 +10,27 @@ To install it run:
 ember install ember-css-transitions
 ```
 
+In its simplest form, this modifier allows you top write css animations in the following form:
 
-This addon is perfect for libraries like [Animate.css](https://animate.style/) and [Tailwind CSS](https://tailwindcss.com/). If you write your own css it will be of the following structure:
+{{#docs-demo as |demo|}}
+  {{#demo.example name="intro-example.hbs"}}
+    <button class="docs-btn" {{on "click" (fn (mut this.show) (not this.show))}}>
+      Toggle
+    </button>
 
+    {{#if this.show}}
+      <div {{css-transition "fade"}}>
+        hello
+      </div>
+    {{/if}}
 
-```css
-.example-enter {
-  /* enter initial state */
-  opacity: 0;
-}
+  {{/demo.example}}
 
-.example-enter-active {
-  /* define the duration, delay and easing curve for the entering transition */
-  transition: opacity 0.5s ease-in;
-}
+  {{demo.snippet "intro-example.css"}}
+  {{demo.snippet "intro-example.hbs"}}
+{{/docs-demo}}
 
-.example-enter-to {
-  /* enter final state */
-  opacity: 1;
-}
-
-.example-leave {
-  /* leave initial state */
-  opacity: 1;
-}
-
-.example-leave-active {
-  /* define the duration, delay and easing curve for the leaving transition */
-  transition: opacity 0.5s ease-in;
-}
-
-.example-leave-active {
-  /* leave final state */
-  opacity: 0;
-}
-```
+This addon is also has a good synergy with libraries like [Animate.css](https://animate.style/) and [Tailwind CSS](https://tailwindcss.com/) because it allows
+customization of the class names that are applied.
 
 Check out the other sections of the docs for more info on how to use the addon.
