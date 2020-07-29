@@ -1,5 +1,4 @@
 import Modifier from 'ember-modifier';
-import { dasherize } from '@ember/string';
 
 import { nextTick, sleep, computeTimeout } from 'ember-css-transitions/utils/transition-utils';
 
@@ -23,7 +22,6 @@ export default class CssTransitionModifier extends Modifier {
   parentElement = null;
   nextElementSibling = null;
   installed = false;
-  prevState = null;
 
   /**
    * @type {(HTMLElement|undefined)}
@@ -116,24 +114,6 @@ export default class CssTransitionModifier extends Modifier {
     this.guardedRun(this.transitionOut);
   }
 
-  didUpdateArguments() {
-    if (this.args.named.isEnabled === false) {
-      return;
-    }
-
-    this.guardedRun(this.transitionClassChange);
-  }
-
-  applyClasses() {
-    if (Object.prototype.hasOwnProperty.call(this.args.named, 'state')) {
-      this.prevState = this.args.named['state'];
-
-      if (this.prevState) {
-        this.addClass(dasherize(this.prevState));
-      }
-    }
-  }
-
   /**
    * Adds a clone to the parentElement so it can be transitioned out
    *
@@ -171,8 +151,6 @@ export default class CssTransitionModifier extends Modifier {
   }
 
   *transitionIn() {
-    this.applyClasses();
-
     if (this.enterClass) {
       yield* this.transition({
         className: this.enterClass,
@@ -209,42 +187,6 @@ export default class CssTransitionModifier extends Modifier {
       }
 
       this.clone = null;
-    }
-  }
-
-  *transitionClassChange() {
-    let prevState = this.prevState;
-    let state = this.args.named['state'];
-    this.prevState = state; // update previous state
-
-    if (prevState !== state) {
-      if (state) {
-        let className = dasherize(state);
-        this.addClass(className);
-
-        yield* this.transition({
-          className: `${className}-add`,
-          activeClassName: `${className}-add-active`,
-          toClassName: `${className}-add-to`
-        });
-
-        if (this.args.named.didTransitionIn) {
-          this.args.named.didTransitionIn(className);
-        }
-      } else {
-        let className = dasherize(prevState);
-
-        this.removeClass(className);
-        yield* this.transition({
-          className: `${className}-remove`,
-          activeClassName: `${className}-remove-active`,
-          toClassName: `${className}-remove-to`
-        });
-
-        if (this.args.named.didTransitionOut) {
-          this.args.named.didTransitionOut(className);
-        }
-      }
     }
   }
 
