@@ -106,7 +106,7 @@ export default class CssTransitionModifier extends Modifier {
     this.guardedRun(this.transitionIn);
   }
 
-  willDestroy() {
+  willRemove() {
     if (this.args.named.isEnabled === false || !this.installed) {
       return;
     }
