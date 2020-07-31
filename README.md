@@ -51,7 +51,14 @@ Animations are completely based on CSS classes. As long as you have a CSS class 
 or by manually specifying classes, perfect for libraries like [Animate.css](https://animate.style/) and [Tailwind CSS](https://tailwindcss.com/).
 
 ```hbs
-<div {{css-transition enterClass="example-enter" enterActiveClass="example-enter-active" enterToClass="example-enter-to" leaveClass="example-leave" leaveActiveClass="example-leave-active" leaveToClass="example-leave-to"}}>
+{{!-- Using Tailwind CSS provided classes --}}
+<div {{css-transition
+  enterClass="opacity-0"
+  enterActiveClass="transition-opacity duration-500 ease-in-out"
+  enterToClass="opacity-100"
+  leaveClass="opacity-100"
+  leaveActiveClass="transition-opacity duration-500 ease-in-out"
+  leaveToClass="opacity-0"}}>
   <h1>Hello world</h1>
 </div>
 ```
