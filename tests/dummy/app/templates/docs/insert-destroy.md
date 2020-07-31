@@ -25,7 +25,8 @@ Each of these classes will be prefixed with the name of the transition. If you u
 `${name}-enter-active` and `${name}-leave-active` give you the ability to specify different easing curves for enter/leave transitions, which you’ll see an example of in the following section.
 
 Here is a diagram taken from the [VueJS docs](https://vuejs.org/v2/guide/transitions.html#Transition-Classes) that explains this in a more visual way:
-![VueJS transition classes](/transition.png "VueJS image")
+
+<img src={{root-url "transition.png"}} alt="VueJS transition classes">
 
 ## CSS Transitions
 
