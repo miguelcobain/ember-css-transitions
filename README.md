@@ -2,11 +2,9 @@
 
 This addon provides a nice way of defining CSS Transitions for Ember Components. Which means, only css based animations for performance - and no animation library needed.
 
-Ember CSS Transitions is heavily inspired (and CSS compatible) with:
+Ember CSS Transitions is heavily inspired (and CSS compatible) with [Vue's CSS Transitions](https://vuejs.org/v2/guide/transitions.html).
 
-- [Vue's CSS Transitions](https://vuejs.org/v2/guide/transitions.html)
-
-Animations are completely based on CSS classes. As long as you have a CSS class attached to a HTML element, you can apply animations to it.
+Animations are completely based on CSS classes.
 
 ## Documentation
 
@@ -14,36 +12,29 @@ Animations are completely based on CSS classes. As long as you have a CSS class 
 
 ## How it works
 
-**Utimately you define your animations and transitions with ONLY CSS.**
+Utimately you define your animations and transitions with only css like:
 
 ```css
-.example-enter {
-  opacity: 0.01;
+/* initial state */
+.example-enter, .example-leave-to {
+  opacity: 0;
 }
 
-.example-enter-active {
-  transition: opacity .5s ease-in;
-}
-
-.example-enter-to {
+/* final state */
+.example-enter-to, .example-leave {
   opacity: 1;
 }
 
-.example-leave {
-  opacity: 1;
-}
-
-.example-leave-active {
+/* easings */
+.example-enter-active, .example-leave-active {
   transition: opacity .5s ease-in;
-}
-
-.example-leave-to {
-  opacity: 0.01;
 }
 ```
 
+And using the included modifier like:
+
 ```hbs
-<div {{css-transition name="example"}}>
+<div {{css-transition "example"}}>
   <h1>Hello world</h1>
 </div>
 ```
