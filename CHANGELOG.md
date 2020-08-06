@@ -1,3 +1,8 @@
+# v2.0.0
+
+#### 🏗 Chores
+
+- update ember-modifier to v2 ([#45](https://github.com/peec/ember-css-transitions/pull/45))
 
 # v2.0.0
 
