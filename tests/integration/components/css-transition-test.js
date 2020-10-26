@@ -276,7 +276,7 @@ module('Integration | Component | transition group', function(hooks) {
 
   test('teardown by removal of the parent element', async function(assert) {
     this.set('show', true);
-    this.render(hbs`
+    render(hbs`
       {{#if this.show}}
         <div>
           <div id="my-element" {{css-transition name="example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
@@ -294,7 +294,7 @@ module('Integration | Component | transition group', function(hooks) {
   test('teardown after removal of sibling element', async function(assert) {
     this.set('show', true);
     this.set('showSibling', true);
-    this.render(hbs`
+    render(hbs`
       {{#if this.show}}
         <div>
           <div id="my-element" {{css-transition name="example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
