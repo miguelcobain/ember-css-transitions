@@ -33,20 +33,21 @@ Here is a diagram taken from the [VueJS docs](https://vuejs.org/v2/guide/transit
 Let's look at one example:
 
 {{#docs-demo as |demo|}}
-  {{#demo.example name="slide-fade.hbs"}}
-    <button class="docs-btn" {{on "click" (fn (mut this.show) (not show))}}>
-      Toggle
-    </button>
+{{#demo.example name="slide-fade.hbs"}}
+<button class="docs-btn" {{on "click" (fn (mut this.show) (not show))}}>
+Toggle
+</button>
 
     {{#if this.show}}
       <div {{css-transition "slide-fade"}}>
         <h1>Hello world</h1>
       </div>
     {{/if}}
-  {{/demo.example}}
 
-  {{demo.snippet "slide-fade.css"}}
-  {{demo.snippet "slide-fade.hbs"}}
+{{/demo.example}}
+
+{{demo.snippet "slide-fade.css"}}
+{{demo.snippet "slide-fade.hbs"}}
 {{/docs-demo}}
 
 ## Custom Transition Classess
@@ -64,10 +65,10 @@ This is perfect for libraries like [Animate.css](https://animate.style/) and [Ta
 Here is an example with TailwindCSS-like styles:
 
 {{#docs-demo as |demo|}}
-  {{#demo.example name="insert-destroy-verbose.hbs"}}
-    <button class="docs-btn" {{on "click" (fn (mut this.show2) (not show2))}}>
-      Toggle
-    </button>
+{{#demo.example name="insert-destroy-verbose.hbs"}}
+<button class="docs-btn" {{on "click" (fn (mut this.show2) (not show2))}}>
+Toggle
+</button>
 
     {{#if this.show2}}
       <div {{css-transition
@@ -80,11 +81,37 @@ Here is an example with TailwindCSS-like styles:
         <h1>Hello world</h1>
       </div>
     {{/if}}
-  {{/demo.example}}
 
-  {{demo.snippet "insert-destroy-verbose.hbs"}}
-  {{demo.snippet "insert-destroy-verbose.css"}}
+{{/demo.example}}
+
+{{demo.snippet "insert-destroy-verbose.hbs"}}
+{{demo.snippet "insert-destroy-verbose.css"}}
 {{/docs-demo}}
 
-
 You're free to customize your element like you normally would. The modifier will only apply and remove the transition classes and nothing else.
+
+If you are using [TailwindUI](https://tailwindui.com) then you will see transition instructions included in the code, as in this example:
+
+```hbs
+<!--
+  Slide-over panel, show/hide based on slide-over state.
+
+  Entering: "transform transition ease-in-out duration-500 sm:duration-700"
+    From: "translate-x-full"
+    To: "translate-x-0"
+  Leaving: "transform transition ease-in-out duration-500 sm:duration-700"
+    From: "translate-x-0"
+    To: "translate-x-full"
+-->
+```
+
+You should map these instructions to this addon's API in the following way:
+
+| TailwindUI | Addon            |
+| ---------- | ---------------- |
+| Entering   | enterActiveClass |
+| From       | enterClass       |
+| To         | enterToClass     |
+| Leaving    | leaveActiveClass |
+| From       | leaveClass       |
+| To         | leaveToClass     |
