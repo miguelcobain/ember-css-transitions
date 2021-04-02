@@ -26,7 +26,6 @@
   "dependencies": {
     "ember-cli-babel": "^7.22.1",
     "ember-cli-htmlbars": "^5.3.1",
-    "ember-cli-requestanimationframe-polyfill": "^0.0.1",
     "ember-modifier": "^2.1.0"
   },
   "devDependencies": {
