@@ -12,22 +12,25 @@ Animations are completely based on CSS classes.
 
 ## How it works
 
-Utimately you define your animations and transitions with only css like:
+Ultimately you define your animations and transitions with only css like:
 
 ```css
 /* initial state */
-.example-enter, .example-leave-to {
+.example-enter,
+.example-leave-to {
   opacity: 0;
 }
 
 /* final state */
-.example-enter-to, .example-leave {
+.example-enter-to,
+.example-leave {
   opacity: 1;
 }
 
 /* easings */
-.example-enter-active, .example-leave-active {
-  transition: opacity .5s ease-in;
+.example-enter-active,
+.example-leave-active {
+  transition: opacity 0.5s ease-in;
 }
 ```
 
@@ -53,6 +56,32 @@ or by manually specifying classes, perfect for libraries like [Animate.css](http
   <h1>Hello world</h1>
 </div>
 ```
+
+If you are using [TailwindUI](https://tailwindui.com) then you will see transition instructions included in the code, as in this example:
+
+```hbs
+<!--
+  Slide-over panel, show/hide based on slide-over state.
+
+  Entering: "transform transition ease-in-out duration-500 sm:duration-700"
+    From: "translate-x-full"
+    To: "translate-x-0"
+  Leaving: "transform transition ease-in-out duration-500 sm:duration-700"
+    From: "translate-x-0"
+    To: "translate-x-full"
+-->
+```
+
+You should map these instructions to this addon's API in the following way:
+
+| TailwindUI | Addon            |
+| ---------- | ---------------- |
+| Entering   | enterActiveClass |
+| From       | enterClass       |
+| To         | enterToClass     |
+| Leaving    | leaveActiveClass |
+| From       | leaveClass       |
+| To         | leaveToClass     |
 
 Check out the homepage for more detailed documentation: [https://peec.github.io/ember-css-transitions/](https://peec.github.io/ember-css-transitions/)
 
@@ -85,30 +114,29 @@ Note: **IE9** does not support CSS3 transitions / animations. They must live wit
 
 ## Contribute
 
-* `git clone <repository-url>` this repository
-* `cd my-addon`
-* `npm install`
+- `git clone <repository-url>` this repository
+- `cd my-addon`
+- `npm install`
 
 ### Linting
 
-* `npm run lint:hbs`
-* `npm run lint:js`
-* `npm run lint:js -- --fix`
+- `npm run lint:hbs`
+- `npm run lint:js`
+- `npm run lint:js -- --fix`
 
 ### Running tests
 
-* `ember test` – Runs the test suite on the current Ember version
-* `ember test --server` – Runs the test suite in "watch mode"
-* `ember try:each` – Runs the test suite against multiple Ember versions
+- `ember test` – Runs the test suite on the current Ember version
+- `ember test --server` – Runs the test suite in "watch mode"
+- `ember try:each` – Runs the test suite against multiple Ember versions
 
 ### Running the dummy application
 
-* `ember serve`
-* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
+- `ember serve`
+- Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
 
-License
-------------------------------------------------------------------------------
+## License
 
 This project is licensed under the [MIT License](LICENSE.md).
