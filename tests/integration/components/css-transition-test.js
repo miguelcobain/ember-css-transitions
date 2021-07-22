@@ -149,6 +149,37 @@ module('Integration | Component | transition group', function(hooks) {
     });
   });
 
+  module('Nested elements', function() {
+    test('leave transitions via classes', async function(assert) {
+      assert.expect(2);
+
+      this.set('show', true);
+
+      await render(hbs`
+        {{#if this.show}}
+          <div class="random-class">
+            <div
+              id="my-element"
+              {{css-transition
+                leaveClass="opacity-100"
+                leaveActiveClass="duration-1000"
+                leaveToClass="opacity-0"
+              }}
+            >
+            <p class="content">Çup?</p>
+          </div>
+        </div>
+      {{/if}}`);
+
+      assert.dom('#my-element').exists({ count: 1 }, 'element is rendered');
+
+      this.set('show', false);
+      await new Promise(res => setTimeout(res, 250));
+
+      assert.dom('#my-element_clone').exists({ count: 1 }, 'element clone is still rendered');
+    });
+  });
+
   module('Enter and leave via transition classes', function() {
     let testCases = [{
       name: 'element',
