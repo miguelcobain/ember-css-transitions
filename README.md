@@ -1,4 +1,4 @@
-# Ember CSS Transitions [![Build Status](https://travis-ci.org/peec/ember-css-transitions.svg?branch=master)](https://travis-ci.org/peec/ember-css-transitions) [![Ember Observer Score](https://emberobserver.com/badges/ember-css-transitions.svg)](https://emberobserver.com/addons/ember-css-transitions)
+# Ember CSS Transitions [![Build Status](https://github.com/peec/ember-css-transitions/workflows/CI/badge.svg)](https://github.com/peec/ember-css-transitions/actions?query=workflow%3ACI) [![Ember Observer Score](https://emberobserver.com/badges/ember-css-transitions.svg)](https://emberobserver.com/addons/ember-css-transitions)
 
 This addon provides a nice way of defining CSS Transitions for Ember Components. Which means, only css based animations for performance - and no animation library needed.
 
