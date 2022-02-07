@@ -114,7 +114,7 @@ Note: **IE9** does not support CSS3 transitions / animations. They must live wit
 
 ## Contribute
 
-- `git clone <repository-url>` this repository
+- `git clone https://github.com/peec/ember-css-transitions.git` this repository
 - `cd my-addon`
 - `npm install`
 

@@ -2,7 +2,7 @@
 
 ## Installation
 
-* `git clone <repository-url>`
+* `git clone https://github.com/peec/ember-css-transitions.git`
 * `cd my-addon`
 * `npm install`
 
