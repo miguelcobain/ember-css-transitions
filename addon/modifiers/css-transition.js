@@ -1,6 +1,10 @@
 import Modifier from 'ember-modifier';
 
-import { nextTick, sleep, computeTimeout } from 'ember-css-transitions/utils/transition-utils';
+import {
+  nextTick,
+  sleep,
+  computeTimeout,
+} from 'ember-css-transitions/utils/transition-utils';
 
 /**
   Modifier that applies classes. Usage:
@@ -17,13 +21,13 @@ import { nextTick, sleep, computeTimeout } from 'ember-css-transitions/utils/tra
   @public
 */
 export default class CssTransitionModifier extends Modifier {
-
   clone = null;
   parentElement = null;
   nextElementSibling = null;
   installed = false;
 
   /**
+   * @property el
    * @type {(HTMLElement|undefined)}
    * @private
    * @readonly
@@ -33,6 +37,7 @@ export default class CssTransitionModifier extends Modifier {
   }
 
   /**
+   * @property transitionName
    * @type {(String|undefined)}
    * @private
    * @readonly
@@ -42,57 +47,81 @@ export default class CssTransitionModifier extends Modifier {
   }
 
   /**
+   * @property enterClass
    * @type {(String|undefined)}
    * @private
    * @readonly
    */
   get enterClass() {
-    return this.args.named.enterClass || this.transitionName && `${this.transitionName}-enter`;
+    return (
+      this.args.named.enterClass ||
+      (this.transitionName && `${this.transitionName}-enter`)
+    );
   }
 
   /**
+   * @property enterActiveClass
    * @type {(String|undefined)}
    * @private
    * @readonly
    */
   get enterActiveClass() {
-    return this.args.named.enterActiveClass || this.transitionName && `${this.transitionName}-enter-active`;
+    return (
+      this.args.named.enterActiveClass ||
+      (this.transitionName && `${this.transitionName}-enter-active`)
+    );
   }
 
   /**
+   * @property enterToClass
    * @type {(String|undefined)}
    * @private
    * @readonly
    */
   get enterToClass() {
-    return this.args.named.enterToClass || this.transitionName && `${this.transitionName}-enter-to`;
+    return (
+      this.args.named.enterToClass ||
+      (this.transitionName && `${this.transitionName}-enter-to`)
+    );
   }
 
   /**
+   * @property leaveClass
    * @type {(String|undefined)}
    * @private
    * @readonly
    */
   get leaveClass() {
-    return this.args.named.leaveClass || this.transitionName && `${this.transitionName}-leave`;
+    return (
+      this.args.named.leaveClass ||
+      (this.transitionName && `${this.transitionName}-leave`)
+    );
   }
 
   /**
+   * @property leaveActiveClass
    * @type {(String|undefined)}
    * @private
    * @readonly
    */
   get leaveActiveClass() {
-    return this.args.named.leaveActiveClass || this.transitionName && `${this.transitionName}-leave-active`;
+    return (
+      this.args.named.leaveActiveClass ||
+      (this.transitionName && `${this.transitionName}-leave-active`)
+    );
   }
 
   /**
+   * @property leaveToClass
    * @type {(String|undefined)}
    * @private
    * @readonly
    */
   get leaveToClass() {
-    return this.args.named.leaveToClass || this.transitionName && `${this.transitionName}-leave-to`;
+    return (
+      this.args.named.leaveToClass ||
+      (this.transitionName && `${this.transitionName}-leave-to`)
+    );
   }
 
   didInstall() {
@@ -123,9 +152,13 @@ export default class CssTransitionModifier extends Modifier {
   addClone() {
     let original = this.element;
     let parentElement = original.parentElement || this.parentElement;
-    let nextElementSibling = original.nextElementSibling || this.nextElementSibling;
+    let nextElementSibling =
+      original.nextElementSibling || this.nextElementSibling;
 
-    if (nextElementSibling && (nextElementSibling.parentElement !== parentElement)) {
+    if (
+      nextElementSibling &&
+      nextElementSibling.parentElement !== parentElement
+    ) {
       nextElementSibling = null;
     }
 
@@ -155,7 +188,7 @@ export default class CssTransitionModifier extends Modifier {
       yield* this.transition({
         className: this.enterClass,
         activeClassName: this.enterActiveClass,
-        toClassName: this.enterToClass
+        toClassName: this.enterToClass,
       });
 
       if (this.args.named.didTransitionIn) {
@@ -177,7 +210,7 @@ export default class CssTransitionModifier extends Modifier {
       yield* this.transition({
         className: this.leaveClass,
         activeClassName: this.leaveActiveClass,
-        toClassName: this.leaveToClass
+        toClassName: this.leaveToClass,
       });
 
       this.removeClone();

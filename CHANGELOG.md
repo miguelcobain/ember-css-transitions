@@ -1,3 +1,16 @@
+# v3.0.0
+
+#### 🚨 Breaking Changes
+
+- Drop Node.js 10 support ([#69](https://github.com/peec/ember-css-transitions/pull/69))
+
+#### 🏗 Chores
+
+- update ember-modifier to v3 ([#68](https://github.com/peec/ember-css-transitions/pull/68))
+- move `ember-cli-htmlbars` to `devDependencies` ([#67](https://github.com/peec/ember-css-transitions/pull/67]))
+- replace Travis with GH Actions ([#71](https://github.com/peec/ember-css-transitions/pull/71))
+- update ember-cli project and dependencies
+
 # v2.1.0
 
 #### 🏗 Chores
@@ -13,6 +26,7 @@
   Here is a before and after example of a style were were using on the docs.
 
 Before:
+
 ```css
 .example-enter {
   opacity: 0;
@@ -20,7 +34,7 @@ Before:
 
 .example-enter.example-enter-active {
   opacity: 1;
-  transition: opacity .5s ease-in;
+  transition: opacity 0.5s ease-in;
 }
 .example-leave {
   opacity: 1;
@@ -28,25 +42,29 @@ Before:
 
 .example-leave.example-leave-active {
   opacity: 0;
-  transition: opacity .5s ease-in;
+  transition: opacity 0.5s ease-in;
 }
 ```
 
-After: 
+After:
+
 ```css
 /* initial state */
-.example-enter, .example-leave-to {
+.example-enter,
+.example-leave-to {
   opacity: 0;
 }
 
 /* final state */
-.example-enter-to, .example-leave {
+.example-enter-to,
+.example-leave {
   opacity: 1;
 }
 
 /* easings */
-.example-enter-active, .example-leave-active {
-  transition: opacity .5s ease-in;
+.example-enter-active,
+.example-leave-active {
+  transition: opacity 0.5s ease-in;
 }
 ```
 
@@ -64,8 +82,7 @@ Check the documentation to understand exactly what has changed and how you shoul
 
 #### 🐛 Bugfixes
 
-- fixes various failures when an element is removed soon after it is added 
-
+- fixes various failures when an element is removed soon after it is added
 
 # v1.0.0
 

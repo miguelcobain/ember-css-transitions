@@ -1,5 +1,5 @@
+// eslint-disable-next-line ember/no-classic-components
 import Component from '@ember/component';
 
-export default class MyComponent extends Component {
-
-}
+// eslint-disable-next-line ember/require-tagless-components
+export default class MyComponent extends Component {}

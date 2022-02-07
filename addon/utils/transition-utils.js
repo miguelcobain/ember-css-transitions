@@ -44,7 +44,7 @@ export function computeTimeout(element) {
     transitionDelay,
     animationDuration,
     animationDelay,
-    animationIterationCount
+    animationIterationCount,
   } = window.getComputedStyle(element);
 
   // `getComputedStyle` returns durations and delays in the Xs format.
@@ -52,9 +52,14 @@ export function computeTimeout(element) {
   // numeral (0-9), a decimal point, or an exponent, it returns the value up to that point
   // and ignores that character and all succeeding characters.
 
-  let maxDelay = Math.max(parseFloat(animationDelay), parseFloat(transitionDelay));
-  let maxDuration = Math.max(parseFloat(animationDuration) *
-    parseFloat(animationIterationCount), parseFloat(transitionDuration));
+  let maxDelay = Math.max(
+    parseFloat(animationDelay),
+    parseFloat(transitionDelay)
+  );
+  let maxDuration = Math.max(
+    parseFloat(animationDuration) * parseFloat(animationIterationCount),
+    parseFloat(transitionDuration)
+  );
 
   return (maxDelay + maxDuration) * 1000;
 }

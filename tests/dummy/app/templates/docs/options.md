@@ -9,7 +9,7 @@ Here is a simple example that uses both:
 
 {{#docs-demo as |demo|}}
   {{#demo.example name="actions.hbs"}}
-    <button class="docs-btn" {{on "click" (action (mut this.show) (not show))}}>
+    <button class="docs-btn" {{on "click" (action (mut this.show) (not this.show))}}>
       Toggle
     </button>
 
