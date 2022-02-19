@@ -129,8 +129,9 @@ export default class CssTransitionModifier extends Modifier {
       return;
     }
 
-    this.parentElement = this.element.parentElement;
-    this.nextElementSibling = this.element.nextElementSibling;
+    let el = this.getElementToClone();
+    this.parentElement = el.parentElement;
+    this.nextElementSibling = el.nextElementSibling;
 
     this.guardedRun(this.transitionIn);
   }
@@ -150,7 +151,7 @@ export default class CssTransitionModifier extends Modifier {
    * @method addClone
    */
   addClone() {
-    let original = this.element;
+    let original = this.getElementToClone();
     let parentElement = original.parentElement || this.parentElement;
     let nextElementSibling =
       original.nextElementSibling || this.nextElementSibling;
@@ -169,6 +170,22 @@ export default class CssTransitionModifier extends Modifier {
     parentElement.insertBefore(clone, nextElementSibling);
 
     this.clone = clone;
+  }
+
+  /**
+   * Finds the correct element to clone. If `parentSelector` is present, we will
+   * use the closest parent element that matches that selector. Otherwise we use
+   * the element's immediate parentElement directly.
+   *
+   * @private
+   * @method getElementToClone
+   */
+  getElementToClone() {
+    if (this.args.named.parentSelector) {
+      return this.element.closest(this.args.named.parentSelector);
+    } else {
+      return this.element;
+    }
   }
 
   /**
