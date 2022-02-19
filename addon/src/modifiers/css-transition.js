@@ -1,10 +1,6 @@
 import Modifier from 'ember-modifier';
 
-import {
-  nextTick,
-  sleep,
-  computeTimeout,
-} from 'ember-css-transitions/utils/transition-utils';
+import { nextTick, sleep, computeTimeout } from '../utils/transition-utils';
 
 /**
   Modifier that applies classes. Usage:
