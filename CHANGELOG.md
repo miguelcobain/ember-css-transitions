@@ -1,3 +1,10 @@
+# v3.1.0
+
+#### ✨ Features
+
+- a new `parentSelector` argument is supported. This allows you to specify which part of the DOM is going to be destroyed.
+  This might fix some of the leave transitions. See [#61](https://github.com/peec/ember-css-transitions/issues/61) for detailed information.
+
 # v3.0.0
 
 #### 🚨 Breaking Changes
