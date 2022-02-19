@@ -34,7 +34,7 @@ Let's look at one example:
 
 {{#docs-demo as |demo|}}
 {{#demo.example name="slide-fade.hbs"}}
-<button class="docs-btn" {{on "click" (fn (mut this.show) (not show))}}>
+<button class="docs-btn" {{on "click" (fn (mut this.show) (not this.show))}}>
 Toggle
 </button>
 
@@ -66,7 +66,7 @@ Here is an example with TailwindCSS-like styles:
 
 {{#docs-demo as |demo|}}
 {{#demo.example name="insert-destroy-verbose.hbs"}}
-<button class="docs-btn" {{on "click" (fn (mut this.show2) (not show2))}}>
+<button class="docs-btn" {{on "click" (fn (mut this.show2) (not this.show2))}}>
 Toggle
 </button>
 
