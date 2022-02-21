@@ -1,6 +1,6 @@
 {
   "name": "ember-css-transitions",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Ember implementation of CSS Transitions. Just like ng-animate and react animation but for Ember.",
   "keywords": [
     "ember-addon",
@@ -24,7 +24,8 @@
     "start": "ember serve",
     "test": "npm-run-all lint test:*",
     "test:ember": "ember test",
-    "test:ember-compatibility": "ember try:each"
+    "test:ember-compatibility": "ember try:each",
+    "deploy": "ember deploy production"
   },
   "dependencies": {
     "ember-cli-babel": "^7.26.11",
@@ -41,7 +42,7 @@
     "broccoli-asset-rev": "^3.0.0",
     "ember-auto-import": "^2.2.4",
     "ember-cli": "~4.1.1",
-    "ember-cli-addon-docs": "^4.2.1",
+    "ember-cli-addon-docs": "^4.2.2",
     "ember-cli-addon-docs-yuidoc": "^1.0.0",
     "ember-cli-dependency-checker": "^3.2.0",
     "ember-cli-deploy": "^1.0.2",
@@ -67,7 +68,7 @@
     "ember-try": "^2.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-ember": "^10.5.8",
+    "eslint-plugin-ember": "^10.5.9",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-qunit": "^7.2.0",

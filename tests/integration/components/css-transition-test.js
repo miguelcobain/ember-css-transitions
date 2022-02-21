@@ -461,4 +461,43 @@ module('Integration | Component | transition group', function (hooks) {
     this.set('show', false);
     assert.dom('#my-element').doesNotExist();
   });
+
+  test('leave transitions via classes', async function (assert) {
+    assert.expect(4);
+
+    this.set('show', true);
+
+    await render(hbs`
+      {{#if this.show}}
+        <div id="real-parent" class="random-class">
+          <div
+            id="my-element"
+            {{css-transition
+              leaveClass="opacity-100"
+              leaveActiveClass="duration-1000"
+              leaveToClass="opacity-0"
+              parentSelector=".random-class"
+            }}
+          >
+          <p class="content">Çup?</p>
+        </div>
+      </div>
+    {{/if}}`);
+
+    assert.dom('#my-element').exists({ count: 1 }, 'element is rendered');
+
+    this.set('show', false);
+
+    await waitFor('#real-parent_clone');
+
+    assert.dom('#my-element_clone').doesNotExist('normal clone does not exist');
+
+    assert
+      .dom('#real-parent_clone')
+      .exists({ count: 1 }, 'element clone is still rendered');
+
+    assert
+      .dom('#my-element')
+      .exists({ count: 1 }, 'child element is still rendered');
+  });
 });
