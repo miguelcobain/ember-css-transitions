@@ -1,0 +1,53 @@
+{
+  "name": "ember-css-transitions",
+  "version": "3.1.0",
+  "description": "Ember implementation of CSS Transitions. Just like ng-animate and react animation but for Ember.",
+  "keywords": [
+    "ember-addon",
+    "animation"
+  ],
+  "repository": "https://github.com/peec/ember-css-transitions",
+  "license": "MIT",
+  "author": "Petter Kjelkenes <kjelkenes@gmail.com>",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
+    "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
+    "lint:hbs": "ember-template-lint .",
+    "lint:hbs:fix": "ember-template-lint . --fix",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "ember-cli-babel": "^7.26.11",
+    "ember-modifier": "^2.1.2 || ^3.1.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "ember-template-lint": "^3.15.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-ember": "^10.5.9",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-qunit": "^7.2.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.5.1"
+  },
+  "engines": {
+    "node": "12.* || 14.* || >= 16"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "demoURL": "http://peec.github.io/ember-css-transitions/"
+  },
+  "homepage": "https://peec.github.io/ember-css-transitions",
+  "volta": {
+    "extends": "../package.json"
+  }
+}
