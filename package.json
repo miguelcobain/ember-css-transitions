@@ -6,7 +6,8 @@
     "url": "https://github.com/peec/ember-css-transitions.git"
   },
   "workspaces": [
-    "addon"
+    "addon",
+    "test-app"
   ],
   "scripts": {
     "prepare": "cd addon && yarn build",
@@ -36,7 +37,7 @@
           ],
           "dependencyUpdates": [
             "package.json",
-            "test-app/*/package.json"
+            "test-app/package.json"
           ]
         }
       }
