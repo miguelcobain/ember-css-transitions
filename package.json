@@ -6,17 +6,12 @@
     "url": "https://github.com/peec/ember-css-transitions.git"
   },
   "workspaces": [
-    "addon",
-    "test-app"
+    "addon"
   ],
   "scripts": {
     "prepare": "cd addon && yarn build",
     "release": "release-it"
   },
-  "workspaces": [
-    "addon",
-    "test-app"
-  ],
   "devDependencies": {
     "release-it": "^14.2.1",
     "release-it-lerna-changelog": "^3.1.0",
