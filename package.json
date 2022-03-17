@@ -1,5 +1,6 @@
 {
   "private": true,
+  "version": "3.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/peec/ember-css-transitions.git"
@@ -8,6 +9,10 @@
     "addon",
     "test-app"
   ],
+  "scripts": {
+    "prepare": "cd addon && yarn build",
+    "release": "release-it"
+  },
   "devDependencies": {
     "release-it": "^14.2.1",
     "release-it-lerna-changelog": "^3.1.0",
@@ -20,9 +25,22 @@
     "plugins": {
       "release-it-lerna-changelog": {
         "infile": "CHANGELOG.md",
-        "launchEditor": false
+        "launchEditor": true
       },
-      "release-it-yarn-workspaces": true
+      "release-it-yarn-workspaces": {
+        "workspaces": [
+          "addon"
+        ],
+        "additionalManifests": {
+          "versionUpdates": [
+            "package.json"
+          ],
+          "dependencyUpdates": [
+            "package.json",
+            "test-app/package.json"
+          ]
+        }
+      }
     },
     "git": {
       "tagName": "v${version}"

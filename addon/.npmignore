@@ -1,0 +1,17 @@
+# source
+/src/
+
+# dependencies
+/bower_components/
+
+# misc
+/.eslintcache
+/.eslintignore
+/.eslintrc.js
+/.gitignore
+/.prettierignore
+/.prettierrc.js
+/.template-lintrc.js
+/addon-main.js
+/yarn-error.log
+.gitkeep
