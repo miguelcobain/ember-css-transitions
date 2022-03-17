@@ -1,9 +1,6 @@
 # source
 /src/
 
-# dependencies
-/bower_components/
-
 # misc
 /.eslintcache
 /.eslintignore
@@ -12,6 +9,5 @@
 /.prettierignore
 /.prettierrc.js
 /.template-lintrc.js
-/addon-main.js
+/rollup.config.js
 /yarn-error.log
-.gitkeep

@@ -4,12 +4,12 @@
 
 * `git clone https://github.com/peec/ember-css-transitions.git`
 * `cd ember-css-transitions`
-* `npm install`
+* `yarn install`
 
 ## Linting
 
-* `npm run lint`
-* `npm run lint:fix`
+* `yarn run lint`
+* `yarn run lint:fix`
 
 ## Running tests
 
