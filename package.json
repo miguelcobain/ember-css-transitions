@@ -32,10 +32,11 @@
           "addon"
         ],
         "additionalManifests": {
-          "versionUpdates": [
-            "package.json"
-          ],
           "dependencyUpdates": [
+            "package.json",
+            "test-app/package.json"
+          ],
+          "versionUpdates": [
             "package.json",
             "test-app/package.json"
           ]
