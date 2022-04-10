@@ -7,25 +7,28 @@ The arguments are called `didTransitionIn` or `didTransitionOut`.
 
 Here is a simple example that uses both:
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name="actions.hbs"}}
+<DocsDemo as |demo|>
+  <demo.example @name="actions.hbs">
     <button class="docs-btn" {{on "click" (action (mut this.show) (not this.show))}}>
       Toggle
     </button>
 
     {{#if this.show}}
-      <div {{css-transition "slide-fade"
-        didTransitionIn=this.didTransitionIn
-        didTransitionOut=this.didTransitionOut}}>
+      <div
+        {{css-transition "slide-fade"
+          didTransitionIn=this.didTransitionIn
+          didTransitionOut=this.didTransitionOut
+        }}
+      >
         <h1>Hello world</h1>
       </div>
     {{/if}}
 
-  {{/demo.example}}
+  </demo.example>
 
-  {{demo.snippet "actions.hbs"}}
-  {{demo.snippet "actions.js"}}
-{{/docs-demo}}
+  <demo.snippet @name="actions.hbs" />
+  <demo.snippet @name="actions.js" />
+</DocsDemo>
 
 ## Enabling/Disabling
 
@@ -39,8 +42,8 @@ want to disable animations/transitions in a given feature/use case.
 
 In the demo below you will not see any animations.
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name="is-enabled.hbs"}}
+<DocsDemo as |demo|>
+  <demo.example @name="is-enabled.hbs">
     <button class="docs-btn" {{on "click" (fn (mut this.show2) (not this.show2))}}>
       Toggle
     </button>
@@ -51,17 +54,17 @@ In the demo below you will not see any animations.
       </div>
     {{/if}}
 
-  {{/demo.example}}
+  </demo.example>
 
-  {{demo.snippet "is-enabled.hbs"}}
-{{/docs-demo}}
+  <demo.snippet @name="is-enabled.hbs" />
+</DocsDemo>
 
 ## `parentSelector`
 
 Sometimes the things you want to animate are nested deep in the DOM. Because our modifier uses clones
 to animate leave transitions, it might happen that at the time to add the clone, the parent element no longer
 exists. The `parentSelector` argument allows you to specify a selector to use as the element to clone.
-Generally, the correct element is the one imediately inside the `{{#if` statement. See [#61](https://github.com/peec/ember-css-transitions/issues/61)
+Generally, the correct element is the one immediately inside the `{{#if` statement. See [#61](https://github.com/peec/ember-css-transitions/issues/61)
 for more information on this issue.
 
 <aside>
@@ -69,8 +72,8 @@ for more information on this issue.
   If you need IE11 support, you can consider using <a href="https://github.com/miguelcobain/ember-cli-element-closest-polyfill" class="docs-md__a" target="_blank">ember-cli-element-closest-polyfill</a>.
 </aside>
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name="parent-selector.hbs"}}
+<DocsDemo as |demo|>
+  <demo.example @name="parent-selector.hbs">
     <button class="docs-btn" {{on "click" (fn (mut this.show3) (not this.show3))}}>
       Toggle
     </button>
@@ -85,7 +88,7 @@ for more information on this issue.
       </div>
     {{/if}}
 
-  {{/demo.example}}
+  </demo.example>
 
-  {{demo.snippet "parent-selector.hbs"}}
-{{/docs-demo}}
+  <demo.snippet @name="parent-selector.hbs" />
+</DocsDemo>

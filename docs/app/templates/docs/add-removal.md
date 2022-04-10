@@ -5,8 +5,8 @@ In this case just the act of insert/removing a class should be enough and this a
 
 Here is an example of such an animation:
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name="class-add-removal-verbose.hbs"}}
+<DocsDemo as |demo|>
+  <demo.example @name="class-add-removal-verbose.hbs">
     <button class="docs-btn" {{on "click" (fn (mut this.isImportant) (not this.isImportant))}}>
       Toggle
     </button>
@@ -15,8 +15,8 @@ Here is an example of such an animation:
       <h1>A very important text.</h1>
     </div>
 
-  {{/demo.example}}
+  </demo.example>
 
-  {{demo.snippet "class-add-removal-verbose.hbs"}}
-  {{demo.snippet "class-add-removal-verbose.css"}}
-{{/docs-demo}}
+  <demo.snippet @name="class-add-removal-verbose.hbs" />
+  <demo.snippet @name="class-add-removal-verbose.css" />
+</DocsDemo>

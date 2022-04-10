@@ -7,7 +7,9 @@ module.exports = function (defaults) {
     autoImport: {
       watchDependencies: ['ember-css-transitions'],
     },
-    // Add options here
+    'ember-cli-addon-docs': {
+      documentingAddonAt: '../addon',
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
@@ -23,12 +25,5 @@ module.exports = function (defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  const { maybeEmbroider } = require('@embroider/test-setup');
-  return maybeEmbroider(app, {
-    skipBabel: [
-      {
-        package: 'qunit',
-      },
-    ],
-  });
+  return app.toTree();
 };

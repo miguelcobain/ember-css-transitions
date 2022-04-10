@@ -12,8 +12,8 @@ ember install ember-css-transitions
 
 In its simplest form, this modifier allows you top write css animations in the following form:
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name="intro-example.hbs"}}
+<DocsDemo as |demo|>
+  <demo.example @name="intro-example.hbs">
     <button class="docs-btn" {{on "click" (fn (mut this.show) (not this.show))}}>
       Toggle
     </button>
@@ -24,11 +24,11 @@ In its simplest form, this modifier allows you top write css animations in the f
       </div>
     {{/if}}
 
-  {{/demo.example}}
+  </demo.example>
 
-  {{demo.snippet "intro-example.css"}}
-  {{demo.snippet "intro-example.hbs"}}
-{{/docs-demo}}
+  <demo.snippet @name="intro-example.css" />
+  <demo.snippet @name="intro-example.hbs" />
+</DocsDemo>
 
 This addon is also has a good synergy with libraries like [Animate.css](https://animate.style/) and [Tailwind CSS](https://tailwindcss.com/) because it allows
 customization of the class names that are applied.
