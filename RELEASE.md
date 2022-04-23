@@ -58,3 +58,8 @@ release process. It will prompt you to choose the version number after which
 you will have the chance to hand tweak the changelog to be used (for the
 `CHANGELOG.md` and GitHub release), then `release-it` continues on to tagging,
 pushing the tag and commits, etc.
+
+## Unstable Tag
+
+For every push to the master branch, [`Publish Unstable`](./.github/workflows/publish-unstable.yml)
+publishes an NPM package to the "unstable" NPM tag.
