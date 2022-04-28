@@ -1,5 +1,16 @@
 ## v4.0.0 (2022-03-17)
 
+#### 🚨 Breaking Change
+* [#77](https://github.com/miguelcobain/ember-css-transitions/pull/77) Convert to addon v2 ([@AnastasiiaPlutalova](https://github.com/AnastasiiaPlutalova))
+
+#### 🏠 Internal
+* [#78](https://github.com/miguelcobain/ember-css-transitions/pull/78) fix addon .npmignore entries ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#76](https://github.com/miguelcobain/ember-css-transitions/pull/76) Converting to monorepo ([@AnastasiiaPlutalova](https://github.com/AnastasiiaPlutalova))
+
+#### Committers: 2
+- AnastasiiaPlutalova ([@AnastasiiaPlutalova](https://github.com/AnastasiiaPlutalova))
+- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))
+
 # v3.1.0
 
 #### ✨ Features
