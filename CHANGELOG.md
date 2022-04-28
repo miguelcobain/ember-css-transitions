@@ -1,3 +1,24 @@
+
+## v4.1.0 (2022-04-28)
+
+#### :rocket: Enhancement
+* [#87](https://github.com/miguelcobain/ember-css-transitions/pull/87) Make compatible with ember-modifier 4.x ([@SergeAstapov](https://github.com/SergeAstapov))
+
+#### :memo: Documentation
+* [#92](https://github.com/miguelcobain/ember-css-transitions/pull/92) update github url ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#91](https://github.com/miguelcobain/ember-css-transitions/pull/91) add v4 changelog ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#89](https://github.com/miguelcobain/ember-css-transitions/pull/89) Improve contributing docs ([@SergeAstapov](https://github.com/SergeAstapov))
+
+#### :house: Internal
+* [#93](https://github.com/miguelcobain/ember-css-transitions/pull/93) run `npx ember-cli-update --to=4.3.0` to align with blueprint ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#88](https://github.com/miguelcobain/ember-css-transitions/pull/88) Extract docs into separate app ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#85](https://github.com/miguelcobain/ember-css-transitions/pull/85)  move `.md` files to published package ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#81](https://github.com/miguelcobain/ember-css-transitions/pull/81) Update release-it config ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#80](https://github.com/miguelcobain/ember-css-transitions/pull/80) Add `publishConfig.registry` to addon/package.json ([@SergeAstapov](https://github.com/SergeAstapov))
+
+#### Committers: 1
+- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))
+
 ## v4.0.0 (2022-03-17)
 
 #### 🚨 Breaking Change

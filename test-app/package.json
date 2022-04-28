@@ -1,6 +1,6 @@
 {
   "name": "test-app",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "private": true,
   "description": "Ember implementation of CSS Transitions. Just like ng-animate and react animation but for Ember.",
   "keywords": [
@@ -43,7 +43,7 @@
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
-    "ember-css-transitions": "4.0.0",
+    "ember-css-transitions": "4.1.0",
     "ember-data": "~4.3.0",
     "ember-export-application-global": "^2.0.1",
     "ember-load-initializers": "^2.1.2",
