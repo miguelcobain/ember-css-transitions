@@ -6,8 +6,8 @@
     "ember-addon",
     "animation"
   ],
-  "homepage": "https://peec.github.io/ember-css-transitions",
-  "repository": "https://github.com/peec/ember-css-transitions",
+  "homepage": "https://miguelcobain.github.io/ember-css-transitions",
+  "repository": "https://github.com/miguelcobain/ember-css-transitions",
   "license": "MIT",
   "author": "Petter Kjelkenes <kjelkenes@gmail.com>",
   "exports": {
@@ -63,7 +63,7 @@
     "edition": "octane"
   },
   "ember-addon": {
-    "demoURL": "http://peec.github.io/ember-css-transitions/",
+    "demoURL": "http://miguelcobain.github.io/ember-css-transitions/",
     "main": "addon-main.js",
     "type": "addon",
     "version": 2,

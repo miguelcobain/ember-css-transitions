@@ -64,7 +64,7 @@ In the demo below you will not see any animations.
 Sometimes the things you want to animate are nested deep in the DOM. Because our modifier uses clones
 to animate leave transitions, it might happen that at the time to add the clone, the parent element no longer
 exists. The `parentSelector` argument allows you to specify a selector to use as the element to clone.
-Generally, the correct element is the one immediately inside the `{{#if` statement. See [#61](https://github.com/peec/ember-css-transitions/issues/61)
+Generally, the correct element is the one immediately inside the `{{#if` statement. See [#61](https://github.com/miguelcobain/ember-css-transitions/issues/61)
 for more information on this issue.
 
 <aside>

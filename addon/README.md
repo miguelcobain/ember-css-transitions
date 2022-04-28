@@ -1,4 +1,4 @@
-# Ember CSS Transitions [![Build Status](https://github.com/peec/ember-css-transitions/workflows/CI/badge.svg)](https://github.com/peec/ember-css-transitions/actions?query=workflow%3ACI) [![Ember Observer Score](https://emberobserver.com/badges/ember-css-transitions.svg)](https://emberobserver.com/addons/ember-css-transitions)
+# Ember CSS Transitions [![Build Status](https://github.com/miguelcobain/ember-css-transitions/workflows/CI/badge.svg)](https://github.com/miguelcobain/ember-css-transitions/actions?query=workflow%3ACI) [![Ember Observer Score](https://emberobserver.com/badges/ember-css-transitions.svg)](https://emberobserver.com/addons/ember-css-transitions)
 
 This addon provides a nice way of defining CSS Transitions for Ember Components. Which means, only css based animations for performance - and no animation library needed.
 
@@ -8,7 +8,7 @@ Animations are completely based on CSS classes.
 
 ## Documentation
 
-- [https://peec.github.io/ember-css-transitions/](https://peec.github.io/ember-css-transitions/)
+- [https://miguelcobain.github.io/ember-css-transitions/](https://miguelcobain.github.io/ember-css-transitions/)
 
 ## How it works
 
@@ -83,7 +83,7 @@ You should map these instructions to this addon's API in the following way:
 | From       | leaveClass       |
 | To         | leaveToClass     |
 
-Check out the homepage for more detailed documentation: [https://peec.github.io/ember-css-transitions/](https://peec.github.io/ember-css-transitions/)
+Check out the homepage for more detailed documentation: [https://miguelcobain.github.io/ember-css-transitions/](https://miguelcobain.github.io/ember-css-transitions/)
 
 ## Install
 
@@ -114,7 +114,7 @@ Note: **IE9** does not support CSS3 transitions / animations. They must live wit
 
 ## Contribute
 
-- `git clone https://github.com/peec/ember-css-transitions.git` this repository
+- `git clone https://github.com/miguelcobain/ember-css-transitions.git` this repository
 - `cd my-addon`
 - `npm install`
 

@@ -3,7 +3,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/peec/ember-css-transitions.git"
+    "url": "https://github.com/miguelcobain/ember-css-transitions.git"
   },
   "workspaces": [
     "addon",
