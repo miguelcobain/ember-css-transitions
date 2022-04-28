@@ -8,7 +8,7 @@ This repo is divided into multiple packages using Yarn workspaces:
 
 ## Installation
 
-* `git clone https://github.com/peec/ember-css-transitions.git`
+* `git clone https://github.com/miguelcobain/ember-css-transitions.git`
 * `cd ember-css-transitions`
 * `yarn install`
 

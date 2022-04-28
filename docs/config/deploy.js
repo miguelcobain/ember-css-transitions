@@ -4,7 +4,7 @@ module.exports = function (deployTarget) {
   let ENV = {
     build: {},
     git: {
-      repo: 'git@github.com:peec/ember-css-transitions',
+      repo: 'git@github.com:miguelcobain/ember-css-transitions',
       worktreePath: '../../deploy-ember-css-transitions-docs',
     },
     // include other plugin configuration that applies to all deploy targets here

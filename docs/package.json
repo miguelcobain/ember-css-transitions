@@ -4,8 +4,8 @@
   "private": true,
   "description": "Docs app for ember-css-transitions",
   "keywords": [],
-  "homepage": "https://peec.github.io/ember-css-transitions",
-  "repository": "https://github.com/peec/ember-css-transitions",
+  "homepage": "https://miguelcobain.github.io/ember-css-transitions",
+  "repository": "https://github.com/miguelcobain/ember-css-transitions",
   "license": "MIT",
   "author": "Petter Kjelkenes <kjelkenes@gmail.com>",
   "directories": {

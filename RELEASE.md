@@ -58,16 +58,3 @@ release process. It will prompt you to choose the version number after which
 you will have the chance to hand tweak the changelog to be used (for the
 `CHANGELOG.md` and GitHub release), then `release-it` continues on to tagging,
 pushing the tag and commits, etc.
-
-## Docs site
-
-Once release is done, you should update docs side:
-
-* First build the documentation application:
-
-  ```shell
-  cd docs && yarn deploy
-  ```
-
-From there, GitHub Pages takes care of deploying documentation site to [http://peec.github.io/ember-css-transitions/](http://peec.github.io/ember-css-transitions/).
-You may check the deployment status via GitHub actions [pages-build-deployment workflow](https://github.com/peec/ember-css-transitions/actions/workflows/pages/pages-build-deployment).
