@@ -1,8 +1,23 @@
 /*!
+ * @overview RSVP - a tiny implementation of Promises/A+.
+ * @copyright Copyright (c) 2016 Yehuda Katz, Tom Dale, Stefan Penner and contributors
+ * @license   Licensed under MIT license
+ *            See https://raw.githubusercontent.com/tildeio/rsvp.js/master/LICENSE
+ * @version   4.8.4+ff10049b
+ */
+
+/*!
  * clipboard.js v2.0.10
  * https://clipboardjs.com/
  *
  * Licensed MIT © Zeno Rocha
+ */
+
+/*!
+ * isobject <https://github.com/jonschlinkert/isobject>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
  */
 
 /*!
@@ -61,6 +76,8 @@
  * Copyright (C) 2020 Oliver Nightingale
  */
 
+/*! https://mths.be/he v1.2.0 by @mathias | MIT license */
+
 /*! tether 1.4.7 */
 
 /**
@@ -70,6 +87,12 @@
  * Released under MIT license <https://lodash.com/license>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/**
+ * line-column - Convert efficiently index to/from line-column in a string
+ * @module  lineColumn
+ * @license MIT
  */
 
 /**
