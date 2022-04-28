@@ -32,8 +32,8 @@ Here is a diagram taken from the [VueJS docs](https://vuejs.org/v2/guide/transit
 
 Let's look at one example:
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name="slide-fade.hbs"}}
+<DocsDemo as |demo|>
+  <demo.example @name="slide-fade.hbs">
     <button class="docs-btn" {{on "click" (fn (mut this.show) (not this.show))}}>
       Toggle
     </button>
@@ -44,13 +44,13 @@ Let's look at one example:
       </div>
     {{/if}}
 
-  {{/demo.example}}
+  </demo.example>
 
-  {{demo.snippet "slide-fade.css"}}
-  {{demo.snippet "slide-fade.hbs"}}
-{{/docs-demo}}
+  <demo.snippet @name="slide-fade.css" />
+  <demo.snippet @name="slide-fade.hbs" />
+</DocsDemo>
 
-## Custom Transition Classess
+## Custom Transition Classes
 
 Each individual class can also be specified independently by providing the following arguments:
 
@@ -64,8 +64,8 @@ Each individual class can also be specified independently by providing the follo
 This is perfect for libraries like [Animate.css](https://animate.style/) and [Tailwind CSS](https://tailwindcss.com/).
 Here is an example with TailwindCSS-like styles:
 
-{{#docs-demo as |demo|}}
-  {{#demo.example name="insert-destroy-verbose.hbs"}}
+<DocsDemo as |demo|>
+  <demo.example @name="insert-destroy-verbose.hbs">
     <button class="docs-btn" {{on "click" (fn (mut this.show2) (not this.show2))}}>
       Toggle
     </button>
@@ -82,11 +82,11 @@ Here is an example with TailwindCSS-like styles:
       </div>
     {{/if}}
 
-  {{/demo.example}}
+  </demo.example>
 
-  {{demo.snippet "insert-destroy-verbose.hbs"}}
-  {{demo.snippet "insert-destroy-verbose.css"}}
-{{/docs-demo}}
+  <demo.snippet @name="insert-destroy-verbose.hbs" />
+  <demo.snippet @name="insert-destroy-verbose.css" />
+</DocsDemo>
 
 You're free to customize your element like you normally would. The modifier will only apply and remove the transition classes and nothing else.
 
