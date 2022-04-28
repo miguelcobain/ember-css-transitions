@@ -2,7 +2,6 @@
   "name": "test-app",
   "version": "4.0.0",
   "private": true,
-  "private": true,
   "description": "Ember implementation of CSS Transitions. Just like ng-animate and react animation but for Ember.",
   "keywords": [
     "animation"
@@ -27,9 +26,6 @@
     "test": "npm-run-all lint test:*",
     "test:ember": "ember test",
     "test:ember-compatibility": "ember try:each"
-  },
-  "resolutions": {
-    "babel-import-util": "1.1.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
