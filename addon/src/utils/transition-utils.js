@@ -1,8 +1,7 @@
 import { later } from '@ember/runloop';
-import { Promise } from 'rsvp';
 
 /**
- * Function that returns a promise that resolves after after DOM changes
+ * Function that returns a promise that resolves after DOM changes
  * have been flushed and after a browser repaint.
  *
  * @function nextTick
