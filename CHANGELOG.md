@@ -1,4 +1,16 @@
 
+
+## v4.2.0 (2022-09-21)
+
+#### :rocket: Enhancement
+* [#103](https://github.com/miguelcobain/ember-css-transitions/pull/103) remove class properties transpilation ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#95](https://github.com/miguelcobain/ember-css-transitions/pull/95) feat: Add glint types ([@muziejus](https://github.com/muziejus))
+* [#98](https://github.com/miguelcobain/ember-css-transitions/pull/98) Replace use of RSVP with native Promise ([@SergeAstapov](https://github.com/SergeAstapov))
+
+#### Committers: 2
+- Moacir P. de Sá Pereira ([@muziejus](https://github.com/muziejus))
+- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))
+
 ## v4.1.0 (2022-04-28)
 
 #### :rocket: Enhancement
