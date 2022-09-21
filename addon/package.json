@@ -21,7 +21,8 @@
   },
   "files": [
     "addon-main.js",
-    "dist"
+    "dist",
+    "types"
   ],
   "scripts": {
     "build": "rollup --config",
