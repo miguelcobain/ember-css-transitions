@@ -15,6 +15,13 @@
     "./*": "./dist/*",
     "./addon-main.js": "./addon-main.js"
   },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "types/*"
+      ]
+    }
+  },
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -73,12 +80,5 @@
   },
   "volta": {
     "extends": "../package.json"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "types/*"
-      ]
-    }
   }
 }
