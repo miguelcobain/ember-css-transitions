@@ -16,9 +16,9 @@
     "test": "cd test-app && yarn test"
   },
   "devDependencies": {
-    "release-it": "^15.4.2",
     "@release-it-plugins/lerna-changelog": "^5.0.0",
-    "@release-it-plugins/workspaces": "^3.2.0"
+    "@release-it-plugins/workspaces": "^3.2.0",
+    "release-it": "^15.4.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
