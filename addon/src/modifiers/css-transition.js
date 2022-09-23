@@ -27,7 +27,7 @@ if (macroCondition(dependencySatisfies('ember-modifier', '>=3.2.0 || 4.x'))) {
     parentElement = null;
     nextElementSibling = null;
     installed = false;
-    finishedTransitionIn = false;
+    startedTransitionIn = false;
     isEnabled = true;
     parentSelector;
 
@@ -108,7 +108,7 @@ if (macroCondition(dependencySatisfies('ember-modifier', '>=3.2.0 || 4.x'))) {
       super(owner, args);
 
       registerDestructor(this, () => {
-        if (this.isEnabled === false || !this.finishedTransitionIn) {
+        if (this.isEnabled === false || !this.startedTransitionIn) {
           return;
         }
 
@@ -222,6 +222,8 @@ if (macroCondition(dependencySatisfies('ember-modifier', '>=3.2.0 || 4.x'))) {
     }
 
     *transitionIn() {
+      this.startedTransitionIn = true;
+
       if (this.enterClass) {
         yield* this.transition({
           className: this.enterClass,
@@ -233,8 +235,6 @@ if (macroCondition(dependencySatisfies('ember-modifier', '>=3.2.0 || 4.x'))) {
           this.didTransitionIn();
         }
       }
-
-      this.finishedTransitionIn = true;
     }
 
     *transitionOut() {

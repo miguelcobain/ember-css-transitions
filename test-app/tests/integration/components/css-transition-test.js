@@ -500,4 +500,146 @@ module('Integration | Component | transition group', function (hooks) {
       .dom('#my-element')
       .exists({ count: 1 }, 'child element is still rendered');
   });
+
+  module('Always call didTransitionOut', function () {
+    let testCases = [
+      {
+        name: 'element',
+        template: hbs`
+        <style>
+          .window-enter,
+          .window-leave-to {
+            opacity: 0;
+            transform: scale(0.9);
+          }
+
+          .window-enter-active,
+          .window-leave-active {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+          }
+
+          .window-enter-to,
+          .window-leave {
+            opacity: 1;
+            transform: scale(1);
+          }
+        </style>
+
+        {{#if this.show}}
+          <div id="my-element" {{css-transition
+            enterClass="window-enter"
+            enterActiveClass="window-enter-active"
+            enterToClass="window-enter-to"
+            leaveClass="window-leave"
+            leaveActiveClass="window-leave-active"
+            leaveToClass="window-leave-to"
+            didTransitionOut=this.didTransitionOut
+          }}>
+            <p class="content">Çup?</p>
+          </div>
+        {{/if}}
+      `,
+      },
+      {
+        name: 'classic component',
+        template: hbs`
+        <style>
+          .window-enter,
+          .window-leave-to {
+            opacity: 0;
+            transform: scale(0.9);
+          }
+
+          .window-enter-active,
+          .window-leave-active {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+          }
+
+          .window-enter-to,
+          .window-leave {
+            opacity: 1;
+            transform: scale(1);
+          }
+        </style>
+
+        {{#if this.show}}
+          <MyComponent id="my-element" {{css-transition
+            enterClass="window-enter"
+            enterActiveClass="window-enter-active"
+            enterToClass="window-enter-to"
+            leaveClass="window-leave"
+            leaveActiveClass="window-leave-active"
+            leaveToClass="window-leave-to"
+            didTransitionOut=this.didTransitionOut
+          }}>
+            <p class="content">Çup?</p>
+          </MyComponent>
+        {{/if}}
+      `,
+      },
+      {
+        name: 'glimmer component',
+        template: hbs`
+        <style>
+          .window-enter,
+          .window-leave-to {
+            opacity: 0;
+            transform: scale(0.9);
+          }
+
+          .window-enter-active,
+          .window-leave-active {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+          }
+
+          .window-enter-to,
+          .window-leave {
+            opacity: 1;
+            transform: scale(1);
+          }
+        </style>
+
+        {{#if this.show}}
+          <GlimmerComponent id="my-element" {{css-transition
+            enterClass="window-enter"
+            enterActiveClass="window-enter-active"
+            enterToClass="window-enter-to"
+            leaveClass="window-leave"
+            leaveActiveClass="window-leave-active"
+            leaveToClass="window-leave-to"
+            didTransitionOut=this.didTransitionOut
+          }}>
+            <p class="content">Çup?</p>
+          </GlimmerComponent>
+        {{/if}}
+      `,
+      },
+    ];
+
+    testCases.forEach((i) => {
+      test(`didTransitionOut is called for (${i.name})`, async function (assert) {
+        this.didTransitionOut = () => {
+          assert.step('transition-out');
+        };
+
+        this.set('show', false);
+
+        await render(i.template);
+
+        this.set('show', true);
+
+        await new Promise((resolve) => {
+          setTimeout(resolve, 1);
+        });
+
+        this.set('show', false);
+
+        await new Promise((resolve) => {
+          setTimeout(resolve, 2000);
+        });
+
+        assert.verifySteps(['transition-out']);
+      });
+    });
+  });
 });
