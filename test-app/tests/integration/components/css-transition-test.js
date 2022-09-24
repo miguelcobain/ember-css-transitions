@@ -197,6 +197,11 @@ module('Integration | Component | transition group', function (hooks) {
           this.didTransitionOut.notCalled,
           'didTransitionOut was not called'
         );
+
+        await new Promise((resolve) => {
+          setTimeout(resolve, 1000);
+        });
+
         assert.dom('#my-element_clone').doesNotExist('clone was not created');
       });
 
@@ -228,6 +233,11 @@ module('Integration | Component | transition group', function (hooks) {
           this.didTransitionOut.notCalled,
           'didTransitionOut was not called'
         );
+
+        await new Promise((resolve) => {
+          setTimeout(resolve, 1000);
+        });
+
         assert.dom('#my-element_clone').doesNotExist('clone was not created');
       });
     });
