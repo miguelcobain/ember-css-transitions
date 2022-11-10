@@ -26,6 +26,7 @@
     "test:ember": "ember test"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.2",
     "@babel/eslint-parser": "^7.17.0",
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "2.7.0",
@@ -49,6 +50,7 @@
     "ember-css-transitions": "4.2.0",
     "ember-data": "~4.3.0",
     "ember-export-application-global": "^2.0.1",
+    "ember-fetch": "^8.1.2",
     "ember-load-initializers": "^2.1.2",
     "ember-page-title": "^7.0.0",
     "ember-qunit": "^5.1.5",
