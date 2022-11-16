@@ -7,15 +7,6 @@ dist/
 node_modules/
 
 # misc
-/addon/README.md
-/addon/LICENSE.md
 .env*
 .eslintcache
-.pnp*
-.sass-cache
-connect.lock
-coverage/
-libpeerconnection.log
-npm-debug.log*
 yarn-error.log
-.DS_Store
