@@ -140,30 +140,9 @@ declare module '@glint/environment-ember-loose/registry' {
 > Note that Glint itself is still under active development, and as such breaking changes might occur.
 > Therefore, Glint support by this addon is also considered experimental, and not covered by our SemVer contract!
 
-## Contribute
+## Contributing
 
-- `git clone https://github.com/miguelcobain/ember-css-transitions.git` this repository
-- `cd my-addon`
-- `npm install`
-
-### Linting
-
-- `npm run lint:hbs`
-- `npm run lint:js`
-- `npm run lint:js -- --fix`
-
-### Running tests
-
-- `ember test` – Runs the test suite on the current Ember version
-- `ember test --server` – Runs the test suite in "watch mode"
-- `ember try:each` – Runs the test suite against multiple Ember versions
-
-### Running the test-app application
-
-- `ember serve`
-- Visit the test-app application at [http://localhost:4200](http://localhost:4200).
-
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+See the [Contributing](CONTRIBUTING.md) guide for details.
 
 ## License
 

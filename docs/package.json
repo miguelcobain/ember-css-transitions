@@ -78,7 +78,7 @@
   },
   "ember-addon": {
     "paths": [
-      "../addon"
+      "../ember-css-transitions"
     ]
   },
   "volta": {

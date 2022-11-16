@@ -8,7 +8,7 @@ module.exports = function (defaults) {
       watchDependencies: ['ember-css-transitions'],
     },
     'ember-cli-addon-docs': {
-      documentingAddonAt: '../addon',
+      documentingAddonAt: '../ember-css-transitions',
     },
   });
 

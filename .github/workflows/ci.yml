@@ -29,7 +29,7 @@ jobs:
 
       - name: Lint Addon
         run: yarn lint
-        working-directory: addon
+        working-directory: ember-css-transitions
 
       - name: Lint Test App
         run: yarn lint
@@ -143,7 +143,7 @@ jobs:
 
       - name: Update ember-modifier version
         run: yarn add -D ${{ matrix.ember-modifier-scenario }}
-        working-directory: addon
+        working-directory: ember-css-transitions
 
       # Older versions of ember-modifier have different TS signature
       # and would fail typechecking.

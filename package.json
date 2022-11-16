@@ -6,12 +6,12 @@
     "url": "https://github.com/miguelcobain/ember-css-transitions.git"
   },
   "workspaces": [
-    "addon",
+    "ember-css-transitions",
     "docs",
     "test-app"
   ],
   "scripts": {
-    "prepare": "cd addon && yarn build",
+    "prepare": "cd ember-css-transitions && yarn build",
     "release": "release-it",
     "test": "cd test-app && yarn test"
   },
@@ -25,7 +25,7 @@
   },
   "release-it": {
     "hooks": {
-      "before:init": "cp README.md LICENSE.md addon/",
+      "before:init": "cp README.md LICENSE.md ember-css-transitions/",
       "after:release": "cd docs && yarn deploy"
     },
     "plugins": {
@@ -35,7 +35,7 @@
       },
       "@release-it-plugins/workspaces": {
         "workspaces": [
-          "addon"
+          "ember-css-transitions"
         ],
         "additionalManifests": {
           "dependencyUpdates": [
