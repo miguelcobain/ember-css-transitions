@@ -12,6 +12,8 @@ module.exports = async function () {
         npm: {
           devDependencies: {
             'ember-source': '~3.24.3',
+            'ember-data': '~3.24.0',
+            '@ember/test-helpers': '2.7.0',
           },
         },
       },
@@ -20,6 +22,16 @@ module.exports = async function () {
         npm: {
           devDependencies: {
             'ember-source': '~3.28.0',
+            '@ember/test-helpers': '2.7.0',
+          },
+        },
+      },
+      {
+        name: 'ember-lts-4.4',
+        npm: {
+          devDependencies: {
+            'ember-source': '~4.4.0',
+            '@ember/test-helpers': '2.7.0',
           },
         },
       },
@@ -59,6 +71,7 @@ module.exports = async function () {
         npm: {
           devDependencies: {
             'ember-source': '~3.28.0',
+            '@ember/test-helpers': '2.7.0',
           },
           ember: {
             edition: 'classic',
