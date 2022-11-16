@@ -108,7 +108,13 @@ module('Integration | Component | transition group', function (hooks) {
 
         this.set('show', false);
 
-        await waitFor('#my-element_clone.example-leave');
+        // waitFor may run too late and cause false-negative test failure.
+        await new Promise((resolve) =>
+          window.requestAnimationFrame(() => resolve())
+        );
+        if (!find('#my-element_clone.example-leave')) {
+          await waitFor('#my-element_clone.example-leave');
+        }
 
         assert
           .dom('#my-element_clone')
@@ -331,7 +337,13 @@ module('Integration | Component | transition group', function (hooks) {
 
         this.set('show', false);
 
-        await waitFor('#my-element_clone.opacity-100');
+        // waitFor may run too late and cause false-negative test failure.
+        await new Promise((resolve) =>
+          window.requestAnimationFrame(() => resolve())
+        );
+        if (!find('#my-element_clone.opacity-100')) {
+          await waitFor('#my-element_clone.opacity-100');
+        }
 
         assert
           .dom('#my-element_clone')
