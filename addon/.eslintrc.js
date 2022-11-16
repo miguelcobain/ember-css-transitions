@@ -24,12 +24,7 @@ module.exports = {
   overrides: [
     // node files
     {
-      files: [
-        './.eslintrc.js',
-        './.prettierrc.js',
-        './.template-lintrc.js',
-        './addon-main.js',
-      ],
+      files: ['./.eslintrc.js', './.prettierrc.js', './addon-main.js'],
       parserOptions: {
         sourceType: 'script',
       },

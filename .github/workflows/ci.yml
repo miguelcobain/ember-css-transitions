@@ -92,6 +92,7 @@ jobs:
         try-scenario:
           - ember-lts-3.24
           - ember-lts-3.28
+          - ember-lts-4.4
           - ember-release
           - ember-beta
           - ember-canary
@@ -144,6 +145,8 @@ jobs:
         run: yarn add -D ${{ matrix.ember-modifier-scenario }}
         working-directory: addon
 
+      # Older versions of ember-modifier have different TS signature
+      # and would fail typechecking.
       - name: Remove ember-cli-typescript, ember-modifier
         run: yarn remove ember-cli-typescript ember-modifier
         working-directory: test-app

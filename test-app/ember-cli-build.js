@@ -3,11 +3,10 @@
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function (defaults) {
-  let app = new EmberApp(defaults, {
+  const app = new EmberApp(defaults, {
     autoImport: {
       watchDependencies: ['ember-css-transitions'],
     },
-    // Add options here
   });
 
   // Use `app.import` to add additional libraries to the generated
