@@ -1,8 +1,24 @@
 import Modifier from 'ember-modifier';
 import { registerDestructor } from '@ember/destroyable';
-import { macroCondition, dependencySatisfies } from '@embroider/macros';
+import {
+  dependencySatisfies,
+  getOwnConfig,
+  macroCondition,
+} from '@embroider/macros';
+import { buildWaiter } from '@ember/test-waiters';
 
 import { nextTick, sleep, computeTimeout } from '../utils/transition-utils';
+
+const waiter = getOwnConfig().useTestWaiters
+  ? buildWaiter('ember-css-transitions')
+  : {
+      beginAsync() {
+        /* fake */
+      },
+      endAsync() {
+        /* fake */
+      },
+    };
 
 let modifier;
 
@@ -320,6 +336,8 @@ if (macroCondition(dependencySatisfies('ember-modifier', '>=3.2.0 || 4.x'))) {
     }
 
     async guardedRun(f, ...args) {
+      const token = waiter.beginAsync();
+
       let gen = f.call(this, ...args);
       let isDone = false;
 
@@ -330,6 +348,8 @@ if (macroCondition(dependencySatisfies('ember-modifier', '>=3.2.0 || 4.x'))) {
         isDone = done;
         await value;
       }
+
+      waiter.endAsync(token);
     }
   }
 
@@ -614,6 +634,8 @@ if (macroCondition(dependencySatisfies('ember-modifier', '>=3.2.0 || 4.x'))) {
     }
 
     async guardedRun(f, ...args) {
+      const token = waiter.beginAsync();
+
       let gen = f.call(this, ...args);
       let isDone = false;
 
@@ -624,6 +646,8 @@ if (macroCondition(dependencySatisfies('ember-modifier', '>=3.2.0 || 4.x'))) {
         isDone = done;
         await value;
       }
+
+      waiter.endAsync(token);
     }
   };
 }

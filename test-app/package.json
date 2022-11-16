@@ -28,6 +28,7 @@
     "@babel/core": "^7.20.2",
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.8.1",
+    "@embroider/macros": "^1.8.3",
     "@embroider/test-setup": "^1.6.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",

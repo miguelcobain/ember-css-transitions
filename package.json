@@ -6,8 +6,8 @@
     "url": "https://github.com/miguelcobain/ember-css-transitions.git"
   },
   "workspaces": [
-    "ember-css-transitions",
     "docs",
+    "ember-css-transitions",
     "test-app"
   ],
   "scripts": {
@@ -19,6 +19,10 @@
     "@release-it-plugins/lerna-changelog": "^5.0.0",
     "@release-it-plugins/workspaces": "^3.2.0",
     "release-it": "^15.4.2"
+  },
+  "volta": {
+    "node": "14.21.1",
+    "yarn": "1.22.19"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
@@ -59,9 +63,5 @@
       "tokenRef": "GITHUB_AUTH"
     },
     "npm": false
-  },
-  "volta": {
-    "node": "14.21.1",
-    "yarn": "1.22.19"
   }
 }
