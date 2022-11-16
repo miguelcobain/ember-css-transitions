@@ -14,8 +14,8 @@ This repo is divided into multiple packages using Yarn workspaces:
 
 ## Linting
 
-* `yarn run lint`
-* `yarn run lint:fix`
+* `yarn lint`
+* `yarn lint:fix`
 
 ## Running tests
 
@@ -27,9 +27,9 @@ This repo is divided into multiple packages using Yarn workspaces:
 During development, if you'd like test app to pick up changes in the addon, make sure to run both
 `cd addon && yarn start` and `cd test-app && ember test --server` in different terminals.
 
-## Running the test-app application
+## Running the test application
 
-* `ember serve`
-* Visit the test-app application at [http://localhost:4200](http://localhost:4200).
+* `cd test-app && ember serve`
+* Visit the test application at [http://localhost:4200](http://localhost:4200).
 
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+For more information on using ember-cli, visit [https://cli.emberjs.com/release/](https://cli.emberjs.com/release/).

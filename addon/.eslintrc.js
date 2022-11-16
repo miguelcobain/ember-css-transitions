@@ -2,17 +2,18 @@
 
 module.exports = {
   root: true,
-  parser: '@babel/eslint-parser',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 2018,
     sourceType: 'module',
     ecmaFeatures: {
       legacyDecorators: true,
     },
   },
-  plugins: ['ember'],
+  plugins: ['@typescript-eslint', 'ember'],
   extends: [
     'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:ember/recommended',
     'plugin:prettier/recommended',
   ],
@@ -28,7 +29,6 @@ module.exports = {
         './.prettierrc.js',
         './.template-lintrc.js',
         './addon-main.js',
-        './config/**/*.js',
       ],
       parserOptions: {
         sourceType: 'script',
@@ -39,6 +39,10 @@ module.exports = {
       },
       plugins: ['node'],
       extends: ['plugin:node/recommended'],
+      rules: {
+        // We *want* to use traditional require statements in Node `.js` files.
+        '@typescript-eslint/no-var-requires': 'off',
+      },
     },
   ],
 };

@@ -144,6 +144,10 @@ jobs:
         run: yarn add -D ${{ matrix.ember-modifier-scenario }}
         working-directory: addon
 
+      - name: Remove ember-cli-typescript, ember-modifier
+        run: yarn remove ember-cli-typescript ember-modifier
+        working-directory: test-app
+
       - name: Run Tests
         run: yarn test:ember
         working-directory: test-app
