@@ -12,5 +12,6 @@ Router.map(function () {
     this.route('add-removal');
     this.route('options');
     this.route('glint');
+    this.route('test-waiters');
   });
 });

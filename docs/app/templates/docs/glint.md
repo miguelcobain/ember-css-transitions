@@ -1,4 +1,4 @@
-Glint
+# Glint
 
 `css-transition` ships [Glint](https://github.com/typed-ember/glint) types,
 which allow you when using TypeScript to get strict type checking in your templates.
