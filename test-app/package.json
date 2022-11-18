@@ -1,6 +1,6 @@
 {
   "name": "test-app",
-  "version": "4.3.0",
+  "version": "4.3.1",
   "private": true,
   "description": "Test app for ember-css-transitions addon",
   "repository": "https://github.com/miguelcobain/ember-css-transitions",
@@ -75,7 +75,7 @@
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
     "ember-cli-typescript": "^5.2.1",
-    "ember-css-transitions": "4.3.0",
+    "ember-css-transitions": "4.3.1",
     "ember-data": "~4.7.3",
     "ember-load-initializers": "^2.1.2",
     "ember-modifier": "^3.2.7",

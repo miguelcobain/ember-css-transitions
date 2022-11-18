@@ -1,6 +1,15 @@
 
 
 
+
+## v4.3.1 (2022-11-18)
+
+#### :bug: Bug Fix
+* [#116](https://github.com/miguelcobain/ember-css-transitions/pull/116) Handle no ownConfig scenario ([@SergeAstapov](https://github.com/SergeAstapov))
+
+#### Committers: 1
+- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))
+
 ## v4.3.0 (2022-11-18)
 
 #### :rocket: Enhancement
