@@ -2,11 +2,15 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-module.exports = function (defaults) {
-  const app = new EmberApp(defaults, {
-    autoImport: {
-      watchDependencies: ['ember-css-transitions'],
-    },
+let macrosConfig;
+
+// Intentionally not add macros config if env variable not set
+// so that we test in CI all the scenarios:
+//  - USE_TEST_WAITERS=true
+//  - USE_TEST_WAITERS=false
+//  - USE_TEST_WAITERS not set
+if (process.env.USE_TEST_WAITERS !== undefined) {
+  macrosConfig = {
     '@embroider/macros': {
       setConfig: {
         'ember-css-transitions': {
@@ -14,6 +18,15 @@ module.exports = function (defaults) {
         },
       },
     },
+  };
+}
+
+module.exports = function (defaults) {
+  const app = new EmberApp(defaults, {
+    autoImport: {
+      watchDependencies: ['ember-css-transitions'],
+    },
+    ...macrosConfig,
   });
 
   // Use `app.import` to add additional libraries to the generated
