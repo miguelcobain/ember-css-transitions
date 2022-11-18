@@ -9,16 +9,20 @@ import { buildWaiter } from '@ember/test-waiters';
 
 import { nextTick, sleep, computeTimeout } from '../utils/transition-utils';
 
-const waiter = (getOwnConfig() || {}).useTestWaiters
-  ? buildWaiter('ember-css-transitions')
-  : {
-      beginAsync() {
-        /* fake */
-      },
-      endAsync() {
-        /* fake */
-      },
-    };
+let waiter;
+
+if (macroCondition(getOwnConfig()?.useTestWaiters)) {
+  waiter = buildWaiter('ember-css-transitions');
+} else {
+  waiter = {
+    beginAsync() {
+      /* fake */
+    },
+    endAsync() {
+      /* fake */
+    },
+  };
+}
 
 let modifier;
 
