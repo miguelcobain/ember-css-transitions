@@ -1,5 +1,23 @@
 
 
+
+## v4.3.0 (2022-11-18)
+
+#### :rocket: Enhancement
+* [#113](https://github.com/miguelcobain/ember-css-transitions/pull/113) Add opt-in integration with @ember/test-waiters ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#109](https://github.com/miguelcobain/ember-css-transitions/pull/109) Update glint import path to template-registry ([@SergeAstapov](https://github.com/SergeAstapov))
+
+#### :memo: Documentation
+* [#115](https://github.com/miguelcobain/ember-css-transitions/pull/115) Add Glint support page to docs ([@SergeAstapov](https://github.com/SergeAstapov))
+
+#### :house: Internal
+* [#114](https://github.com/miguelcobain/ember-css-transitions/pull/114) Fix flaky tests ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#112](https://github.com/miguelcobain/ember-css-transitions/pull/112) Rename addon folder to ember-css-transitions ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#111](https://github.com/miguelcobain/ember-css-transitions/pull/111) update v2 addon setup ([@SergeAstapov](https://github.com/SergeAstapov))
+
+#### Committers: 1
+- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))
+
 ## v4.2.0 (2022-09-21)
 
 #### :rocket: Enhancement

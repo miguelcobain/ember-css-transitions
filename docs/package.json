@@ -1,6 +1,6 @@
 {
   "name": "ember-css-transitions-docs",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "private": true,
   "description": "Docs app for ember-css-transitions",
   "keywords": [],
@@ -47,7 +47,7 @@
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
-    "ember-css-transitions": "4.2.0",
+    "ember-css-transitions": "4.3.0",
     "ember-data": "~4.7.3",
     "ember-fetch": "^8.1.2",
     "ember-load-initializers": "^2.1.2",
