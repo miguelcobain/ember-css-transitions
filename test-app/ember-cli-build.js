@@ -7,6 +7,13 @@ module.exports = function (defaults) {
     autoImport: {
       watchDependencies: ['ember-css-transitions'],
     },
+    '@embroider/macros': {
+      setConfig: {
+        'ember-css-transitions': {
+          useTestWaiters: process.env.USE_TEST_WAITERS !== 'false',
+        },
+      },
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
