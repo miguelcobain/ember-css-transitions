@@ -11,5 +11,6 @@ Router.map(function () {
     this.route('insert-destroy');
     this.route('add-removal');
     this.route('options');
+    this.route('glint');
   });
 });
