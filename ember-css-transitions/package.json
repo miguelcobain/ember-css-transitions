@@ -12,7 +12,10 @@
   "author": "Petter Kjelkenes <kjelkenes@gmail.com>",
   "exports": {
     ".": "./dist/addon-main.js",
-    "./*": "./dist/*",
+    "./*": {
+      "types": "./types/*.d.ts",
+      "default": "./dist/*.js"
+    },
     "./addon-main.js": "./addon-main.js"
   },
   "typesVersions": {
