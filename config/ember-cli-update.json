@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0.0",
+  "packages": [
+    {
+      "name": "@embroider/addon-blueprint",
+      "version": "2.1.0",
+      "blueprints": [
+        {
+          "name": "@embroider/addon-blueprint",
+          "isBaseBlueprint": true,
+          "options": [
+            "--welcome",
+            "--yarn",
+            "--ci-provider=github",
+            "--addon-location=ember-css-transitions",
+            "--test-app-location=test-app",
+            "--release-it"
+          ]
+        }
+      ]
+    }
+  ]
+}
