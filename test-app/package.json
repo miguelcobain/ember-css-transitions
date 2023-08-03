@@ -99,7 +99,7 @@
     "qunit-dom": "^2.0.0",
     "sinon": "^14.0.2",
     "typescript": "^4.9.3",
-    "webpack": "^5.75.0"
+    "webpack": "^5.76.0"
   },
   "engines": {
     "node": "14.* || 16.* || >= 18"
