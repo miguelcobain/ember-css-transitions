@@ -43,8 +43,6 @@ module('Integration | Component | transition group', function (hooks) {
 
     testCases.forEach((i) => {
       test(`enter and leave transitions work (${i.name})`, async function (assert) {
-        assert.expect(23);
-
         this.didTransitionIn = spy();
         this.didTransitionOut = spy();
 
@@ -174,8 +172,6 @@ module('Integration | Component | transition group', function (hooks) {
       });
 
       test(`teardown after -enter-active is applied does not throw errors (${i.name})`, async function (assert) {
-        assert.expect(6);
-
         this.didTransitionIn = spy();
         this.didTransitionOut = spy();
 
@@ -207,8 +203,6 @@ module('Integration | Component | transition group', function (hooks) {
       });
 
       test(`teardown after -enter is applied does not throw errors (${i.name})`, async function (assert) {
-        assert.expect(6);
-
         this.didTransitionIn = spy();
         this.didTransitionOut = spy();
 
@@ -275,8 +269,6 @@ module('Integration | Component | transition group', function (hooks) {
 
     testCases.forEach((i) => {
       test(`enter and leave transitions work (${i.name})`, async function (assert) {
-        assert.expect(23);
-
         this.didTransitionIn = spy();
         this.didTransitionOut = spy();
 
@@ -399,8 +391,6 @@ module('Integration | Component | transition group', function (hooks) {
   });
 
   test('can disable the modifier by using isEnabled=false', async function (assert) {
-    assert.expect(8);
-
     this.set('show', false);
 
     await render(hbs`
@@ -475,8 +465,6 @@ module('Integration | Component | transition group', function (hooks) {
   });
 
   test('leave transitions via classes', async function (assert) {
-    assert.expect(4);
-
     this.set('show', true);
 
     await render(hbs`

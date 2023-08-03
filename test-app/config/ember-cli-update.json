@@ -3,7 +3,7 @@
   "packages": [
     {
       "name": "ember-cli",
-      "version": "4.8.0",
+      "version": "5.2.0-beta.0",
       "blueprints": [
         {
           "name": "app",
@@ -12,6 +12,8 @@
           "isBaseBlueprint": true,
           "options": [
             "--pnpm",
+            "--ci-provider=github",
+            "--typescript",
             "--no-welcome"
           ]
         }

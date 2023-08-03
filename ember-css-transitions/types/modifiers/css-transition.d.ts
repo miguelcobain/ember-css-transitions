@@ -1,6 +1,6 @@
 import Modifier from 'ember-modifier';
 
-export interface CssTransitionModifierSignature {
+export interface CssTransitionSignature {
   Element?: HTMLElement;
   Args: {
     Positional?: [transitionName: string];
@@ -20,4 +20,4 @@ export interface CssTransitionModifierSignature {
   };
 }
 
-export default class CssTransitionModifier extends Modifier<CssTransitionModifierSignature> {}
+export default class CssTransitionModifier extends Modifier<CssTransitionSignature> {}

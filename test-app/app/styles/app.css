@@ -1,20 +1,22 @@
 /* THE FOLLOWING IS USED FOR INTEGRATION TESTS, DO NOT REMOVE */
 
 /* initial state */
-.example-enter, .example-leave-to {
+.example-enter,
+.example-leave-to {
   opacity: 0;
 }
 
 /* final state */
-.example-enter-to, .example-leave {
+.example-enter-to,
+.example-leave {
   opacity: 1;
 }
 
 /* easings */
-.example-enter-active, .example-leave-active {
-  transition: opacity .5s ease-in;
+.example-enter-active,
+.example-leave-active {
+  transition: opacity 0.5s ease-in;
 }
-
 
 .opacity-0 {
   opacity: 0;
@@ -23,7 +25,6 @@
 .opacity-100 {
   opacity: 100;
 }
-
 
 .duration-500 {
   transition-duration: 500ms;
