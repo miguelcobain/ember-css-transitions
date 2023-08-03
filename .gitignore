@@ -2,11 +2,28 @@
 
 # compiled output
 dist/
+declarations/
+
+# npm/pnpm/yarn pack output
+*.tgz
 
 # dependencies
 node_modules/
 
 # misc
-.env*
+/.env*
+/.pnp*
+/.pnpm-debug.log
+/.sass-cache
 .eslintcache
-yarn-error.log
+/connect.lock
+/coverage/
+/libpeerconnection.log
+/npm-debug.log*
+/testem.log
+/yarn-error.log
+
+# ember-try
+/.node_modules.ember-try/
+/package.json.ember-try
+/yarn.lock.ember-try

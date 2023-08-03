@@ -11,9 +11,14 @@
     "test-app"
   ],
   "scripts": {
-    "prepare": "cd ember-css-transitions && yarn build",
-    "release": "release-it",
-    "test": "cd test-app && yarn test"
+    "build": "yarn workspace ember-css-transitions run build",
+    "lint": "yarn workspaces run lint",
+    "lint:fix": "yarn workspaces run lint:fix",
+    "prepare": "yarn build",
+    "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
+    "start:addon": "yarn workspace ember-css-transitions run start",
+    "start:test-app": "yarn workspace test-app run start",
+    "test": "yarn workspaces run test"
   },
   "devDependencies": {
     "@release-it-plugins/lerna-changelog": "^5.0.0",
@@ -21,7 +26,7 @@
     "release-it": "^15.4.2"
   },
   "volta": {
-    "node": "14.21.1",
+    "node": "16.20.1",
     "yarn": "1.22.19"
   },
   "publishConfig": {
