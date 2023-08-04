@@ -18,21 +18,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: Install Node
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: yarn
+          cache: pnpm
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install
 
       - name: Lint Addon
-        run: yarn lint
+        run: pnpm run lint
         working-directory: ember-css-transitions
 
       - name: Lint Test App
-        run: yarn lint
+        run: pnpm run lint
         working-directory: test-app
 
   test:
@@ -50,17 +54,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: Install Node
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: yarn
+          cache: pnpm
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install
 
       - name: Run Tests
-        run: USE_TEST_WAITERS=${{ matrix.test-waiters }} yarn test:ember
+        run: USE_TEST_WAITERS=${{ matrix.test-waiters }} pnpm run test:ember
         working-directory: test-app
 
   floating:
@@ -70,17 +78,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: Install Node
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: yarn
+          cache: pnpm
 
       - name: Install Dependencies
-        run: yarn install --no-lockfile
+        run: pnpm install --no-lockfile
 
       - name: Run Tests
-        run: yarn test:ember
+        run: pnpm run test:ember
         working-directory: test-app
 
   test-docs:
@@ -90,21 +102,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: Install Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x # ember-cli-addon-docs requires Node.js 14
-          cache: yarn
+          node-version: 16.x
+          cache: pnpm
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install
 
       - name: Lint
-        run: yarn lint
+        run: pnpm run lint
         working-directory: docs
 
       - name: Run Tests
-        run: yarn test:ember
+        run: pnpm run test:ember
         working-directory: docs
 
   try-scenarios:
@@ -128,14 +144,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: Install Node
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: yarn
+          cache: pnpm
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install
 
       - name: Run Tests
         run: ./node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
@@ -154,29 +174,27 @@ jobs:
           - ember-modifier@2
           - ember-modifier@3.1
           - ember-modifier@3.2
-          - ember-modifier@^4.0.0-beta.1
+          - ember-modifier@^4.0.0
 
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: Install Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x # ember-modifier 4.x requires Node.js 14
-          cache: yarn
+          node-version: 16.x
+          cache: pnpm
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install
 
       - name: Update ember-modifier version
-        run: yarn add -D ${{ matrix.ember-modifier-scenario }}
-        working-directory: ember-css-transitions
-
-      # Older versions of ember-modifier have different TS signature
-      # and would fail typechecking.
-      - name: Remove ember-cli-typescript, ember-modifier
-        run: yarn remove ember-cli-typescript ember-modifier
+        run: pnpm add -D ember-modifier
         working-directory: test-app
 
       - name: Run Tests
-        run: yarn test:ember
+        run: pnpm run test:ember
         working-directory: test-app

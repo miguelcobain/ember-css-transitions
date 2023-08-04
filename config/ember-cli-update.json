@@ -10,7 +10,7 @@
           "isBaseBlueprint": true,
           "options": [
             "--welcome",
-            "--yarn",
+            "--pnpm",
             "--ci-provider=github",
             "--addon-location=ember-css-transitions",
             "--test-app-location=test-app",
