@@ -23,6 +23,8 @@ if (process.env.USE_TEST_WAITERS !== undefined) {
 
 module.exports = function (defaults) {
   const app = new EmberApp(defaults, {
+    'ember-cli-babel': { enableTypeScriptTransform: true },
+
     autoImport: {
       watchDependencies: ['ember-css-transitions'],
     },

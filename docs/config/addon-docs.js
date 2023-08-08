@@ -1,4 +1,3 @@
-/* eslint-disable node/no-unpublished-require */
 'use strict';
 
 const AddonDocsConfig = require('ember-cli-addon-docs/lib/config');
