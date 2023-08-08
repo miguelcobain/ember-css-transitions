@@ -3,6 +3,21 @@
 
 
 
+## v4.3.3 (2023-08-08)
+
+#### :rocket: Enhancement
+* [#127](https://github.com/miguelcobain/ember-css-transitions/pull/127) fix: Include /types in package exports ([@HeroicEric](https://github.com/HeroicEric))
+
+#### :house: Internal
+* [#133](https://github.com/miguelcobain/ember-css-transitions/pull/133) Sync test app blueprint ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#134](https://github.com/miguelcobain/ember-css-transitions/pull/134) switch from yarn to pnpm ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#128](https://github.com/miguelcobain/ember-css-transitions/pull/128) Sync with embroider-addon blueprint ([@SergeAstapov](https://github.com/SergeAstapov))
+
+#### Committers: 2
+- Eric Kelly ([@HeroicEric](https://github.com/HeroicEric))
+- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))
+
+
 ## v4.3.2 (2022-11-18)
 
 #### :bug: Bug Fix

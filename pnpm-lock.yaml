@@ -99,7 +99,7 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
       ember-css-transitions:
-        specifier: 4.3.2
+        specifier: 4.3.3
         version: link:../ember-css-transitions
       ember-data:
         specifier: ~4.12.3
@@ -421,7 +421,7 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
       ember-css-transitions:
-        specifier: 4.3.2
+        specifier: 4.3.3
         version: link:../ember-css-transitions
       ember-data:
         specifier: ~5.2.0-beta.0
@@ -9116,7 +9116,7 @@ packages:
       ember-source: ^3.28.0 || >= 4.0.0
     dependencies:
       ember-cli-babel: 7.26.11
-      ember-source: 5.2.0-beta.3(@babel/core@7.22.10)(@glimmer/component@1.1.2)(rsvp@4.8.5)(webpack@5.88.1)
+      ember-source: 5.2.0-beta.3(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(rsvp@4.8.5)(webpack@5.88.1)
       git-repo-info: 2.1.1
     transitivePeerDependencies:
       - supports-color
@@ -10109,7 +10109,7 @@ packages:
       '@embroider/addon-shim': 1.8.6
       ember-cli-normalize-entity-name: 1.0.0
       ember-cli-string-utils: 1.1.0
-      ember-source: 5.2.0-beta.3(@babel/core@7.22.10)(@glimmer/component@1.1.2)(rsvp@4.8.5)(webpack@5.88.1)
+      ember-source: 5.2.0-beta.3(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(rsvp@4.8.5)(webpack@5.88.1)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -10187,7 +10187,7 @@ packages:
     dependencies:
       '@ember/string': 3.1.1
       ember-cli-babel: 7.26.11
-      ember-source: 5.2.0-beta.3(@babel/core@7.22.10)(@glimmer/component@1.1.2)(rsvp@4.8.5)(webpack@5.88.1)
+      ember-source: 5.2.0-beta.3(@babel/core@7.22.9)(@glimmer/component@1.1.2)(@glint/template@1.0.2)(rsvp@4.8.5)(webpack@5.88.1)
     transitivePeerDependencies:
       - supports-color
     dev: true
