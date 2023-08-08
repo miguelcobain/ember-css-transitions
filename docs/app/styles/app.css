@@ -1,25 +1,35 @@
 /* BEGIN-SNIPPET intro-example.css */
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to {
+
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
+
 /* END-SNIPPET */
 
 /* BEGIN-SNIPPET slide-fade.css */
+
 /* Enter and leave animations can use different */
+
 /* durations and timing functions.              */
 .slide-fade-enter-active {
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
+
 .slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
 }
-.slide-fade-enter, .slide-fade-leave-to {
+
+.slide-fade-enter,
+.slide-fade-leave-to {
   transform: translateX(10px);
   opacity: 0;
 }
+
 /* END-SNIPPET */
 
 /* BEGIN-SNIPPET insert-destroy-verbose.css */
@@ -43,30 +53,31 @@
   opacity: 100;
 }
 
-.max-h-12	{
+.max-h-12 {
   max-height: 3rem;
 }
 
-.max-h-0	{
+.max-h-0 {
   max-height: 0;
 }
+
 /* END-SNIPPET */
 
-/* BEGIN-SNIPPET class-add-removal-verbose.css*/
+/* BEGIN-SNIPPET class-add-removal-verbose.css */
 .duration-1000 {
   transition-duration: 1000ms;
 }
 
-.duration-200	{
-  transition-duration: 200ms
+.duration-200 {
+  transition-duration: 200ms;
 }
 
-.text-red-600	{
+.text-red-600 {
   color: #e53e3e;
 }
 
-.text-black	{
-  color: #000000;
+.text-black {
+  color: #000;
 }
 
 .text-base {
@@ -76,4 +87,5 @@
 .text-2xl {
   font-size: 1.5rem;
 }
+
 /* END-SNIPPET */
