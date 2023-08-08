@@ -27,7 +27,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.2",
     "@ember/optional-features": "^2.0.0",
-    "@ember/test-helpers": "^2.8.1",
+    "@ember/test-helpers": "^2.9.4",
     "@embroider/macros": "^1.8.3",
     "@embroider/test-setup": "^1.6.0",
     "@glimmer/component": "^1.1.2",
@@ -36,6 +36,7 @@
     "@glint/environment-ember-loose": "^0.9.7",
     "@tsconfig/ember": "^1.0.1",
     "@types/ember": "^4.0.2",
+    "@types/eslint": "^8.44.1",
     "@types/ember-data": "^4.4.6",
     "@types/ember-data__adapter": "^4.0.1",
     "@types/ember-data__model": "^4.0.0",

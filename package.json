@@ -11,14 +11,14 @@
     "test-app"
   ],
   "scripts": {
-    "build": "yarn workspace ember-css-transitions run build",
-    "lint": "yarn workspaces run lint",
-    "lint:fix": "yarn workspaces run lint:fix",
-    "prepare": "yarn build",
+    "build": "pnpm --filter=ember-css-transitions run build",
+    "lint": "pnpm --recursive run lint",
+    "lint:fix": "pnpm --recursive run lint:fix",
+    "prepare": "pnpm run build",
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
-    "start:addon": "yarn workspace ember-css-transitions run start",
-    "start:test-app": "yarn workspace test-app run start",
-    "test": "yarn workspaces run test"
+    "start:addon": "pnpm --filter=ember-css-transitions run start",
+    "start:test-app": "pnpm --filter=test-app run start",
+    "test": "pnpm --filter=test-app --filter=docs run test"
   },
   "devDependencies": {
     "@release-it-plugins/lerna-changelog": "^5.0.0",
@@ -26,8 +26,7 @@
     "release-it": "^15.4.2"
   },
   "volta": {
-    "node": "16.20.1",
-    "yarn": "1.22.19"
+    "node": "16.20.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
@@ -35,7 +34,7 @@
   "release-it": {
     "hooks": {
       "before:init": "cp README.md LICENSE.md ember-css-transitions/",
-      "after:release": "cd docs && yarn deploy"
+      "after:release": "pnpm --filter=docs run deploy"
     },
     "plugins": {
       "@release-it-plugins/lerna-changelog": {

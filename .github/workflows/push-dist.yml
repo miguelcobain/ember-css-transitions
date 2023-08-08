@@ -17,14 +17,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: Install Node
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: yarn
+          cache: pnpm
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install
 
       - uses: kategengler/put-built-npm-package-contents-on-branch@v1.0.0
         with:
