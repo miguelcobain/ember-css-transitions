@@ -15,6 +15,7 @@
     "lint": "pnpm --recursive run lint",
     "lint:fix": "pnpm --recursive run lint:fix",
     "prepare": "pnpm run build",
+    "release": "release-it",
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
     "start:addon": "pnpm --filter=ember-css-transitions run start",
     "start:test-app": "pnpm --filter=test-app run start",
@@ -34,6 +35,7 @@
   "release-it": {
     "hooks": {
       "before:init": "cp README.md LICENSE.md ember-css-transitions/",
+      "after:bump": "pnpm install",
       "after:release": "pnpm --filter=docs run deploy"
     },
     "plugins": {
