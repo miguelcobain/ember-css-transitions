@@ -112,7 +112,7 @@ ember install ember-cli-autoprefixer
 
 Note: **IE9** does not support CSS3 transitions / animations. They must live with no animations / transitions.
 
-## TypeScript usage
+## Glint usage
 
 `css-transition` ships [Glint](https://github.com/typed-ember/glint) types,
 which allow you when using TypeScript to get strict type checking in your templates.
@@ -137,9 +137,28 @@ declare module '@glint/environment-ember-loose/registry' {
 }
 ```
 
-> **Note** Glint itself is still under active development, and as such breaking changes might occur.
-> Therefore, Glint support by this addon is also considered experimental, and not covered by our SemVer contract!
+## Usage with `<template>` tag
 
+For usage in `gts` or `gjs` files, modifier is exported from the index:
+
+```hbs
+import { cssTransition } from 'ember-css-transitions';
+
+<template>
+  <div
+    {{cssTransition
+      enterClass="opacity-0"
+      enterActiveClass="transition-opacity duration-500 ease-in-out"
+      enterToClass="opacity-100"
+      leaveClass="opacity-100"
+      leaveActiveClass="transition-opacity duration-500 ease-in-out"
+      leaveToClass="opacity-0"
+    }}
+  >
+    <h1>Hello world</h1>
+  </div>
+</template>
+```
 ## Contributing
 
 See the [Contributing](CONTRIBUTING.md) guide for details.
