@@ -76,7 +76,10 @@
     }
   },
   "exports": {
-    ".": "./dist/addon-main.cjs",
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./dist/index.js"
+    },
     "./*": {
       "types": "./types/*.d.ts",
       "default": "./dist/*.js"
