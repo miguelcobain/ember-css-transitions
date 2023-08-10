@@ -3,6 +3,15 @@
 
 
 
+
+## v4.4.0 (2023-08-10)
+
+#### :rocket: Enhancement
+* [#135](https://github.com/miguelcobain/ember-css-transitions/pull/135) Simplify usage with `<template>` tag ([@SergeAstapov](https://github.com/SergeAstapov))
+
+#### Committers: 1
+- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))
+
 ## v4.3.3 (2023-08-08)
 
 #### :rocket: Enhancement
