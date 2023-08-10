@@ -1,66 +1,90 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find, waitFor, waitUntil } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
+import {
+  render,
+  rerender,
+  find,
+  waitFor,
+  waitUntil,
+} from '@ember/test-helpers';
+import { tracked } from '@glimmer/tracking';
 import { spy } from 'sinon';
+import MyComponent from 'test-app/components/my-component';
+import GlimmerComponent from 'test-app/components/glimmer-component';
+import { cssTransition } from 'ember-css-transitions';
 
 module('Integration | Component | transition group', function (hooks) {
   setupRenderingTest(hooks);
+
+  class State {
+    @tracked show = false;
+    @tracked showSibling = false;
+    didTransitionIn;
+    didTransitionOut;
+  }
+
+  /** @type {State} */
+  let state;
+
+  hooks.beforeEach(function () {
+    state = new State();
+  });
 
   module('Enter and leave via name', function () {
     let testCases = [
       {
         name: 'element',
-        template: hbs`
-        {{#if this.show}}
-          <div id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
-            <p class="content">Çup?</p>
-          </div>
-        {{/if}}
-      `,
+        template: <template>
+          {{#if state.show}}
+            <div id="my-element" {{cssTransition "example" didTransitionIn=state.didTransitionIn didTransitionOut=state.didTransitionOut}}>
+              <p class="content">Çup?</p>
+            </div>
+          {{/if}}
+        </template>,
       },
       {
         name: 'classic component',
-        template: hbs`
-        {{#if this.show}}
-          <MyComponent id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
-            <p class="content">Çup?</p>
-          </MyComponent>
-        {{/if}}
-      `,
+        template: <template>
+          {{#if state.show}}
+            <MyComponent id="my-element" {{cssTransition "example" didTransitionIn=state.didTransitionIn didTransitionOut=state.didTransitionOut}}>
+              <p class="content">Çup?</p>
+            </MyComponent>
+          {{/if}}
+        </template>,
       },
       {
         name: 'glimmer component',
-        template: hbs`
-        {{#if this.show}}
-          <GlimmerComponent id="my-element" {{css-transition "example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
-            <p class="content">Çup?</p>
-          </GlimmerComponent>
-        {{/if}}
-      `,
+        template: <template>
+          {{#if state.show}}
+            <GlimmerComponent id="my-element" {{cssTransition "example" didTransitionIn=state.didTransitionIn didTransitionOut=state.didTransitionOut}}>
+              <p class="content">Çup?</p>
+            </GlimmerComponent>
+          {{/if}}
+        </template>,
       },
     ];
 
     testCases.forEach((i) => {
       test(`enter and leave transitions work (${i.name})`, async function (assert) {
-        this.didTransitionIn = spy();
-        this.didTransitionOut = spy();
+        state.didTransitionIn = spy();
+        state.didTransitionOut = spy();
 
-        this.set('show', false);
+        state.show = false;
 
         await render(i.template);
 
         assert.dom('#my-element').doesNotExist('no element at first');
         assert.ok(
-          this.didTransitionIn.notCalled,
+          state.didTransitionIn.notCalled,
           'didTransitionIn was not called'
         );
         assert.ok(
-          this.didTransitionOut.notCalled,
+          state.didTransitionOut.notCalled,
           'didTransitionOut was not called'
         );
 
-        this.set('show', true);
+        state.show = true;
+        await rerender();
 
         assert.dom('#my-element').exists({ count: 1 }, 'element is rendered');
         assert.dom('.content').exists({ count: 1 }, 'its contents as well');
@@ -96,15 +120,15 @@ module('Integration | Component | transition group', function (hooks) {
         await waitFor('#my-element:not(.example-enter-active)');
 
         assert.ok(
-          this.didTransitionIn.calledOnce,
+          state.didTransitionIn.calledOnce,
           'didTransitionIn was called once'
         );
         assert.ok(
-          this.didTransitionOut.notCalled,
+          state.didTransitionOut.notCalled,
           'didTransitionOut was not called'
         );
 
-        this.set('show', false);
+        state.show = false;
 
         // waitFor may run too late and cause false-negative test failure.
         await new Promise((resolve) =>
@@ -162,24 +186,25 @@ module('Integration | Component | transition group', function (hooks) {
         assert.dom('#my-element_clone').doesNotExist('clone was removed');
 
         assert.ok(
-          this.didTransitionIn.calledOnce,
+          state.didTransitionIn.calledOnce,
           'didTransitionIn was called once total'
         );
         assert.ok(
-          this.didTransitionOut.calledOnce,
+          state.didTransitionOut.calledOnce,
           'didTransitionOut was called once total'
         );
       });
 
       test(`teardown after -enter-active is applied does not throw errors (${i.name})`, async function (assert) {
-        this.didTransitionIn = spy();
-        this.didTransitionOut = spy();
+        state.didTransitionIn = spy();
+        state.didTransitionOut = spy();
 
-        this.set('show', false);
+        state.show = false;
 
         await render(i.template);
 
-        this.set('show', true);
+        state.show = true;
+        await rerender();
 
         assert.dom('#my-element').exists({ count: 1 }, 'element is rendered');
         assert
@@ -188,44 +213,47 @@ module('Integration | Component | transition group', function (hooks) {
 
         await waitFor('#my-element.example-enter-active');
 
-        this.set('show', false);
+        state.show = false;
+        await rerender();
 
         assert.dom('#my-element').doesNotExist('element is removed');
         assert.ok(
-          this.didTransitionIn.notCalled,
+          state.didTransitionIn.notCalled,
           'didTransitionIn was not called'
         );
         assert.ok(
-          this.didTransitionOut.notCalled,
+          state.didTransitionOut.notCalled,
           'didTransitionOut was not called'
         );
         assert.dom('#my-element_clone').doesNotExist('clone was not created');
       });
 
       test(`teardown after -enter is applied does not throw errors (${i.name})`, async function (assert) {
-        this.didTransitionIn = spy();
-        this.didTransitionOut = spy();
+        state.didTransitionIn = spy();
+        state.didTransitionOut = spy();
 
-        this.set('show', false);
+        state.show = false;
 
         await render(i.template);
 
-        this.set('show', true);
+        state.show = true;
+        await rerender();
 
         assert.dom('#my-element').exists({ count: 1 }, 'element is rendered');
         assert
           .dom('#my-element')
           .hasClass('example-enter', '-enter is immediately applied');
 
-        this.set('show', false);
+        state.show = false;
+        await rerender();
 
         assert.dom('#my-element').doesNotExist('element is removed');
         assert.ok(
-          this.didTransitionIn.notCalled,
+          state.didTransitionIn.notCalled,
           'didTransitionIn was not called'
         );
         assert.ok(
-          this.didTransitionOut.notCalled,
+          state.didTransitionOut.notCalled,
           'didTransitionOut was not called'
         );
         assert.dom('#my-element_clone').doesNotExist('clone was not created');
@@ -237,56 +265,57 @@ module('Integration | Component | transition group', function (hooks) {
     let testCases = [
       {
         name: 'element',
-        template: hbs`
-        {{#if this.show}}
-          <div id="my-element" {{css-transition enterClass="opacity-0" enterActiveClass="duration-500" enterToClass="opacity-100" leaveClass="opacity-100" leaveActiveClass="duration-500" leaveToClass="opacity-0" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
-            <p class="content">Çup?</p>
-          </div>
-        {{/if}}
-      `,
+        template: <template>
+          {{#if state.show}}
+            <div id="my-element" {{cssTransition enterClass="opacity-0" enterActiveClass="duration-500" enterToClass="opacity-100" leaveClass="opacity-100" leaveActiveClass="duration-500" leaveToClass="opacity-0" didTransitionIn=state.didTransitionIn didTransitionOut=state.didTransitionOut}}>
+              <p class="content">Çup?</p>
+            </div>
+          {{/if}}
+        </template>,
       },
       {
         name: 'classic component',
-        template: hbs`
-        {{#if this.show}}
-          <MyComponent id="my-element" {{css-transition enterClass="opacity-0" enterActiveClass="duration-500" enterToClass="opacity-100" leaveClass="opacity-100" leaveActiveClass="duration-500" leaveToClass="opacity-0" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
-            <p class="content">Çup?</p>
-          </MyComponent>
-        {{/if}}
-      `,
+        template: <template>
+          {{#if state.show}}
+            <MyComponent id="my-element" {{cssTransition enterClass="opacity-0" enterActiveClass="duration-500" enterToClass="opacity-100" leaveClass="opacity-100" leaveActiveClass="duration-500" leaveToClass="opacity-0" didTransitionIn=state.didTransitionIn didTransitionOut=state.didTransitionOut}}>
+              <p class="content">Çup?</p>
+            </MyComponent>
+          {{/if}}
+        </template>,
       },
       {
         name: 'glimmer component',
-        template: hbs`
-        {{#if this.show}}
-          <GlimmerComponent id="my-element" {{css-transition enterClass="opacity-0" enterActiveClass="duration-500" enterToClass="opacity-100" leaveClass="opacity-100" leaveActiveClass="duration-500" leaveToClass="opacity-0" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
-            <p class="content">Çup?</p>
-          </GlimmerComponent>
-        {{/if}}
-      `,
+        template: <template>
+          {{#if state.show}}
+            <GlimmerComponent id="my-element" {{cssTransition enterClass="opacity-0" enterActiveClass="duration-500" enterToClass="opacity-100" leaveClass="opacity-100" leaveActiveClass="duration-500" leaveToClass="opacity-0" didTransitionIn=state.didTransitionIn didTransitionOut=state.didTransitionOut}}>
+              <p class="content">Çup?</p>
+            </GlimmerComponent>
+          {{/if}}
+        </template>,
       },
     ];
 
     testCases.forEach((i) => {
       test(`enter and leave transitions work (${i.name})`, async function (assert) {
-        this.didTransitionIn = spy();
-        this.didTransitionOut = spy();
+        state.didTransitionIn = spy();
+        state.didTransitionOut = spy();
 
-        this.set('show', false);
+        state.show = false;
 
         await render(i.template);
 
         assert.dom('#my-element').doesNotExist('no element at first');
         assert.ok(
-          this.didTransitionIn.notCalled,
+          state.didTransitionIn.notCalled,
           'didTransitionIn was not called'
         );
         assert.ok(
-          this.didTransitionOut.notCalled,
+          state.didTransitionOut.notCalled,
           'didTransitionOut was not called'
         );
 
-        this.set('show', true);
+        state.show = true;
+        await rerender();
 
         assert.dom('#my-element').exists({ count: 1 }, 'element is rendered');
         assert.dom('.content').exists({ count: 1 }, 'its contents as well');
@@ -319,15 +348,15 @@ module('Integration | Component | transition group', function (hooks) {
         await waitFor('#my-element:not(.opacity-100)');
 
         assert.ok(
-          this.didTransitionIn.calledOnce,
+          state.didTransitionIn.calledOnce,
           'didTransitionIn was called once'
         );
         assert.ok(
-          this.didTransitionOut.notCalled,
+          state.didTransitionOut.notCalled,
           'didTransitionOut was not called'
         );
 
-        this.set('show', false);
+        state.show = false;
 
         // waitFor may run too late and cause false-negative test failure.
         await new Promise((resolve) =>
@@ -379,11 +408,11 @@ module('Integration | Component | transition group', function (hooks) {
         assert.dom('#my-element_clone').doesNotExist('clone was removed');
 
         assert.ok(
-          this.didTransitionIn.calledOnce,
+          state.didTransitionIn.calledOnce,
           'didTransitionIn was called once total'
         );
         assert.ok(
-          this.didTransitionOut.calledOnce,
+          state.didTransitionOut.calledOnce,
           'didTransitionOut was called once total'
         );
       });
@@ -391,19 +420,22 @@ module('Integration | Component | transition group', function (hooks) {
   });
 
   test('can disable the modifier by using isEnabled=false', async function (assert) {
-    this.set('show', false);
+    state.show = false;
 
-    await render(hbs`
-      {{#if this.show}}
-        <div id="my-element" class="some test classes" {{css-transition name="example" isEnabled=false}}>
-          <p class="content">Çup?</p>
-        </div>
-      {{/if}}
-    `);
+    await render(
+      <template>
+        {{#if state.show}}
+          <div id="my-element" class="some test classes" {{cssTransition name="example" isEnabled=false}}>
+            <p class="content">Çup?</p>
+          </div>
+        {{/if}}
+      </template>
+    );
 
     assert.dom('#my-element').doesNotExist('no element at first');
 
-    this.set('show', true);
+    state.show = true;
+    await rerender();
 
     assert.dom('#my-element').exists({ count: 1 }, 'element is rendered');
     assert.dom('.content').exists({ count: 1 }, 'its contents as well');
@@ -418,75 +450,96 @@ module('Integration | Component | transition group', function (hooks) {
       .dom('#my-element')
       .doesNotHaveClass('example-enter-to', '-enter-to is not applied');
 
-    this.set('show', false);
+    state.show = false;
+    await rerender();
 
     assert.dom('#my-element').doesNotExist('original element is not present');
     assert.dom('#my-element_clone').doesNotExist('clone was not added');
   });
 
   test('teardown by removal of the parent element', async function (assert) {
-    this.set('show', true);
-    render(hbs`
-      {{#if this.show}}
-        <div>
-          <div id="my-element" {{css-transition name="example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
-            <p class="content">Çup?</p>
+    state.show = true;
+
+    render(
+      <template>
+        {{#if state.show}}
+          <div>
+            <div id="my-element" {{cssTransition name="example" didTransitionIn=state.didTransitionIn didTransitionOut=state.didTransitionOut}}>
+              <p class="content">Çup?</p>
+            </div>
           </div>
-        </div>
-      {{/if}}
-    `);
+        {{/if}}
+      </template>
+    );
+
     await waitFor('#my-element.example-enter-active');
     await waitFor('#my-element:not(.example-enter)');
-    this.set('show', false);
+
+    state.show = false;
+    await rerender();
+
     assert.dom('#my-element').doesNotExist();
   });
 
   test('teardown after removal of sibling element', async function (assert) {
-    this.set('show', true);
-    this.set('showSibling', true);
-    render(hbs`
-      {{#if this.show}}
-        <div>
-          <div id="my-element" {{css-transition name="example" didTransitionIn=this.didTransitionIn didTransitionOut=this.didTransitionOut}}>
-            <p class="content">Çup?</p>
+    state.show = true;
+    state.showSibling = true;
+
+    render(
+      <template>
+        {{#if state.show}}
+          <div>
+            <div id="my-element" {{cssTransition name="example" didTransitionIn=state.didTransitionIn didTransitionOut=state.didTransitionOut}}>
+              <p class="content">Çup?</p>
+            </div>
+            {{#if state.showSibling}}
+              <div data-test-sibling>Sibling element</div>
+            {{/if}}
           </div>
-          {{#if this.showSibling}}
-            <div data-test-sibling>Sibling element</div>
-          {{/if}}
-        </div>
-      {{/if}}
-    `);
+        {{/if}}
+      </template>
+    );
+
     await waitFor('#my-element.example-enter-active');
     await waitFor('#my-element:not(.example-enter)');
-    this.set('showSibling', false);
+
+    state.showSibling = false;
+    await rerender();
+
     assert.dom('[data-test-sibling]').doesNotExist();
-    this.set('show', false);
+
+    state.show = false;
+    await rerender();
+
     assert.dom('#my-element').doesNotExist();
   });
 
   test('leave transitions via classes', async function (assert) {
-    this.set('show', true);
+    state.show = true;
 
-    await render(hbs`
-      {{#if this.show}}
-        <div id="real-parent" class="random-class">
-          <div
-            id="my-element"
-            {{css-transition
-              leaveClass="opacity-100"
-              leaveActiveClass="duration-1000"
-              leaveToClass="opacity-0"
-              parentSelector=".random-class"
-            }}
-          >
-          <p class="content">Çup?</p>
-        </div>
-      </div>
-    {{/if}}`);
+    await render(
+      <template>
+        {{#if state.show}}
+          <div id="real-parent" class="random-class">
+            <div
+              id="my-element"
+              {{cssTransition
+                leaveClass="opacity-100"
+                leaveActiveClass="duration-1000"
+                leaveToClass="opacity-0"
+                parentSelector=".random-class"
+              }}
+            >
+              <p class="content">Çup?</p>
+            </div>
+          </div>
+        {{/if}}
+      </template>
+    );
 
     assert.dom('#my-element').exists({ count: 1 }, 'element is rendered');
 
-    this.set('show', false);
+    state.show = false;
 
     await waitFor('#real-parent_clone');
 
