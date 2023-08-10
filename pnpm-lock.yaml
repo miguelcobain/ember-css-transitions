@@ -285,6 +285,9 @@ importers:
       '@glint/environment-ember-loose':
         specifier: ^1.0.2
         version: 1.0.2(@glimmer/component@1.1.2)(@glint/template@1.0.2)(@types/ember__array@4.0.4)(@types/ember__component@4.0.14)(@types/ember__controller@4.0.5)(@types/ember__object@4.0.6)(@types/ember__routing@4.0.13)(ember-cli-htmlbars@6.2.0)(ember-modifier@4.1.0)
+      '@glint/environment-ember-template-imports':
+        specifier: ^1.0.2
+        version: 1.0.2(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(@types/ember__component@4.0.14)(@types/ember__helper@4.0.2)(@types/ember__modifier@4.0.5)(@types/ember__routing@4.0.13)(ember-template-imports@3.4.2)
       '@glint/template':
         specifier: ^1.0.2
         version: 1.0.2
@@ -450,6 +453,9 @@ importers:
       ember-source-channel-url:
         specifier: ^3.0.0
         version: 3.0.0
+      ember-template-imports:
+        specifier: ^3.4.2
+        version: 3.4.2
       ember-template-lint:
         specifier: ^5.11.0
         version: 5.11.1
@@ -480,6 +486,9 @@ importers:
       prettier:
         specifier: ^2.8.8
         version: 2.8.8
+      prettier-plugin-ember-template-tag:
+        specifier: ^0.3.2
+        version: 0.3.2
       qunit:
         specifier: ^2.19.4
         version: 2.19.4
@@ -3198,6 +3207,35 @@ packages:
       '@types/ember__routing': 4.0.13(@babel/core@7.22.9)
       ember-cli-htmlbars: 6.2.0
       ember-modifier: 4.1.0(ember-source@5.2.0-beta.3)
+    dev: true
+
+  /@glint/environment-ember-template-imports@1.0.2(@glint/environment-ember-loose@1.0.2)(@glint/template@1.0.2)(@types/ember__component@4.0.14)(@types/ember__helper@4.0.2)(@types/ember__modifier@4.0.5)(@types/ember__routing@4.0.13)(ember-template-imports@3.4.2):
+    resolution: {integrity: sha512-PAH7obVGXPFU7gLb04JVlqiNtz/j7Q29BBTAyhS7EVy99Hc6CPe+nV6+xhUPKu/S5GOVn3MWehVt/6gXPJ+cnA==}
+    peerDependencies:
+      '@glint/environment-ember-loose': ^1.0.2
+      '@glint/template': ^1.0.2
+      '@types/ember__component': ^4.0.10
+      '@types/ember__helper': ^4.0.1
+      '@types/ember__modifier': ^4.0.3
+      '@types/ember__routing': ^4.0.12
+      ember-template-imports: ^3.0.0
+    peerDependenciesMeta:
+      '@types/ember__component':
+        optional: true
+      '@types/ember__helper':
+        optional: true
+      '@types/ember__modifier':
+        optional: true
+      '@types/ember__routing':
+        optional: true
+    dependencies:
+      '@glint/environment-ember-loose': 1.0.2(@glimmer/component@1.1.2)(@glint/template@1.0.2)(@types/ember__array@4.0.4)(@types/ember__component@4.0.14)(@types/ember__controller@4.0.5)(@types/ember__object@4.0.6)(@types/ember__routing@4.0.13)(ember-cli-htmlbars@6.2.0)(ember-modifier@4.1.0)
+      '@glint/template': 1.0.2
+      '@types/ember__component': 4.0.14(@babel/core@7.22.9)
+      '@types/ember__helper': 4.0.2(@babel/core@7.22.9)
+      '@types/ember__modifier': 4.0.5(@babel/core@7.22.9)
+      '@types/ember__routing': 4.0.13(@babel/core@7.22.9)
+      ember-template-imports: 3.4.2
     dev: true
 
   /@glint/template@1.0.2:
@@ -8019,6 +8057,11 @@ packages:
     resolution: {integrity: sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==}
     deprecated: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
     requiresBuild: true
+
+  /core-js@3.32.0:
+    resolution: {integrity: sha512-rd4rYZNlF3WuoYuRIDEmbR/ga9CeuWX9U05umAvgrrZoHY4Z++cp/xwPQMvUpBB4Ag6J8KfD80G0zwCyaSxDww==}
+    requiresBuild: true
+    dev: true
 
   /core-object@2.0.6:
     resolution: {integrity: sha512-gS1NpJFBKh/r+cYdNeaQ+ab/+2rRBq5B7nUgdXVZ9brCgpWnhYXY//tyBooYXxyuQZC9zE5yUAeCdokcwUajlQ==}
@@ -16055,6 +16098,20 @@ packages:
       fast-diff: 1.3.0
     dev: true
 
+  /prettier-plugin-ember-template-tag@0.3.2:
+    resolution: {integrity: sha512-L/15ujsvuOpuIB9y9XJJs/QOPgdot76T0U1Q34C19igS1lsaL/cdRw8rXIVC5Z2x362yZI33Qodo//7kK7ItkA==}
+    engines: {node: 14.* || 16.* || >= 18}
+    dependencies:
+      '@babel/core': 7.22.10
+      '@glimmer/syntax': 0.84.3
+      ember-cli-htmlbars: 6.2.0
+      ember-template-imports: 3.4.2
+      prettier: 2.8.8
+      ts-replace-all: 1.0.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /prettier@2.8.8:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
@@ -18639,6 +18696,12 @@ packages:
   /trim-right@1.0.1:
     resolution: {integrity: sha512-WZGXGstmCWgeevgTL54hrCuw1dyMQIzWy7ZfqRJfSmJZBwklI15egmQytFP6bPidmw3M8d5yEowl1niq4vmqZw==}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /ts-replace-all@1.0.0:
+    resolution: {integrity: sha512-6uBtdkw3jHXkPtx/e9xB/5vcngMm17CyJYsS2YZeQ+9FdRnt6Ev5g931Sg2p+dxbtMGoCm13m3ax/obicTZIkQ==}
+    dependencies:
+      core-js: 3.32.0
     dev: true
 
   /tslib@1.14.1:

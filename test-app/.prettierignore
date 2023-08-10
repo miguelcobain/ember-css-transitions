@@ -11,3 +11,6 @@
 
 # ember-try
 /.node_modules.ember-try/
+
+# https://github.com/gitKrystan/prettier-plugin-ember-template-tag/issues/81
+/tests/**/*.gjs

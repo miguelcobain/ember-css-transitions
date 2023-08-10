@@ -1,4 +1,5 @@
 import '@glint/environment-ember-loose';
+import '@glint/environment-ember-template-imports';
 
 import type CssTransitionsRegistry from 'ember-css-transitions/template-registry';
 
