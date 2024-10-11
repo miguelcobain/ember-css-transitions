@@ -53,11 +53,11 @@ module('Integration | Component | transition group', function (hooks) {
         assert.dom('#my-element').doesNotExist('no element at first');
         assert.ok(
           this.didTransitionIn.notCalled,
-          'didTransitionIn was not called'
+          'didTransitionIn was not called',
         );
         assert.ok(
           this.didTransitionOut.notCalled,
-          'didTransitionOut was not called'
+          'didTransitionOut was not called',
         );
 
         this.set('show', true);
@@ -72,13 +72,13 @@ module('Integration | Component | transition group', function (hooks) {
           .dom('#my-element')
           .hasClass(
             'example-enter-active',
-            '-enter-active is immediately applied'
+            '-enter-active is immediately applied',
           );
         assert
           .dom('#my-element')
           .doesNotHaveClass(
             'example-enter-to',
-            '-enter-to is not immediately applied'
+            '-enter-to is not immediately applied',
           );
 
         await waitFor('#my-element.example-enter-to');
@@ -97,18 +97,18 @@ module('Integration | Component | transition group', function (hooks) {
 
         assert.ok(
           this.didTransitionIn.calledOnce,
-          'didTransitionIn was called once'
+          'didTransitionIn was called once',
         );
         assert.ok(
           this.didTransitionOut.notCalled,
-          'didTransitionOut was not called'
+          'didTransitionOut was not called',
         );
 
         this.set('show', false);
 
         // waitFor may run too late and cause false-negative test failure.
         await new Promise((resolve) =>
-          window.requestAnimationFrame(() => resolve())
+          window.requestAnimationFrame(() => resolve()),
         );
         if (!find('#my-element_clone.example-leave')) {
           await waitFor('#my-element_clone.example-leave');
@@ -121,13 +121,13 @@ module('Integration | Component | transition group', function (hooks) {
           .dom('#my-element_clone')
           .hasClass(
             'example-leave-active',
-            '-leave-active is applied on clone'
+            '-leave-active is applied on clone',
           );
         assert
           .dom('#my-element_clone')
           .doesNotHaveClass(
             'example-leave-to',
-            '-leave-to is not yet applied on clone'
+            '-leave-to is not yet applied on clone',
           );
 
         await waitFor('#my-element_clone.example-leave-to');
@@ -136,19 +136,19 @@ module('Integration | Component | transition group', function (hooks) {
           .dom('#my-element_clone')
           .doesNotHaveClass(
             'example-leave',
-            '-leave was removed from the clone'
+            '-leave was removed from the clone',
           );
         assert
           .dom('#my-element_clone')
           .hasClass(
             'example-leave-active',
-            '-leave-active is applied after `afterRender` and a browser repaint on clone'
+            '-leave-active is applied after `afterRender` and a browser repaint on clone',
           );
         assert
           .dom('#my-element_clone')
           .hasClass(
             'example-leave-to',
-            '-leave-to is applied after `afterRender` and a browser repaint on clone'
+            '-leave-to is applied after `afterRender` and a browser repaint on clone',
           );
 
         assert
@@ -163,11 +163,11 @@ module('Integration | Component | transition group', function (hooks) {
 
         assert.ok(
           this.didTransitionIn.calledOnce,
-          'didTransitionIn was called once total'
+          'didTransitionIn was called once total',
         );
         assert.ok(
           this.didTransitionOut.calledOnce,
-          'didTransitionOut was called once total'
+          'didTransitionOut was called once total',
         );
       });
 
@@ -193,11 +193,11 @@ module('Integration | Component | transition group', function (hooks) {
         assert.dom('#my-element').doesNotExist('element is removed');
         assert.ok(
           this.didTransitionIn.notCalled,
-          'didTransitionIn was not called'
+          'didTransitionIn was not called',
         );
         assert.ok(
           this.didTransitionOut.notCalled,
-          'didTransitionOut was not called'
+          'didTransitionOut was not called',
         );
         assert.dom('#my-element_clone').doesNotExist('clone was not created');
       });
@@ -222,11 +222,11 @@ module('Integration | Component | transition group', function (hooks) {
         assert.dom('#my-element').doesNotExist('element is removed');
         assert.ok(
           this.didTransitionIn.notCalled,
-          'didTransitionIn was not called'
+          'didTransitionIn was not called',
         );
         assert.ok(
           this.didTransitionOut.notCalled,
-          'didTransitionOut was not called'
+          'didTransitionOut was not called',
         );
         assert.dom('#my-element_clone').doesNotExist('clone was not created');
       });
@@ -279,11 +279,11 @@ module('Integration | Component | transition group', function (hooks) {
         assert.dom('#my-element').doesNotExist('no element at first');
         assert.ok(
           this.didTransitionIn.notCalled,
-          'didTransitionIn was not called'
+          'didTransitionIn was not called',
         );
         assert.ok(
           this.didTransitionOut.notCalled,
-          'didTransitionOut was not called'
+          'didTransitionOut was not called',
         );
 
         this.set('show', true);
@@ -301,7 +301,7 @@ module('Integration | Component | transition group', function (hooks) {
           .dom('#my-element')
           .doesNotHaveClass(
             'opacity-100',
-            '-enter-to is not immediately applied'
+            '-enter-to is not immediately applied',
           );
 
         await waitFor('#my-element.opacity-100');
@@ -320,18 +320,18 @@ module('Integration | Component | transition group', function (hooks) {
 
         assert.ok(
           this.didTransitionIn.calledOnce,
-          'didTransitionIn was called once'
+          'didTransitionIn was called once',
         );
         assert.ok(
           this.didTransitionOut.notCalled,
-          'didTransitionOut was not called'
+          'didTransitionOut was not called',
         );
 
         this.set('show', false);
 
         // waitFor may run too late and cause false-negative test failure.
         await new Promise((resolve) =>
-          window.requestAnimationFrame(() => resolve())
+          window.requestAnimationFrame(() => resolve()),
         );
         if (!find('#my-element_clone.opacity-100')) {
           await waitFor('#my-element_clone.opacity-100');
@@ -347,7 +347,7 @@ module('Integration | Component | transition group', function (hooks) {
           .dom('#my-element_clone')
           .doesNotHaveClass(
             'opacity-0',
-            '-leave-to is not yet applied on clone'
+            '-leave-to is not yet applied on clone',
           );
 
         await waitFor('#my-element_clone.opacity-0');
@@ -359,13 +359,13 @@ module('Integration | Component | transition group', function (hooks) {
           .dom('#my-element_clone')
           .hasClass(
             'duration-500',
-            '-leave-active is applied after `afterRender` and a browser repaint on clone'
+            '-leave-active is applied after `afterRender` and a browser repaint on clone',
           );
         assert
           .dom('#my-element_clone')
           .hasClass(
             'opacity-0',
-            '-leave-to is applied after `afterRender` and a browser repaint on clone'
+            '-leave-to is applied after `afterRender` and a browser repaint on clone',
           );
 
         assert
@@ -380,11 +380,11 @@ module('Integration | Component | transition group', function (hooks) {
 
         assert.ok(
           this.didTransitionIn.calledOnce,
-          'didTransitionIn was called once total'
+          'didTransitionIn was called once total',
         );
         assert.ok(
           this.didTransitionOut.calledOnce,
-          'didTransitionOut was called once total'
+          'didTransitionOut was called once total',
         );
       });
     });
