@@ -65,7 +65,8 @@ jobs:
           cache: pnpm
 
       - name: Install Dependencies
-        run: pnpm install
+        # double install to make *.injected dependency work.
+        run: pnpm install && pnpm install
 
       - name: Run Tests
         run: USE_TEST_WAITERS=${{ matrix.test-waiters }} pnpm run test:ember
@@ -89,7 +90,8 @@ jobs:
           cache: pnpm
 
       - name: Install Dependencies
-        run: pnpm install --no-lockfile
+        # double install to make *.injected dependency work.
+        run: pnpm install --no-lockfile && pnpm install --no-lockfile
 
       - name: Run Tests
         run: pnpm run test:ember
