@@ -3,7 +3,7 @@
   "packages": [
     {
       "name": "@embroider/addon-blueprint",
-      "version": "2.1.0",
+      "version": "2.18.0",
       "blueprints": [
         {
           "name": "@embroider/addon-blueprint",
@@ -14,7 +14,8 @@
             "--ci-provider=github",
             "--addon-location=ember-css-transitions",
             "--test-app-location=test-app",
-            "--release-it"
+            "--release-it",
+            "--typescript"
           ]
         }
       ]
