@@ -42,6 +42,10 @@
       "after:release": "pnpm --filter=docs run deploy"
     },
     "plugins": {
+      "@release-it-plugins/lerna-changelog": {
+        "infile": "CHANGELOG.md",
+        "launchEditor": true
+      },
       "@release-it-plugins/workspaces": {
         "workspaces": [
           "ember-css-transitions"
@@ -58,10 +62,6 @@
             "test-app/package.json"
           ]
         }
-      },
-      "release-it-lerna-changelog": {
-        "infile": "CHANGELOG.md",
-        "launchEditor": true
       }
     },
     "git": {
