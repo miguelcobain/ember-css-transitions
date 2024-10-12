@@ -4,6 +4,17 @@
 
 
 
+
+## v4.4.1 (2024-10-12)
+
+#### :house: Internal
+* [#148](https://github.com/miguelcobain/ember-css-transitions/pull/148) Sync with latest addon blueprint via ember-cli-update ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#143](https://github.com/miguelcobain/ember-css-transitions/pull/143) Use workspace protocol for addon reference ([@SergeAstapov](https://github.com/SergeAstapov))
+
+#### Committers: 2
+- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))
+- Tom Carter ([@tcjr](https://github.com/tcjr))
+
 ## v4.4.0 (2023-08-10)
 
 #### :rocket: Enhancement
