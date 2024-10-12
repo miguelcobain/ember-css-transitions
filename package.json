@@ -39,7 +39,7 @@
     "hooks": {
       "before:init": "cp README.md LICENSE.md ember-css-transitions/",
       "after:bump": "pnpm install",
-      "after:release": "pnpm --filter=docs run deploy"
+      "after:release": "pnpm --filter=ember-css-transitions-docs run deploy"
     },
     "plugins": {
       "@release-it-plugins/lerna-changelog": {
