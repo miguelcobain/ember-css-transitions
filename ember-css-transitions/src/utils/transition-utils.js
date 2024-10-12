@@ -53,11 +53,11 @@ export function computeTimeout(element) {
 
   let maxDelay = Math.max(
     parseFloat(animationDelay),
-    parseFloat(transitionDelay)
+    parseFloat(transitionDelay),
   );
   let maxDuration = Math.max(
     parseFloat(animationDuration) * parseFloat(animationIterationCount),
-    parseFloat(transitionDuration)
+    parseFloat(transitionDuration),
   );
 
   return (maxDelay + maxDuration) * 1000;
