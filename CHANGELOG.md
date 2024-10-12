@@ -7,6 +7,9 @@
 
 ## v4.4.1 (2024-10-12)
 
+#### :bug: Bug Fix
+* [#138](https://github.com/miguelcobain/ember-css-transitions/pull/138) Make utility functions importable ([@tcjr](https://github.com/tcjr))
+
 #### :house: Internal
 * [#148](https://github.com/miguelcobain/ember-css-transitions/pull/148) Sync with latest addon blueprint via ember-cli-update ([@SergeAstapov](https://github.com/SergeAstapov))
 * [#143](https://github.com/miguelcobain/ember-css-transitions/pull/143) Use workspace protocol for addon reference ([@SergeAstapov](https://github.com/SergeAstapov))
