@@ -15,6 +15,7 @@ module.exports = async function () {
             '@ember/test-helpers': '2.7.0',
             'ember-cli': '^3.24.0',
             'ember-cli-app-version': '^6.0.1',
+            'ember-load-initializers': '^3.0.1',
             'ember-qunit': '~6.0.0',
             'ember-data': '~3.24.0',
             'ember-resolver': '^8.0.0',
@@ -28,6 +29,7 @@ module.exports = async function () {
           devDependencies: {
             '@ember/test-helpers': '2.7.0',
             'ember-cli': '^3.28.0',
+            'ember-load-initializers': '^3.0.1',
             'ember-qunit': '~6.0.0',
             'ember-resolver': '^8.0.0',
             'ember-source': '~3.28.0',
@@ -39,6 +41,7 @@ module.exports = async function () {
         npm: {
           devDependencies: {
             '@ember/test-helpers': '2.7.0',
+            'ember-load-initializers': '^3.0.1',
             'ember-qunit': '~6.0.0',
             'ember-resolver': '^8.0.0',
             'ember-source': '~4.4.0',
@@ -49,6 +52,7 @@ module.exports = async function () {
         name: 'ember-lts-4.8',
         npm: {
           devDependencies: {
+            'ember-load-initializers': '^3.0.1',
             'ember-resolver': '^10.1.1',
             'ember-source': '~4.8.0',
           },
@@ -58,6 +62,7 @@ module.exports = async function () {
         name: 'ember-lts-4.12',
         npm: {
           devDependencies: {
+            'ember-load-initializers': '^3.0.1',
             'ember-source': '~4.12.0',
           },
         },
