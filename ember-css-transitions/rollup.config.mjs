@@ -6,9 +6,6 @@ const addon = new Addon({
   destDir: 'dist',
 });
 
-// Add extensions here, such as ts, gjs, etc that you may import
-const extensions = ['.js'];
-
 export default {
   // This provides defaults that work well alongside `publicEntrypoints` below.
   // You can augment this if you need to.
@@ -17,6 +14,11 @@ export default {
   plugins: [
     // These are the modules that users should be able to import from your
     // addon. Anything not listed here may get optimized away.
+    // By default all your JavaScript modules (**/*.js) will be importable.
+    // But you are encouraged to tweak this to only cover the modules that make
+    // up your addon's public API. Also make sure your package.json#exports
+    // is aligned to the config here.
+    // See https://github.com/embroider-build/embroider/blob/main/docs/v2-faq.md#how-can-i-define-the-public-exports-of-my-addon
     addon.publicEntrypoints(['modifiers/**/*.js', 'utils/**/*.js', 'index.js']),
 
     // These are the modules that should get reexported into the traditional
@@ -36,12 +38,15 @@ export default {
     // By default, this will load the actual babel config from the file
     // babel.config.json.
     babel({
-      extensions,
+      extensions: ['.js', '.gjs'],
       babelHelpers: 'bundled',
     }),
 
     // Ensure that standalone .hbs files are properly integrated as Javascript.
     addon.hbs(),
+
+    // Ensure that .gjs files are properly integrated as Javascript
+    addon.gjs(),
 
     // addons are allowed to contain imports of .css files, which we want rollup
     // to leave alone and keep in the published output.

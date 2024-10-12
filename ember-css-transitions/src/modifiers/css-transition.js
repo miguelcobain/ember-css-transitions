@@ -7,7 +7,7 @@ import {
 } from '@embroider/macros';
 import { buildWaiter } from '@ember/test-waiters';
 
-import { nextTick, sleep, computeTimeout } from '../utils/transition-utils';
+import { nextTick, sleep, computeTimeout } from '../utils/transition-utils.js';
 
 let waiter;
 
