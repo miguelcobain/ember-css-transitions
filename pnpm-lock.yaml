@@ -196,7 +196,7 @@ importers:
   ember-css-transitions:
     dependencies:
       '@ember/test-waiters':
-        specifier: ^3.1.0
+        specifier: ^3.1.0 || ^4.0.0
         version: 3.1.0
       '@embroider/addon-shim':
         specifier: ^1.8.9
