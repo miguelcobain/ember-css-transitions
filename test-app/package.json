@@ -1,6 +1,6 @@
 {
   "name": "test-app",
-  "version": "4.4.1",
+  "version": "4.5.0",
   "private": true,
   "description": "Test app for ember-css-transitions addon",
   "repository": "https://github.com/miguelcobain/ember-css-transitions",

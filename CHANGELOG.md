@@ -5,6 +5,22 @@
 
 
 
+
+## v4.5.0 (2025-04-15)
+
+#### :rocket: Enhancement
+* [#152](https://github.com/miguelcobain/ember-css-transitions/pull/152) Widen @ember/test-waiters dependency range to allow v4 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :memo: Documentation
+* [#149](https://github.com/miguelcobain/ember-css-transitions/pull/149) Update status badge image url ([@SergeAstapov](https://github.com/SergeAstapov))
+
+#### :house: Internal
+* [#150](https://github.com/miguelcobain/ember-css-transitions/pull/150) update workspace in dpcs deploy release hook ([@SergeAstapov](https://github.com/SergeAstapov))
+
+#### Committers: 2
+- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v4.4.1 (2024-10-12)
 
 #### :bug: Bug Fix
