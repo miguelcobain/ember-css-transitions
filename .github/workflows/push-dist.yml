@@ -14,14 +14,14 @@ on:
 jobs:
   push-dist:
     name: Push dist
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 9
+      - uses: pnpm/action-setup@v4
 
       - name: Install Node
         uses: actions/setup-node@v4
@@ -33,7 +33,7 @@ jobs:
         # double install to make *.injected dependency work.
         run: pnpm install && pnpm install
 
-      - uses: kategengler/put-built-npm-package-contents-on-branch@v1.0.0
+      - uses: kategengler/put-built-npm-package-contents-on-branch@v2.0.0
         with:
           branch: dist
           token: ${{ secrets.GITHUB_TOKEN }}

@@ -28,8 +28,8 @@
     "release-it": "^17.8.2"
   },
   "volta": {
-    "node": "18.20.4",
-    "pnpm": "9.12.1"
+    "node": "18.20.8",
+    "pnpm": "10.8.1"
   },
   "packageManager": "pnpm@9.12.1",
   "publishConfig": {
