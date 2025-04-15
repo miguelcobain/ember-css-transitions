@@ -1,0 +1,94 @@
+{
+  "name": "ember-css-transitions",
+  "version": "4.5.0",
+  "description": "Ember implementation of CSS Transitions. Just like ng-animate and react animation but for Ember.",
+  "keywords": [
+    "ember-addon",
+    "animation"
+  ],
+  "homepage": "https://miguelcobain.github.io/ember-css-transitions",
+  "repository": "https://github.com/miguelcobain/ember-css-transitions",
+  "license": "MIT",
+  "author": "Petter Kjelkenes <kjelkenes@gmail.com>",
+  "files": [
+    "addon-main.cjs",
+    "dist",
+    "types"
+  ],
+  "scripts": {
+    "build": "rollup --config",
+    "lint": "concurrently 'pnpm:lint:*(!fix)' --names 'lint:'",
+    "lint:fix": "concurrently 'pnpm:lint:*:fix' --names 'fix:'",
+    "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
+    "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "start": "rollup --config --watch",
+    "test": "echo 'A v2 addon does not have tests, run tests in test-app'"
+  },
+  "dependencies": {
+    "@ember/test-waiters": "^3.1.0 || ^4.0.0",
+    "@embroider/addon-shim": "^1.8.9",
+    "ember-modifier": "^2.1.2 || ^3.1.0 || ^4.0.0",
+    "decorator-transforms": "^2.2.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.8",
+    "@babel/eslint-parser": "^7.25.8",
+    "@babel/runtime": "^7.25.7",
+    "@embroider/addon-dev": "^6.0.1",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@tsconfig/ember": "^3.0.8",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "babel-plugin-ember-template-compilation": "^2.2.5",
+    "concurrently": "^9.0.1",
+    "ember-template-lint": "^6.0.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-ember": "^12.2.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^17.11.1",
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.3.3",
+    "prettier-plugin-ember-template-tag": "^2.0.2",
+    "rollup": "^4.24.0",
+    "typescript": "^5.6.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.cjs",
+    "demoURL": "http://miguelcobain.github.io/ember-css-transitions/",
+    "versionCompatibility": {
+      "ember": "3.24 || >=4.0"
+    },
+    "app-js": {
+      "./modifiers/css-transition.js": "./dist/_app_/modifiers/css-transition.js"
+    }
+  },
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./types/*.d.ts",
+      "default": "./dist/*.js"
+    },
+    "./addon-main.js": "./addon-main.cjs"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "types/*"
+      ]
+    }
+  }
+}
